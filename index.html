@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emagrecimento Real: Chega de Tentar, Comece a Evoluir</title>
     <link rel="icon" href="logo.png" type="image/x-icon">
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -27,577 +28,14 @@
     <noscript><img height="1" width="1" style="display:none"
       src="https://www.facebook.com/tr?id=839178802000364&ev=PageView&noscript=1"
     /></noscript>
-    <style>
-        /* --- CONFIGURAÇÕES GLOBAIS E VARIÁVEIS (Nova Paleta) --- */
-        :root {
-            --cor-fundo: #1A1A1A; /* Preto carvão */
-            --cor-fundo-secundario: #111111; /* Mantendo secundário escuro original */
-            --cor-texto-principal: #f5f5f7; /* Mantendo texto claro original */
-            --cor-texto-secundario: #A7A7A7; /* Cinza quente */
-            --cor-destaque: #E63946; /* Vermelho energético */
-            --cor-destaque-hover: #F04A58; /* Vermelho ligeiramente mais claro para hover */
-            --cor-verde: #FF6F91; /* Rosa queimado (substituindo verde original) */
-            --cor-vermelho-riscado: #E63946; /* Vermelho energético (para consistência) */
-            --cor-verde-fluorescente: #FF6F91; /* Rosa queimado (substituindo verde fluorescente original no hover) */
-            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        /* --- ESTILOS GERAIS (Mantidos da estrutura original) --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            background-color: var(--cor-fundo);
-            color: var(--cor-texto-principal);
-            font-family: var(--font-family);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden;
-        }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
-        section { padding: 8rem 0; text-align: center; }
-        h1, h2, h3 { font-weight: 600; }
-        /* AJUSTE NO H1: Leve ajuste no clamp para melhor responsividade */
-        h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: -0.02em; }
-        h2 { font-size: clamp(2.5rem, 5vw, 3.5rem); letter-spacing: -0.01em; margin-bottom: 1.5rem; }
-        p.subtitulo { font-size: 1.5rem; color: var(--cor-texto-secundario); max-width: 700px; margin: 1.5rem auto 2.5rem auto; line-height: 1.6; }
-        .btn {
-            display: inline-block;
-            background-color: var(--cor-destaque);
-            color: #fff;
-            padding: 1rem 2.5rem;
-            border-radius: 980px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1.1rem;
-            transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
-            animation: gentle-float 4s ease-in-out infinite;
-            border: none;
-            cursor: pointer;
-            text-align: center;
-        }
-        .btn:hover {
-            background-color: var(--cor-verde-fluorescente);
-            color: var(--cor-fundo);
-            transform: scale(1.05);
-            animation-play-state: paused;
-        }
-        .btn:active {
-            background-color: var(--cor-verde);
-            transform: scale(1.02);
-            transition: transform 0.1s ease, background-color 0.1s ease;
-        }
-        .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-        .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
-        .header-logo-container { position: absolute; top: 0; left: 0; width: 100%; padding: 2rem; z-index: 10; text-align: right; }
-        .header-logo { max-height: 165px; width: auto; opacity: 0.9; transition: opacity 0.3s ease; }
-        .header-logo:hover { opacity: 1; }
-        #hero { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; padding: 0; overflow: hidden; }
-        #video-background, #iframe-background { position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; object-fit: cover; transform: translate(-50%, -50%); z-index: 1; opacity: 0.25; border: none; }
-        #iframe-background { width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; pointer-events: none; }
-        .video-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
-        .video-modal.active { opacity: 1; pointer-events: auto; }
-        .video-modal-content { position: relative; width: 90%; max-width: 1100px; aspect-ratio: 16 / 9; transform: scale(0.8); transition: transform 0.4s ease; }
-        .video-modal.active .video-modal-content { transform: scale(1); }
-        .video-modal video, .video-modal iframe { width: 100%; height: 100%; border-radius: 15px; border: none; }
-        .close-modal-btn { position: absolute; top: -40px; right: 0px; background: transparent; border: none; color: #fff; font-size: 3rem; font-weight: 300; cursor: pointer; line-height: 1; transition: transform 0.3s ease; }
-        .close-modal-btn:hover { transform: scale(1.2); }
-        .hero-content { position: relative; z-index: 2; width: 100%; }
-        .title-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 2rem; padding: 2rem; }
-        .vertical-text { font-size: 1.2rem; font-weight: 600; color: var(--cor-texto-secundario); writing-mode: vertical-rl; text-transform: uppercase; letter-spacing: 4px; }
-        .left { text-align: left; transform: rotate(180deg); }
-        .right { text-align: right; }
-        .main-title { display: flex; flex-direction: column; gap: 1.5rem; }
-        #poder { background-color: var(--cor-fundo-secundario); padding-bottom: 0; }
-        .poder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem; text-align: left; }
-        .poder-card { background-color: #1c1c1e; padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
-        .poder-card h3 { font-size: 1.5rem; color: var(--cor-verde); margin-bottom: 1rem; }
-        .poder-card p { color: var(--cor-texto-secundario); line-height: 1.7; }
-        #video-demonstracao { background-color: var(--cor-fundo-secundario); }
-        .video-showcase { position: relative; width: 100%; max-width: 900px; margin: 3rem auto 0 auto; border-radius: 20px; overflow: hidden; background-color: #000; box-shadow: 0 20px 50px rgba(0,0,0,0.5); border: 1px solid rgba(255, 255, 255, 0.1); cursor: pointer; }
-        .video-showcase-poster { display: block; width: 100%; height: auto; opacity: 0.6; transition: opacity 0.4s ease, transform 0.4s ease; }
-        .video-showcase:hover .video-showcase-poster { opacity: 0.4; transform: scale(1.05); }
-        .play-button-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90px; height: 90px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; transition: all 0.3s ease; pointer-events: none; }
-        .video-showcase:hover .play-button-overlay { transform: translate(-50%, -50%) scale(1.1); background-color: rgba(255, 255, 255, 0.2); }
-        .play-button-overlay svg { width: 40px; height: 40px; margin-left: 5px; }
-        .feature-section { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; text-align: left; }
-        .feature-section.reverse { grid-template-columns: 1fr 1fr; }
-        .feature-section.reverse .feature-image { order: 2; }
-        .feature-image img { width: 100%; height: auto; border-radius: 30px; display: block; }
-        .feature-text h3 { font-size: 2.5rem; margin-bottom: 1rem; }
-        .feature-text p { color: var(--cor-texto-secundario); font-size: 1.2rem; line-height: 1.7; }
-        #beneficios .feature-text p strong { color: var(--cor-verde); font-weight: 600; }
-        #integracoes { overflow: hidden; background-color: var(--cor-fundo-secundario); }
-        .logos-container { position: relative; padding: 2rem 0; margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent); mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent); }
-        .logos-slide { display: flex; width: fit-content; animation: scroll 60s linear infinite; }
-        .logos-slide.reverse { animation-direction: reverse; }
-        .logos-slide img { height: 45px; margin: 0 40px; filter: grayscale(1) opacity(0.6); transition: filter 0.3s ease, transform 0.3s ease, opacity 0.3s ease; }
-        .logos-slide img:hover { filter: grayscale(0) opacity(1); transform: scale(1.1); }
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .carousel-container { position: relative; margin-top: 4rem; }
-        .carousel-wrapper { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 2rem; padding: 2rem 1rem; scroll-behavior: smooth; }
-        .carousel-wrapper::-webkit-scrollbar { display: none; }
-        .depoimento-card { flex: 0 0 31%; max-width: 31%; scroll-snap-align: start; background-color: #1c1c1e; padding: 3rem; border-radius: 20px; text-align: left; border: 1px solid rgba(255,255,255,0.1); }
-        .depoimento-card blockquote { font-size: 1.2rem; line-height: 1.6; font-style: italic; margin-bottom: 2rem; }
-        .author { display: flex; align-items: center; gap: 1rem; }
-        .author img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
-        .author-info strong { display: block; font-size: 1.1rem; }
-        .author-info small { color: var(--cor-texto-secundario); }
-        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.2); color: white; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; transition: background-color 0.3s ease; }
-        .carousel-btn:hover { background-color: rgba(255, 255, 255, 0.2); }
-        #prev-btn { left: -25px; }
-        #next-btn { right: -25px; }
-        #porque-agora .highlight-box { background-image: url('yes.jpg'); background-size: cover; background-position: center 25%; color: #fff; padding: 5rem; border-radius: 30px; margin-top: 3rem; position: relative; overflow: hidden; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 500px; }
-        #porque-agora .highlight-box::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); z-index: -1; }
-        .highlight-box h2, .highlight-box p { position: relative; z-index: 2; }
-        .highlight-box h2 { color: #fff; font-size: clamp(2rem, 4vw, 3rem); text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.7); margin-bottom: 0; }
-        #garantia { background-color: var(--cor-fundo-secundario); }
-        .garantia-box { display: grid; grid-template-columns: 300px 1fr; gap: 4rem; align-items: center; background-color: #1c1c1e; padding: 4rem; border-radius: 30px; text-align: left; }
-        .garantia-seal img { width: 100%; height: auto; filter: grayscale(100%); opacity: 0.7; transition: filter 0.4s ease, opacity 0.4s ease; }
-        .garantia-text h3 { font-size: 2rem; color: var(--cor-texto-secundario); transition: color 0.4s ease; }
-        .garantia-text p { color: var(--cor-texto-secundario); font-size: 1.1rem; line-height: 1.7; margin-top: 1rem; }
-        .garantia-text strong { color: var(--cor-texto-principal); transition: color 0.4s ease; }
-        .garantia-box:hover .garantia-seal img { filter: grayscale(0%); opacity: 1; }
-        .garantia-box:hover .garantia-text h3, .garantia-box:hover .garantia-text strong { color: var(--cor-verde); }
-        #criador { background-color: var(--cor-fundo); padding: 8rem 0 2rem 0; }
-        .creator-grid { display: grid; grid-template-columns: 400px 1fr; gap: 5rem; align-items: flex-start; text-align: left; margin-top: 4rem; }
-        .creator-image-wrapper { position: relative; }
-        .creator-image-wrapper::after { content: ''; position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px; background: conic-gradient(from 180deg at 50% 50%, var(--cor-verde) 0deg, rgba(255, 111, 145, 0.5) 120deg, rgba(255, 111, 145, 0) 360deg); z-index: -1; border-radius: 40px; opacity: 0.2; transition: opacity 0.4s ease, transform 0.4s ease; }
-        .creator-image-wrapper:hover::after { opacity: 0.5; transform: scale(1.02) rotate(15deg); }
-        .creator-image-wrapper img { width: 100%; border-radius: 30px; box-shadow: 0 25px 60px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); }
-        .creator-text-content h4 { font-size: 1.5rem; color: var(--cor-verde); margin-top: 2.5rem; margin-bottom: 1rem; }
-        .creator-text-content h4:first-child { margin-top: 0; }
-        .creator-text-content p, .creator-text-content li { color: var(--cor-texto-secundario); font-size: 1.1rem; line-height: 1.7; margin-bottom: 1rem; }
-        .creator-text-content ul { list-style: none; padding-left: 0; }
-        .creator-text-content li { padding-left: 1.5rem; position: relative; }
-        .creator-text-content li::before { content: '✓'; position: absolute; left: 0; color: var(--cor-verde); font-weight: 700; }
-        .text-green { color: var(--cor-verde); font-weight: 600; }
-        #preco { padding-top: 2rem; padding-bottom: 4rem; }
-        .price-card { background: linear-gradient(145deg, #1c1c1e, #111111); border-radius: 30px; padding: 3rem; max-width: 800px; margin: 2rem auto 0 auto; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4); }
-        .price-card .n8n-logo { max-width: 150px; margin-bottom: 2rem; }
-        .price-card h3 { font-size: 1.5rem; color: var(--cor-texto-secundario); margin-bottom: 1rem; }
-        .price-display { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
-        .price-display .old-price { font-size: clamp(2rem, 5vw, 2.5rem); color: var(--cor-vermelho-riscado); text-decoration: line-through; text-decoration-thickness: 3px; opacity: 0.7; }
-        .price-display .new-price { font-size: clamp(3.5rem, 10vw, 5rem); color: var(--cor-verde-fluorescente); font-weight: 700; line-height: 1; }
-        .price-card .btn { margin-top: 1rem; }
-        #garantia-objecoes { padding-top: 0; }
-        .garantia-objecoes-grid { display: grid; grid-template-columns: 350px 1fr; gap: 4rem; align-items: center; margin-top: 4rem; text-align: left; }
-        .garantia-blindada-seal { display: flex; align-items: center; justify-content: center; }
-        .garantia-blindada-seal img { max-width: 100%; animation: gentle-float 5s ease-in-out infinite; }
-        .objeccoes-container { display: flex; flex-direction: column; gap: 1.5rem; }
-        .objeccao-card { background-color: var(--cor-fundo-secundario); padding: 2rem; border-radius: 20px; border-left: 4px solid var(--cor-destaque); }
-        .objeccao-card h4 { font-size: 1.3rem; margin-bottom: 0.75rem; color: var(--cor-texto-principal); }
-        .objeccao-card p { color: var(--cor-texto-secundario); line-height: 1.6; }
-
-        /* --- ESTILOS DOS BOTÕES FLUTUANTES (MODIFICADO) --- */
-        .floating-buttons-container { /* Novo container para agrupar */
-            position: fixed;
-            bottom: 20px;
-            left: 20px; /* Alinhado à esquerda */
-            right: 20px; /* Alinhado à direita */
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between; /* Espaça os botões */
-            pointer-events: none; /* Container não bloqueia cliques */
-        }
-        .floating-buttons-group { /* Agrupa botões em cada lado */
-             display: flex;
-             flex-direction: column;
-             gap: 15px;
-             pointer-events: auto; /* Botões são clicáveis */
-        }
-        /* Ajuste específico para o grupo da direita (WhatsApp e Topo) */
-        .floating-buttons-group.right-group {
-             align-items: flex-end; /* Alinha itens à direita dentro do grupo */
-        }
-
-        .float-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease, background-color 0.3s ease, opacity 0.3s ease; /* Adicionado opacity */
-            cursor: pointer;
-            border: none;
-            text-decoration: none;
-        }
-        .float-btn:hover { transform: scale(1.1); }
-        .float-btn svg { width: 32px; height: 32px; fill: white; }
-        /* Alteração 1: Estilos para a imagem do botão da IA */
-        #ai-chat-btn img {
-             width: 60px; /* Ajuste o tamanho conforme necessário */
-             height: 500px; /* Ajuste o tamanho conforme necessário */
-             object-fit: contain; /* Ou 'cover', dependendo da imagem */
-             border-radius: 50%; /* Se a imagem não for redonda */
-        }
-        #whatsapp-btn { background-color: #25D366; order: 2; /* Garante que fique abaixo do back-to-top */ }
-        #ai-chat-btn {
-            background-color: var(--cor-destaque); /* Cor de destaque para IA */
-            /* Posicionado no grupo esquerdo por padrão */
-        }
-        #back-to-top-btn {
-             background-color: rgba(255, 255, 255, 0.2);
-             backdrop-filter: blur(10px);
-             opacity: 0;
-             pointer-events: none;
-             transform: translateY(20px);
-             transition: opacity 0.3s ease, transform 0.3s ease;
-             order: 1; /* Garante que fique acima do WhatsApp */
-        }
-        #back-to-top-btn.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
-
-        /* --- ESTILOS DO PAINEL DE CHAT FLUTUANTE --- */
-        #ai-chat-panel {
-            position: fixed;
-            bottom: 95px; /* Posição acima do botão flutuante */
-            left: 20px;
-            width: 380px; /* Alteração 2: Aumentada a largura */
-            max-height: 550px; /* Alteração 2: Aumentada a altura máxima */
-            background-color: #1c1c1e;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,255,255,0.1);
-            z-index: 999; /* Abaixo do botão flutuante, mas acima do conteúdo */
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(20px) scale(0.95);
-            pointer-events: none;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-        #ai-chat-panel.active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            pointer-events: auto;
-        }
-        .ai-chat-header {
-            padding: 0.8rem 1rem;
-            background-color: rgba(0,0,0,0.2);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .ai-chat-header h3 { font-size: 1rem; margin: 0; color: var(--cor-texto-principal); }
-        .ai-chat-close-btn {
-             background: none; border: none; color: var(--cor-texto-secundario); font-size: 1.5rem; cursor: pointer; line-height: 1; padding: 0 0.5rem;
-        }
-        .ai-chat-close-btn:hover { color: var(--cor-texto-principal); }
-
-        #ai-chat-display { /* Ajustado para o painel */
-            flex-grow: 1; /* Ocupa espaço disponível */
-            overflow-y: auto;
-            padding: 1rem;
-            margin-bottom: 0;
-            background-color: transparent;
-            border: none;
-            font-size: 0.9rem; /* Levemente menor */
-        }
-         /* Mensagens dentro do painel */
-        #ai-chat-display p { /* Estilo geral para parágrafos (mensagens) */
-            padding: 0.7rem 1rem;
-            border-radius: 12px;
-            margin-bottom: 0.7rem;
-            line-height: 1.5;
-            max-width: 85%; /* Limita a largura das mensagens */
-            word-wrap: break-word; /* Quebra palavras longas */
-        }
-        #ai-chat-display .user-message {
-             margin-left: auto; /* Alinha à direita */
-             background-color: rgba(230, 57, 70, 0.2); /* Tom de destaque */
-             color: var(--cor-texto-principal);
-             text-align: right;
-             border-bottom-right-radius: 4px; /* Ajuste visual */
-        }
-        #ai-chat-display .ai-message {
-             margin-right: auto; /* Alinha à esquerda */
-             background-color: rgba(255,255,255,0.08);
-             color: var(--cor-texto-principal);
-             text-align: left;
-             border-bottom-left-radius: 4px; /* Ajuste visual */
-        }
-        /* Alteração 5: Estilo para links dentro das mensagens da IA */
-        #ai-chat-display .ai-message a {
-            color: var(--cor-verde-fluorescente); /* Cor de destaque para links */
-            text-decoration: underline;
-            font-weight: 500;
-        }
-        #ai-chat-display .ai-message a:hover {
-            color: var(--cor-destaque-hover);
-        }
-
-
-        /* Alteração 3: Estilos para perguntas rápidas */
-        #ai-quick-questions {
-            padding: 0.5rem 1rem 0rem 1rem; /* Espaçamento */
-            display: flex;
-            flex-wrap: wrap; /* Permite que os botões quebrem linha */
-            gap: 8px; /* Espaço entre os botões */
-            border-bottom: 1px solid rgba(255,255,255,0.1); /* Separador visual */
-            margin-bottom: 0.5rem;
-        }
-        .quick-question-btn {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: var(--cor-texto-principal);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            padding: 6px 12px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            white-space: nowrap; /* Evita que o texto do botão quebre */
-        }
-        .quick-question-btn:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-
-        .ai-chat-input-area { /* Ajustado para o painel */
-            padding: 1rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            gap: 0.5rem;
-        }
-        #ai-chat-input { /* Reutiliza estilos de form-group */
-            width: 100%;
-            padding: 0.7rem 0.9rem; /* Ligeiramente menor */
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--cor-texto-principal);
-            font-size: 0.9rem; /* Ligeiramente menor */
-            font-family: var(--font-family);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            flex-grow: 1;
-        }
-         #ai-chat-input:focus {
-             outline: none;
-             border-color: var(--cor-destaque);
-             box-shadow: 0 0 0 2px rgba(230, 57, 70, 0.2);
-        }
-
-        #ai-chat-submit { /* Ajustado para o painel */
-            padding: 0.7rem 1rem; /* Ligeiramente menor */
-            font-size: 0.9rem; /* Ligeiramente menor */
-            border-radius: 8px;
-            white-space: nowrap;
-             /* Herda do .btn mas remove animação */
-            background-color: var(--cor-destaque);
-            color: #fff;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.3s ease, transform 0.1s ease;
-            border: none;
-            cursor: pointer;
-            text-align: center;
-        }
-        #ai-chat-submit:hover {
-            background-color: var(--cor-verde-fluorescente);
-            color: var(--cor-fundo);
-            transform: scale(1.03); /* Mantém um leve hover */
-        }
-         #ai-chat-submit:active {
-             transform: scale(0.98);
-        }
-
-
-        footer { background-color: var(--cor-fundo-secundario); color: var(--cor-texto-secundario); padding: 4rem 0 2rem 0; font-size: 0.9rem; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
-        .footer-grid h4 { color: var(--cor-texto-principal); font-size: 1rem; margin-bottom: 1rem; }
-        .footer-grid ul { list-style: none; padding: 0; /* Adicionado para remover padding padrão */ }
-        .footer-grid li { margin-bottom: 0.75rem; }
-        .footer-grid a { color: var(--cor-texto-secundario); text-decoration: none; transition: color 0.3s ease; }
-        .footer-grid a:hover { color: var(--cor-destaque); }
-        .footer-bottom { border-top: 1px solid #333; padding-top: 2rem; text-align: center; }
-        @keyframes gentle-float { 0% { transform: translateY(0); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0); } }
-
-        /* --- NOVOS ESTILOS PARA CALCULADORA --- */
-        #calculadora { background-color: var(--cor-fundo-secundario); }
-        .calculadora-form {
-            max-width: 600px;
-            margin: 3rem auto 0 auto;
-            background-color: #1c1c1e;
-            padding: 2.5rem;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-            text-align: left;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-        }
-        .form-group { margin-bottom: 1.5rem; }
-        .form-group label {
-            display: block;
-            font-weight: 500;
-            color: var(--cor-texto-secundario);
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-        .form-group input[type="text"],
-        .form-group input[type="number"],
-        .form-group input[type="email"],
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.9rem 1rem;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--cor-texto-principal);
-            font-size: 1rem;
-            font-family: var(--font-family);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .form-group input[type="text"]:focus,
-        .form-group input[type="number"]:focus,
-        .form-group input[type="email"]:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--cor-destaque);
-            box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.3);
-        }
-        .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23A7A7A7' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em; padding-right: 2.5rem; }
-        .calculadora-form button[type="submit"] {
-            width: 100%;
-            margin-top: 1rem;
-        }
-        #resultado-calculadora {
-            margin-top: 2.5rem;
-            background-color: rgba(255, 111, 145, 0.1);
-            border-left: 4px solid var(--cor-verde);
-            padding: 1.5rem;
-            border-radius: 10px;
-            color: var(--cor-texto-principal);
-            font-size: 1.1rem;
-            line-height: 1.7;
-            text-align: left;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-         #resultado-calculadora.visible {
-             opacity: 1;
-             transform: translateY(0);
-        }
-        #resultado-calculadora strong { color: var(--cor-verde); }
-        .disclaimer { font-size: 0.85rem; color: var(--cor-texto-secundario); margin-top: 1rem; text-align: center; }
-
-        /* Estilo para botões adicionados */
-        .botao-adicional {
-            margin-top: 2.5rem;
-            text-align: center;
-        }
-
-        /* --- ESTILOS PARA NOVA SEÇÃO #foco-no-treino (MODIFICADO) --- */
-        #foco-no-treino {
-            background-color: var(--cor-fundo); /* Mantém fundo escuro original se a imagem falhar */
-            color: var(--cor-texto-principal);
-            background-image: url('https://images.pexels.com/photos/1480520/pexels-photo-1480520.jpeg'); /* <<< SUBSTITUA pela URL da sua imagem */
-            background-size: cover;
-            background-position: center;
-            position: relative; /* Necessário para o overlay */
-            z-index: 1; /* Garante que a seção fique acima de elementos padrão */
-            text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6); /* Sombra leve no texto para legibilidade extra */
-        }
-        #foco-no-treino::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); /* Overlay escuro - ajuste a opacidade (0.0 a 1.0) */
-            z-index: -1; /* Coloca o overlay atrás do conteúdo de texto */
-        }
-        #foco-no-treino h2 {
-            color: var(--cor-verde); /* Cor de destaque para o título */
-        }
-        #foco-no-treino p {
-            color: var(--cor-texto-principal); /* Texto principal claro para contraste com overlay escuro */
-            font-size: 1.3rem;
-            line-height: 1.7;
-            max-width: 800px;
-            margin: 1.5rem auto;
-        }
-         #foco-no-treino strong {
-            color: var(--cor-verde); /* Destaque para strong com cor verde */
-            font-weight: 600;
-        }
-
-        /* --- MEDIA QUERIES (Mantidos e ajustados) --- */
-        @media (max-width: 1024px) {
-            .depoimento-card { flex: 0 0 47%; max-width: 47%; }
-            .feature-section, .feature-section.reverse { grid-template-columns: 1fr; gap: 2rem; }
-            .feature-section.reverse .feature-image { order: 0; }
-            .feature-image { margin-bottom: 2rem; }
-            .garantia-box { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
-            .garantia-seal { max-width: 200px; margin: 0 auto 2rem auto; }
-            .garantia-objecoes-grid { grid-template-columns: 1fr; gap: 3rem; }
-            .garantia-blindada-seal { max-width: 250px; margin: 0 auto; }
-            .creator-grid { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
-            .creator-image-wrapper { max-width: 350px; margin: 0 auto; }
-            .creator-text-content { text-align: left; }
-        }
-        @media (max-width: 768px) {
-            section { padding: 5rem 0; }
-            .container { padding: 0 1.5rem; }
-            /* AJUSTE H1 Mobile */
-            h1 { font-size: clamp(2.2rem, 7vw, 3rem); }
-            h2 { font-size: clamp(2rem, 7vw, 2.5rem); }
-            p.subtitulo { font-size: 1.2rem; }
-            #foco-no-treino p { font-size: 1.1rem; } /* Ajuste de fonte na nova seção */
-            .header-logo-container { padding: 1.5rem; }
-            .header-logo { max-height: 165px; }
-            .title-grid { grid-template-columns: 1fr; gap: 1rem; }
-            .vertical-text, .left, .right { display: none; }
-            .poder-card { padding: 2rem 1.5rem; }
-            .feature-text h3 { font-size: 2rem; }
-            .depoimento-card { flex: 0 0 90%; max-width: 90%; padding: 2rem; }
-            .carousel-wrapper { padding: 1.5rem 0; }
-            .carousel-btn { display: none; }
-            #porque-agora .highlight-box { min-height: 380px; padding: 3rem 1.5rem; margin-top: 2rem; background-position: center top; }
-            .garantia-box { padding: 2.5rem 1.5rem; }
-            .price-card { padding: 2.5rem 1.5rem; }
-            .price-display .new-price { font-size: clamp(3rem, 12vw, 4rem); }
-            .garantia-objecoes-grid { margin-top: 2.5rem; }
-            .objeccao-card { padding: 1.5rem; }
-            .footer-grid { text-align: center; }
-            .calculadora-form { padding: 2rem 1.5rem; }
-            /* Ajustes Mobile Chat Flutuante */
-            #ai-chat-panel { width: calc(100% - 30px); left: 15px; bottom: 85px; max-height: 400px; }
-            .floating-buttons-container { bottom: 15px; left: 15px; right: 15px; }
-        }
-        @media (max-width: 480px) {
-            h1 { font-size: clamp(2rem, 8vw, 2.5rem); } /* Ajuste fino H1 mobile menor */
-            p.subtitulo { font-size: 1.1rem; }
-             #foco-no-treino p { font-size: 1rem; } /* Ajuste fino nova seção */
-            .btn { padding: 0.9rem 2rem; font-size: 1rem; }
-            .play-button-overlay { width: 75px; height: 75px; }
-            .play-button-overlay svg { width: 30px; height: 30px; }
-            .depoimento-card { flex: 0 0 95%; max-width: 95%; }
-            .price-display { gap: 1rem; }
-            .price-display .new-price { font-size: clamp(3rem, 15vw, 3.5rem); }
-            .float-btn { width: 55px; height: 55px; }
-            .form-group input[type="text"],
-            .form-group input[type="number"],
-            .form-group input[type="email"],
-            .form-group select,
-            .form-group textarea { font-size: 0.95rem; padding: 0.8rem; }
-            #ai-chat-panel { bottom: 80px; width: calc(100% - 20px); left: 10px;} /* Ajuste fino posição painel */
-            #ai-chat-submit { font-size: 0.95rem; padding: 0.8rem 1.2rem; } /* Ajuste botão chat mobile */
-            .floating-buttons-container { bottom: 10px; left: 10px; right: 10px; } /* Ajuste container botões */
-             #ai-quick-questions { padding: 0.4rem 0.8rem 0rem 0.8rem; gap: 6px;}
-             .quick-question-btn { padding: 5px 10px; font-size: 0.75rem;}
-        }
-    </style>
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header id="hero">
         <div id="iframe-background-container" style="width:100%; height:100%; position:absolute;">
-             <iframe id="iframe-background" src="" frameborder="0" allow="autoplay; encrypted-media;" allowfullscreen></iframe>
+            <iframe id="iframe-background" src="" frameborder="0" allow="autoplay; encrypted-media;" allowfullscreen></iframe>
         </div>
         <video id="video-background" autoplay muted loop playsinline poster="https://images.pexels.com/photos/3401402/pexels-photo-3401402.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></video>
 
@@ -614,7 +52,7 @@
                     <h1 class="animate-on-scroll" style="transition-delay: 0.1s;">Primeira coisa: você quer emagrecer, sim ou não?</h1>
                     <p class="subtitulo animate-on-scroll" style="transition-delay: 0.2s;">Se a resposta for não, pode sair dessa página agora — de verdade. Você poupa o seu tempo, e eu poupo o meu. Mas se você ficou aqui, é porque está cansada de promessas vazias, dietas malucas e gurus que nunca suaram na vida. Então, parabéns. Você acabou de dar o primeiro passo pro único tipo de transformação que realmente funciona: A real, feita com verdade, estratégia e resultado.</p>
                     <div class="animate-on-scroll" style="transition-delay: 0.3s;">
-                        <a href="https://go.hotmart.com/G102346790F?ap=8048" target="_blank" class="btn" id="cta-hero-btn">QUERO COMEÇAR AGORA</a>
+                        <a href="#calculadora" class="btn" id="cta-hero-btn">COMEÇAR PELA MINHA META</a>
                     </div>
                 </div>
                  <span class="vertical-text right animate-on-scroll">É SUA</span>
@@ -643,20 +81,7 @@
                 </div>
             </div>
         </section>
-
-        <section id="video-demonstracao">
-            <div class="container">
-                <h2 class="animate-on-scroll">Veja a Transformação Acontecer.</h2>
-                <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">Inspire-se com quem já trilhou o caminho. Visualize o seu futuro.</p>
-                <div class="video-showcase animate-on-scroll" style="transition-delay: 0.2s;" id="play-demo-video-btn">
-                     <img src="https://images.unsplash.com/photo-1550345332-09e3ac987658?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=687" alt="Vídeo motivacional de emagrecimento" class="video-showcase-poster">
-                    <div class="play-button-overlay">
-                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M6.3 21.7C5.2 22.4 3.8 21.7 3.8 20.4V3.6C3.8 2.3 5.2 1.6 6.3 2.3L20.4 11.7C21.4 12.4 21.4 13.6 20.4 14.3L6.3 21.7Z"></path></svg>
-                    </div>
-                </div>
-            </div>
-        </section>
-
+        
         <section id="importancia">
             <div class="container">
                 <div class="feature-section">
@@ -689,12 +114,36 @@
             <div class="container">
                  <div class="feature-section">
                      <div class="feature-image animate-on-scroll">
-                         <img src="https://images.unsplash.com/photo-1732900293895-233f769299b3?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170" alt="Suplementos organizados">
-                     </div>
-                     <div class="feature-text animate-on-scroll">
-                         <h3>💊 Suplementação Inteligente</h3>
-                         <p>Suplementos não substituem esforço, mas aceleram resultados quando usados com consciência.<br>⭐ <strong>Os aliados ideais pra quem está começando:</strong><br>- Whey Protein: ajuda na recuperação e na construção muscular.<br>- Creatina: mantém força e desempenho, mesmo em déficit calórico.<br>- Termogênicos confiáveis: dão um empurrãozinho na queima de gordura (sempre com treino e acompanhamento).<br>🚫 Evite os produtos “milagrosos” da internet. Grande parte não tem respaldo científico e pode prejudicar seu metabolismo.<br>👉 <strong>A fórmula real é simples: Treino certo + dieta ajustada + suplementos confiáveis = resultado real.</strong></p>
-                     </div>
+                        <img src="https://images.unsplash.com/photo-1732900293895-233f769299b3?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170" alt="Suplementos organizados">
+                    </div>
+                    <div class="feature-text animate-on-scroll">
+                        <h3>💊 Suplementação Inteligente</h3>
+                        <p>Suplementos não substituem esforço, mas aceleram resultados quando usados com consciência.<br>⭐ <strong>Os aliados ideais pra quem está começando:</strong><br>- Whey Protein: ajuda na recuperação e na construção muscular.<br>- Creatina: mantém força e desempenho, mesmo em déficit calórico.<br>- Termogênicos confiáveis: dão um empurrãozinho na queima de gordura (sempre com treino e acompanhamento).<br>🚫 Evite os produtos “milagrosos” da internet. Grande parte não tem respaldo científico e pode prejudicar seu metabolismo.<br>👉 <strong>A fórmula real é simples: Treino certo + dieta ajustada + suplementos confiáveis = resultado real.</strong></p>
+                        
+                        <div class="recomendacao-box-v5">
+                            <strong>Minhas Recomendações (Curadoria):</strong>
+                            <p>Para te poupar tempo (e dinheiro com produtos ruins), estas são as marcas que eu uso e confio:</p>
+                            
+                            <div class="recomendacao-links-v5">
+                                <a href="https://s.shopee.com.br/10uyEPTyHY" target="_blank" rel="noopener noreferrer" class="rec-card-btn">
+                                    <img src="https://down-br.img.susercontent.com/file/br-11134211-7r98o-m9lrst2tugoy0e.webp" alt="Whey Protein Icon"> <div class="rec-card-text">
+                                        <strong>Whey + Creatina</strong>
+                                        <span>O Essencial</span>
+                                    </div>
+                                    <span class="rec-card-arrow">→</span>
+                                </a>
+
+                                <a href="https://s.shopee.com.br/8V0z9zSfYb" target="_blank" rel="noopener noreferrer" class="rec-card-btn">
+                                    <img src="magnesio.png" alt="Termogênico Icon"> <div class="rec-card-text">
+                                        <strong>Termogênico</strong>
+                                        <span>O Acelerador</span>
+                                    </div>
+                                    <span class="rec-card-arrow">→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
                  </div>
             </div>
         </section>
@@ -703,12 +152,12 @@
             <div class="container">
                  <div class="feature-section reverse">
                      <div class="feature-image animate-on-scroll">
-                         <img src="personal.jpg" alt="Mulher olhando-se no espelho com confiança">
-                     </div>
-                     <div class="feature-text animate-on-scroll">
-                         <h3>🔥 A Mentalidade Que Muda Tudo</h3>
-                         <p>Você não precisa de sorte. Precisa de estratégia.<br>Não precisa de milagre. Precisa de consistência.<br>E, sinceramente? Não precisa de um personal com mais barriga que você — precisa de alguém que viva o que ensina, inspire o que fala e te mostre o caminho com verdade.<br>Aqui, você vai encontrar orientação real, com humor, seriedade e propósito. Sem ilusões. Sem atalhos. Apenas o caminho certo pra emagrecer de verdade, com saúde e autoestima.</p>
-                     </div>
+                        <img src="personal.jpg" alt="Mulher olhando-se no espelho com confiança">
+                    </div>
+                    <div class="feature-text animate-on-scroll">
+                        <h3>🔥 A Mentalidade Que Muda Tudo</h3>
+                        <p>Você não precisa de sorte. Precisa de estratégia.<br>Não precisa de milagre. Precisa de consistência.<br>E, sinceramente? Não precisa de um personal com mais barriga que você — precisa de alguém que viva o que ensina, inspire o que fala e te mostre o caminho com verdade.<br>Aqui, você vai encontrar orientação real, com humor, seriedade e propósito. Sem ilusões. Sem atalhos. Apenas o caminho certo pra emagrecer de verdade, com saúde e autoestima.</p>
+                    </div>
                  </div>
             </div>
         </section>
@@ -731,75 +180,145 @@
         <section id="integracoes">
             <div class="container">
                 <h2 class="animate-on-scroll">Ferramentas que podem te ajudar</h2>
-                <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">Aplicativos de treino, contadores de calorias, wearables e mais.</p>
-                <div class="logos-container">
-                    <div class="logos-slide">
-                         <img src="https://cdn.worldvectorlogo.com/logos/whatsapp-3.svg" alt="WhatsApp"> <img src="instagram.png" alt="Instagram"> <img src="google.png" alt="Google Fit"> <img src="https://cdn.worldvectorlogo.com/logos/slack-new-logo.svg" alt="MyFitnessPal"> <img src="gmail.png" alt="Strava"> <img src="meta.png" alt="Apple Watch"> <img src="https://cdn.worldvectorlogo.com/logos/trello.svg" alt="Fitbit"> <img src="https://cdn.worldvectorlogo.com/logos/stripe-4.svg" alt="Samsung Health"> <img src="https://cdn.worldvectorlogo.com/logos/openai-2.svg" alt="Nike Training Club"> <img src="calendar.png" alt="Calm"> <img src="drive.png" alt="Headspace"> <img src="https://cdn.worldvectorlogo.com/logos/telegram-1.svg" alt="Telegram"> <img src="https://cdn.worldvectorlogo.com/logos/whatsapp-3.svg" alt="WhatsApp"> <img src="instagram.png" alt="Instagram"> <img src="google.png" alt="Google Fit"> <img src="https://cdn.worldvectorlogo.com/logos/slack-new-logo.svg" alt="MyFitnessPal"> <img src="gmail.png" alt="Strava"> <img src="meta.png" alt="Apple Watch"> <img src="https://cdn.worldvectorlogo.com/logos/trello.svg" alt="Fitbit"> <img src="https://cdn.worldvectorlogo.com/logos/stripe-4.svg" alt="Samsung Health"> <img src="https://cdn.worldvectorlogo.com/logos/openai-2.svg" alt="Nike Training Club"> <img src="calendar.png" alt="Calm"> <img src="drive.png" alt="Headspace"> <img src="https://cdn.worldvectorlogo.com/logos/telegram-1.svg" alt="Telegram">
+                <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">A tecnologia é sua aliada. Estes são os aplicativos que recomendo para monitorar sua jornada.</p>
+                
+                <div class="ferramentas-grid">
+                    
+                    <div class="ferramenta-card animate-on-scroll" style="transition-delay: 0.2s;">
+                        <img src="https://images.pexels.com/photos/1109197/pexels-photo-1109197.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="App de Dieta (Ex: MyFitnessPal)">
+                        <div class="ferramenta-card-content">
+                            <h3>App de Dieta</h3>
+                            <p>Monitore sua ingestão de calorias e macros (proteínas, carboidratos, gorduras) com precisão. Conhecimento é poder.</p>
+                            <a href="https://www.myfitnesspal.com/pt/" target="_blank" rel="noopener noreferrer" class="btn-secundario">Ver App</a>
+                        </div>
                     </div>
-                    <div class="logos-slide reverse">
-                         <img src="https://cdn.worldvectorlogo.com/logos/whatsapp-3.svg" alt="WhatsApp"> <img src="instagram.png" alt="Instagram"> <img src="shetts.png" alt="Google Fit"> <img src="https://cdn.worldvectorlogo.com/logos/slack-new-logo.svg" alt="MyFitnessPal"> <img src="gmail.png" alt="Strava"> <img src="meta.png" alt="Apple Watch"> <img src="https://cdn.worldvectorlogo.com/logos/trello.svg" alt="Fitbit"> <img src="https://cdn.worldvectorlogo.com/logos/stripe-4.svg" alt="Samsung Health"> <img src="https://cdn.worldvectorlogo.com/logos/openai-2.svg" alt="Nike Training Club"> <img src="calendar.png" alt="Calm"> <img src="drive.png" alt="Headspace"> <img src="https://cdn.worldvectorlogo.com/logos/telegram-1.svg" alt="Telegram"> <img src="https://cdn.worldvectorlogo.com/logos/whatsapp-3.svg" alt="WhatsApp"> <img src="instagram.png" alt="Instagram"> <img src="shetts.png" alt="Google Fit"> <img src="https://cdn.worldvectorlogo.com/logos/slack-new-logo.svg" alt="MyFitnessPal"> <img src="gmail.png" alt="Strava"> <img src="meta.png" alt="Apple Watch"> <img src="https://cdn.worldvectorlogo.com/logos/trello.svg" alt="Fitbit"> <img src="https://cdn.worldvectorlogo.com/logos/stripe-4.svg" alt="Samsung Health"> <img src="https://cdn.worldvectorlogo.com/logos/openai-2.svg" alt="Nike Training Club"> <img src="calendar.png" alt="Calm"> <img src="drive.png" alt="Headspace"> <img src="https://cdn.worldvectorlogo.com/logos/telegram-1.svg" alt="Telegram">
+                    
+                    <div class="ferramenta-card animate-on-scroll" style="transition-delay: 0.3s;">
+                        <img src="https://images.pexels.com/photos/1153369/pexels-photo-1153369.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="App de Treino (Ex: Strava)">
+                        <div class="ferramenta-card-content">
+                            <h3>App de Treino</h3>
+                            <p>Registre seus treinos, meça seu progresso de cardio e mantenha-se motivada com a comunidade. O que não é medido, não é gerenciado.</p>
+                            <a href="https://play.google.com/store/apps/details?id=com.strava&hl=pt_BR" target="_blank" rel="noopener noreferrer" class="btn-secundario">Ver App</a>
+                        </div>
                     </div>
-                </div>
-            </div>
+                    
+                    <div class="ferramenta-card animate-on-scroll" style="transition-delay: 0.4s;">
+                        <img src="https://images.pexels.com/photos/935777/pexels-photo-935777.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="App de Sono (Ex: Sleep Cycle)">
+                        <div class="ferramenta-card-content">
+                            <h3>App de Sono</h3>
+                            <p>O emagrecimento acontece na recuperação. Monitorar a qualidade do seu sono é crucial para a regulação hormonal e reparo muscular.</p>
+                            <a href="https://www.sleepcycle.com/" target="_blank" rel="noopener noreferrer" class="btn-secundario">Ver App</a>
+                        </div>
+                    </div>
+                    
+                    <div class="ferramenta-card animate-on-scroll" style="transition-delay: 0.5s;">
+                        <img src="https://images.pexels.com/photos/6342183/pexels-photo-6342183.jpeg" alt="App de Hidratação (Ex: Waterllama)">
+                        <div class="ferramenta-card-content">
+                            <h3>App de Hidratação</h3>
+                            <p>Bater sua meta de água (que você viu na calculadora) é vital para o metabolismo. Use um app para criar o hábito e não esquecer.</p>
+                            <a href="https://waterllama.com/" target="_blank" rel="noopener noreferrer" class="btn-secundario">Ver App</a>
+                        </div>
+                    </div>
+
+                </div> </div>
         </section>
 
         <section id="depoimentos">
               <div class="container">
-                  <h2 class="animate-on-scroll">Histórias Reais de Transformação.</h2>
-                  <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">Elas também duvidaram. Hoje, inspiram.</p>
-                  <div class="carousel-container">
-                      <button id="prev-btn" class="carousel-btn" aria-label="Anterior"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-                      <div class="carousel-wrapper" id="carousel-wrapper">
-                          <div class="depoimento-card"><blockquote>"Eu tentei de tudo. Dietas da lua, chás milagrosos... Nada funcionou de verdade até encontrar essa abordagem. Perdi 15kg em 4 meses sem passar fome e aprendi a amar o processo!"</blockquote><div class="author"><img src="https://images.pexels.com/photos/837358/pexels-photo-837358.jpeg" alt="Ana B."><div class="author-info"><strong>Ana B.</strong><small>Mãe e Profissional</small></div></div></div> <div class="depoimento-card"><blockquote>"Achava que academia era tortura. Hoje é a minha terapia! A orientação fez toda a diferença pra entender como treinar certo e ver resultado de verdade. Minha autoestima mudou completamente."</blockquote><div class="author"><img src="https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg" alt="Carla M."><div class="author-info"><strong>Carla M.</strong><small>Estudante Universitária</small></div></div></div> <div class="depoimento-card"><blockquote>"A parte da mentalidade foi crucial. Parei de me culpar por cada deslize e aprendi a ter constância. Em 6 meses, não só emagreci, mas mudei minha relação com a comida e comigo mesma."</blockquote><div class="author"><img src="https://images.pexels.com/photos/842571/pexels-photo-842571.jpeg" alt="Sofia R."><div class="author-info"><strong>Sofia R.</strong><small>Empreendedora</small></div></div></div>
-                      </div>
-                      <button id="next-btn" class="carousel-btn" aria-label="Próximo"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
-                  </div>
+                    <h2 class="animate-on-scroll">Histórias Reais de Transformação.</h2>
+                    <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">Elas também duvidaram. Hoje, inspiram.</p>
+                    <div class="carousel-container">
+                        <button id="prev-btn" class="carousel-btn" aria-label="Anterior"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+                        <div class="carousel-wrapper" id="carousel-wrapper"><div class="depoimento-card"><blockquote>"Eu já tinha tentado low carb, jejum e tudo mais. No ebook eu entendi que eu simplesmente não fazia déficit. Só isso já valeu."
+                            </blockquote><div class="author"><img src="https://images.pexels.com/photos/837358/pexels-photo-837358.jpeg" alt="Ana B."><div class="author-info"><strong>JEFERSON</strong><small>EMPRESÁRIO</small></div></div></div>
+                            <div class="depoimento-card"><blockquote>"O passo do sono foi o que mais me pegou. Eu achava que era só dieta e cardio. Dormi melhor, parei de atacar doce à noite."
+                            </blockquote><div class="author"><img src="https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg" alt="Carla M."><div class="author-info"><strong>CARLA</strong><small>Estudante Universitária</small></div></div></div> <div class="depoimento-card"><blockquote>"A parte da mentalidade foi crucial. Parei de me culpar por cada deslize e aprendi a ter constância. Em 6 meses, não só emagreci, mas mudei minha relação com a comida e comigo mesma."
+                            </blockquote><div class="author"><img src="https://images.pexels.com/photos/842571/pexels-photo-842571.jpeg" alt="Sofia R."><div class="author-info"><strong>SOFIA</strong><small>Empreendedora</small></div></div></div>
+                        <div class="depoimento-card">
+    <blockquote>"Gostei porque não tem enrolação. São 5 coisas pra fazer e ele fala que se tirar uma, não funciona. Aí eu fiz as 5."</blockquote>
+    <div class="author">
+        <img src="https://midias.jornalcruzeiro.com.br/wp-content/uploads/2020/03/O-que-%C3%A9-ser-mulher-hoje-0.jpg" alt="Nome da Nova Pessoa">
+        <div class="author-info">
+            <strong>JENNIFER</strong>
+            <small>EMPRESÁRIA</small>
+        </div>
+    </div>
+</div>
+<div class="depoimento-card">
+    <blockquote>"Eu trabalho sentada o dia todo e nunca batia 3.000 passos. Com a ideia dos 10.000 por dia eu comecei a me mexer e já desinchei na primeira semana."</blockquote>
+    <div class="author">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5FvCajUnzXt3ygidZY_0QITtq3dje1iLXIQ&s" alt="Nome da Nova Pessoa">
+        <div class="author-info">
+            <strong>SORAIA</strong>
+            <small>APOSENTADA</small>
+        </div>
+    </div>
+</div>
+<div class="depoimento-card">
+    <blockquote>"O exercício dos 5 porquês mudou pra mim. Eu não emagrecia porque eu nem sabia por que queria. Agora ficou mais fácil dizer não."</blockquote>
+    <div class="author">
+        <img src="https://gente.globo.com/wp-content/uploads/2024/10/153525-gente-donas-da-casa-quem-sao-as-mulheres-empoderadas-2.jpg" alt="Nome da Nova Pessoa">
+        <div class="author-info">
+            <strong>JULIANA</strong>
+            <small>EMPREGADA DOMÉSTICA</small>
+        </div>
+    </div>
+</div>
+<div class="depoimento-card">
+    <blockquote>"Eu sempre emagreci ficando flácida. No ebook ele explica por que tem que fazer musculação. Voltei pra academia e agora o corpo tá ganhando forma."</blockquote>
+    <div class="author">
+        <img src="https://assets.propmark.com.br/uploads/2022/02/WhatsApp-Image-2022-02-18-at-08.52.06.jpeg" alt="Nome da Nova Pessoa">
+        <div class="author-info">
+            <strong>CAMILA</strong>
+            <small>BANCARIA</small>
+        </div>
+    </div>
+</div>
+<div class="depoimento-card">
+    <blockquote>"O melhor é que ele mostra aplicativo pra contar caloria. Eu não sabia por onde começar. Agora sei quanto posso comer."</blockquote>
+    <div class="author">
+        <img src="https://f.i.uol.com.br/fotografia/2024/03/07/170982434865e9d95cd132e_1709824348_3x2_md.jpg" alt="Nome da Nova Pessoa">
+        <div class="author-info">
+            <strong>MILENA</strong>
+            <small>SECRETARIA</small>
+        </div>
+    </div>
+</div>
+<div class="depoimento-card">
+    <blockquote>"Gostei que não promete milagre. Fala 60 dias, mas deixa claro que tem que fazer tudo. Isso dá confiança."</blockquote>
+    <div class="author">
+        <img src="https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_640.jpg" alt="Nome da Nova Pessoa">
+        <div class="author-info">
+            <strong>RODRIGO</strong>
+            <small>ESCRITOR</small>
+        </div>
+    </div>
+</div>
+<div class="depoimento-card">
+    <blockquote>"Comecei pelo passo do movimento e já me senti mais disposta. Aí o resto ficou mais fácil de seguir."</blockquote>
+    <div class="author">
+        <img src="https://www.sad.ms.gov.br/wp-content/uploads/2020/09/Hosilene_.jpg" alt="Nome da Nova Pessoa">
+        <div class="author-info">
+            <strong>FERNANDA</strong>
+            <small>FUNCIONÁRIA PÚBLICA</small>
+        </div>
+    </div>
+</div>
+<div class="depoimento-card">
+    <blockquote>"É simples de entender. Não é linguagem de nutricionista. Dá pra aplicar na rotina normal, com trabalho, casa e tudo."</blockquote>
+    <div class="author">
+        <img src="https://images.pexels.com/photos/26776506/pexels-photo-26776506.jpeg" alt="Nome da Nova Pessoa">
+        <div class="author-info">
+            <strong>PATRÍCIA</strong>
+            <small>DENTISTA</small>
+        </div>
+    </div>
+</div>
+                        </div>
+                        <button id="next-btn" class="carousel-btn" aria-label="Próximo"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+                    </div>
               </div>
           </section>
-
-        <section id="porque-agora">
-            <div class="container">
-                <h2 class="animate-on-scroll"> A vida não espera o "momento perfeito". </h2>
-                <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;"> Quantos verões você já adiou? Quantas roupas deixou de usar? A hora de construir a sua melhor versão não é amanhã, nem segunda-feira. É agora. </p>
-                <div class="highlight-box animate-on-scroll" style="transition-delay: 0.2s;">
-                    <a href="https://wa.me/message/DQJBWVDS3BJ4N1" target="_blank" rel="noopener noreferrer" class="btn" id="cta-highlight-btn">A decisão é feita hoje.</a>
-                    </div>
-            </div>
-        </section>
-
-        <section id="garantia">
-            <div class="container">
-                <div class="garantia-box animate-on-scroll">
-                    <div class="garantia-seal"> <img src="magnesio.png" alt="Selo de 100% Garantia"> </div>
-                    <div class="garantia-text">
-                        <h3>Sua Satisfação ou Seu Dinheiro de Volta.</h3>
-                        <p><strong>Garantia Incondicional de 7 Dias:</strong> Experimente o método, sinta a diferença. Se nos primeiros 7 dias você achar que não é para você, devolvemos 100% do seu investimento. Sem burocracia, sem perguntas.</p>
-                        <p><strong>Nosso compromisso é com o seu resultado:</strong> Acreditamos tanto na transformação que propomos que o risco é todo nosso. Você não tem nada a perder, exceto os quilos extras e a falta de confiança.</p>
-                    </div>
-                </div>
-                <div class="botao-adicional animate-on-scroll" style="transition-delay: 0.1s;">
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="btn" id="cta-garantia1-btn">[COLOQUE SEU LINK DE AFILIADO AQUI]</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="garantia-satisfacao" style="padding-top: 0; background-color: var(--cor-fundo-secundario);">
-            <div class="container">
-                <div class="garantia-box animate-on-scroll">
-                    <div class="garantia-seal"> <img src="vinho.png" alt="Selo de 100% Garantia"> </div>
-                    <div class="garantia-text">
-                        <h3>Compromisso com a Sua Evolução.</h3>
-                        <p><strong>Este não é um programa de dieta...</strong> é uma reeducação completa de corpo e mente. Foi criado para mulheres cansadas de soluções temporárias e prontas para uma mudança duradoura.</p>
-                        <p><strong>Aqui você aprende, na prática, como equilibrar</strong> alimentação, treino e mentalidade para construir um corpo saudável, forte e que você ame. Sem atalhos, sem milagres, apenas ciência e estratégia. <strong>E o melhor: com acompanhamento real e foco na sua satisfação.</strong></p>
-                    </div>
-                </div>
-                <div class="botao-adicional animate-on-scroll" style="transition-delay: 0.1s;">
-                   <a href="#" target="_blank" rel="noopener noreferrer" class="btn" id="cta-garantia2-btn">[COLOQUE SEU OUTRO LINK AQUI]</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="criador"> <div class="container"> <h2 class="animate-on-scroll">Quem vai te guiar nessa jornada?</h2> <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;"> Alguém que entende a luta, vive o processo e celebra cada vitória com você. </p> <div class="creator-grid"> <div class="creator-image-wrapper animate-on-scroll" style="transition-delay: 0.2s;"> <img src="criador1.png" alt="Foto da Mentora/Coach"> </div> <div class="creator-text-content animate-on-scroll" style="transition-delay: 0.3s;"> <h4 class="text-green">[Nome da Mentora/Coach]</h4> <p>Ex-[Profissão Anterior], hoje especialista em [Sua Especialidade - ex: emagrecimento feminino, nutrição esportiva], eu já estive onde você está. Lutei contra a balança, a frustração e as promessas vazias. Por isso, criei um método <span class="text-green">realista, sustentável e focado em resultados duradouros</span>.</p> <p>Minha missão é te mostrar que emagrecer não precisa ser um sofrimento. Com a estratégia certa, <span class="text-green">você pode conquistar o corpo que deseja e a confiança que merece.</span></p> <h4>O que você vai <span class="text-green">receber</span>:</h4> <ul> <li>Acompanhamento próximo e personalizado;</li> <li>Estratégias baseadas em ciência, não em modismos;</li> <li>Foco em criar hábitos saudáveis para a vida toda;</li> <li>Suporte para superar os desafios mentais e emocionais.</li> </ul> <h4>Minha <span class="text-green">Promessa</span>:</h4> <p>Sem fórmulas mágicas. Sem restrições absurdas. Apenas <span class="text-green">orientação honesta, prática e eficaz</span> para você finalmente alcançar seus objetivos e manter os resultados. Vamos juntas transformar seu corpo e sua mente.</p> </div> </div> </div> </section>
 
         <section id="calculadora">
             <div class="container">
@@ -807,7 +326,7 @@
                 <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">Descubra estimativas personalizadas para te ajudar a alcançar seus objetivos de emagrecimento. Preencha os campos abaixo.</p>
 
                 <form id="calculadora-form" class="calculadora-form animate-on-scroll" style="transition-delay: 0.2s;">
-                      <div class="form-group"> <label for="calc-nome">Nome:</label> <input type="text" id="calc-nome" required placeholder="Como podemos te chamar?"> </div> <div class="form-group"> <label for="calc-idade">Idade:</label> <input type="number" id="calc-idade" required min="1" placeholder="Quantos anos você tem?"> </div> <div class="form-group"> <label for="calc-altura">Altura (em cm):</label> <input type="number" id="calc-altura" required min="1" placeholder="Ex: 165"> </div> <div class="form-group"> <label for="calc-peso">Peso Atual (em kg):</label> <input type="number" id="calc-peso" required min="1" step="0.1" placeholder="Ex: 70.5"> </div> <div class="form-group"> <label for="calc-treino">Nível de Treino:</label> <select id="calc-treino" required> <option value="" disabled selected>Selecione seu nível</option> <option value="iniciante">Iniciante (Treina pouco ou começou agora)</option> <option value="intermediario">Intermediário (Treina 3-4x por semana)</option> <option value="avancado">Avançado (Treina 5x ou mais por semana)</option> </select> </div> <div class="form-group"> <label for="calc-remedio">Já usou remédio para emagrecer?</label> <select id="calc-remedio" required> <option value="" disabled selected>Selecione</option> <option value="nao">Não</option> <option value="sim">Sim</option> </select> </div> <div class="form-group"> <label for="calc-suplemento">Tem vontade de usar suplemento que ajuda a emagrecer?</label> <select id="calc-suplemento" required> <option value="" disabled selected>Selecione</option> <option value="sim">Sim</option> <option value="nao">Não</option> <option value="talvez">Talvez / Preciso de orientação</option> </select> </div> <div class="form-group"> <label for="calc-saude">Saúde Geral / Condições Especiais:</label> <textarea id="calc-saude" rows="3" placeholder="Ex: Tudo certo, Gravidez, Pós-parto, Alguma restrição alimentar, etc."></textarea> </div>
+                     <div class="form-group"> <label for="calc-nome">Nome:</label> <input type="text" id="calc-nome" required placeholder="Como podemos te chamar?"> </div> <div class="form-group"> <label for="calc-idade">Idade:</label> <input type="number" id="calc-idade" required min="1" placeholder="Quantos anos você tem?"> </div> <div class="form-group"> <label for="calc-altura">Altura (em cm):</label> <input type="number" id="calc-altura" required min="1" placeholder="Ex: 165"> </div> <div class="form-group"> <label for="calc-peso">Peso Atual (em kg):</label> <input type="number" id="calc-peso" required min="1" step="0.1" placeholder="Ex: 70.5"> </div> <div class="form-group"> <label for="calc-treino">Nível de Treino:</label> <select id="calc-treino" required> <option value="" disabled selected>Selecione seu nível</option> <option value="iniciante">Iniciante (Treina pouco ou começou agora)</option> <option value="intermediario">Intermediário (Treina 3-4x por semana)</option> <option value="avancado">Avançado (Treina 5x ou mais por semana)</option> </select> </div> <div class="form-group"> <label for="calc-remedio">Já usou remédio para emagrecer?</label> <select id="calc-remedio" required> <option value="" disabled selected>Selecione</option> <option value="nao">Não</option> <option value="sim">Sim</option> </select> </div> <div class="form-group"> <label for="calc-suplemento">Tem vontade de usar suplemento que ajuda a emagrecer?</label> <select id="calc-suplemento" required> <option value="" disabled selected>Selecione</option> <option value="sim">Sim</option> <option value="nao">Não</option> <option value="talvez">Talvez / Preciso de orientação</option> </select> </div> <div class="form-group"> <label for="calc-saude">Saúde Geral / Condições Especiais:</label> <textarea id="calc-saude" rows="3" placeholder="Ex: Tudo certo, Gravidez, Pós-parto, Alguma restrição alimentar, etc."></textarea> </div>
                     <button type="submit" class="btn">Calcular Minhas Metas</button>
                 </form>
 
@@ -816,27 +335,58 @@
                  <p class="disclaimer"><strong>Importante:</strong> Esta calculadora oferece apenas estimativas com base em diretrizes gerais. Os resultados não substituem a avaliação e orientação de um profissional de saúde ou nutricionista. Consulte um especialista para um plano personalizado.</p>
             </div>
         </section>
-
-        <section id="preco"> <div class="container"> <div class="price-card animate-on-scroll"> <img src="logo2.png" alt="Logo Placeholder" class="n8n-logo"> <h3>Acesso ao Guia e Lista Exclusiva</h3> <div class="price-display"> <span class="new-price">GRATUITO</span> </div> <p class="subtitulo" style="margin-bottom: 2rem; font-size: 1.2rem;">Inscreva-se abaixo para receber conteúdos exclusivos e dar o primeiro passo.</p> <a href="#cta" class="btn" id="cta-price-btn">Quero meu Guia Agora</a> </div> </div> </section>
-
-        <section id="garantia-objecoes" style="background-color: var(--cor-fundo-secundario);"> <div class="container"> <h2 class="animate-on-scroll">Suas dúvidas, nossas respostas.</h2> <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">Entendemos suas preocupações. Veja por que este caminho é diferente.</p> <div class="garantia-objecoes-grid"> <div class="garantia-blindada-seal animate-on-scroll" style="transition-delay: 0.2s;"> <img src="https://images.pexels.com/photos/6383268/pexels-photo-6383268.jpeg" alt="Selo de Dúvidas Resolvidas"> </div> <div class="objeccoes-container"> <div class="objeccao-card animate-on-scroll" style="transition-delay: 0.3s;"> <h4>"Já tentei de tudo e nada funcionou."</h4> <p>Entendemos. Muitas dietas falham por serem restritivas demais ou não considerarem sua individualidade. Nosso foco é criar um plano sustentável, adaptado à sua rotina e que ensine hábitos para a vida, não apenas para um período.</p> </div> <div class="objeccao-card animate-on-scroll" style="transition-delay: 0.4s;"> <h4>"Não tenho tempo para cozinhar ou treinar."</h4> <p>O segredo não é ter mais tempo, é usar o tempo de forma inteligente. Vamos te mostrar estratégias práticas para refeições rápidas e saudáveis, e treinos eficientes que se encaixam até nas agendas mais corridas. Pequenas mudanças consistentes geram grandes resultados.</p> </div> <div class="objeccao-card animate-on-scroll" style="transition-delay: 0.5s;"> <h4>"Tenho medo de falhar novamente."</h4> <p>O medo é natural, mas aqui você não estará sozinha. O acompanhamento contínuo e o foco na mentalidade são partes essenciais do processo. Vamos trabalhar juntas para construir sua confiança e resiliência, celebrando cada pequena vitória no caminho.</p> </div> </div> </div> </div> </section>
-
+        
         <section id="cta">
             <div class="container">
-                <h2 class="animate-on-scroll">💬 Chegou a hora de parar de tentar e começar a evoluir.</h2>
-                <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">✋ Se você está pronta pra começar o processo de verdade, sem enrolação, sem promessas falsas e com acompanhamento que funciona —<br>👇 Deixe seu e-mail abaixo e entre pra lista exclusiva.</p>
-                <p class="subtitulo animate-on-scroll" style="transition-delay: 0.15s; font-size: 1.1rem; color: var(--cor-texto-principal);">Você vai receber:<br>✅ O Guia de Emagrecimento Real (sem milagre, só ciência).<br>✅ Dicas práticas de alimentação, treino e foco.<br>✅ E os melhores suplementos confiáveis pra acelerar seus resultados.</p>
+                <div class="cta-content-box animate-on-scroll">
+                    <h2 class="animate-on-scroll"> Nada de fórmula milagrosa, só o passo a passo que funciona:</h2>
+                    <h3>movimento diário, mente no lugar, dieta ajustada, treino certo e sono de verdade.</h3>
+                    <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">
+                        ✋ movimento diário inteligente mentalidade pra não furar dieta em déficit sem mimimi
+                            musculação pra não perder músculo sono pra acelerar tudo Coloca seu e-mail aqui embaixo que eu te 
+                            envio o ebook completo agora mesmo. Você vai entender por que não precisa viver de cardio, como segurar 
+                            a fome, como montar o prato certo e o que fazer pra não desistir no meio do caminho.
+                    </p>
+                    
+                    <h3 class="cta-list-title">Você vai receber:</h3>
+                    
+                    <ul class="cta-benefits-list">
+                        <li>
+                            <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            <span>O Guia de Emagrecimento Real (sem milagre, só ciência).</span>
+                        </li>
+                        <li>
+                            <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            <span>Dicas práticas de alimentação, treino e foco.</span>
+                        </li>
+                        <li>
+                            <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            <span>É gratuito. Só o e-mail e acabou.</span>
+                        </li>
+                    </ul>
 
-                <form id="email-form" style="margin-top: 2rem; max-width: 500px; margin-left: auto; margin-right: auto;" class="animate-on-scroll" style="transition-delay: 0.2s;">
-                    <div class="form-group">
-                        <label for="email-input" style="display: none;">Email:</label>
-                        <input type="email" id="email-input" placeholder="Digite seu melhor e-mail" required>
+                    <div class="cta-form-wrapper">
+                        <form id="email-form" style="margin-top: 1rem;">
+                            <div class="form-group-inline">
+                                <label for="email-input" style="display: none;">Email:</label>
+                                <input type="email" id="email-input" placeholder="Digite seu melhor e-mail" required>
+                                <button type="submit" class="btn" style="width: auto;">QUERO COMEÇAR AGORA</button>
+                            </div>
+                        </form>
                     </div>
-                    <button type="submit" class="btn" style="width: 100%;">[🔘 QUERO COMEÇAR AGORA]</button>
-                </form>
 
+                </div>
             </div>
         </section>
+
+
+        <section id="garantia-objecoes" style="background-color: var(--cor-fundo-secundario);"> <div class="container"> <h2 class="animate-on-scroll">Suas dúvidas, nossas respostas.</h2> <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">Entendemos suas preocupações. Veja por que este caminho é diferente.</p> <div class="garantia-objecoes-grid"> <div class="garantia-blindada-seal animate-on-scroll" style="transition-delay: 0.2s;"> <img src="https://images.pexels.com/photos/6383268/pexels-photo-6383268.jpeg" alt="Selo de Dúvidas Resolvidas"> </div> <div class="objeccoes-container"> <div class="objeccao-card animate-on-scroll" style="transition-delay: 0.3s;"> <h4>"Já tentei de tudo e nada funcionou."</h4> <p>Entendemos. Muitas dietas falham por serem restritivas demais ou não considerarem sua individualidade. Nosso foco é criar um plano sustentável, adaptado à sua rotina e que ensine hábitos para a vida, não apenas para um período.</p> </div> <div class="objeccao-card animate-on-scroll" style="transition-delay: 0.4s;"> <h4>"Não tenho tempo para cozinhar ou treinar."</h4> <p>O segredo não é ter mais tempo, é usar o tempo de forma inteligente. Vamos te mostrar estratégias práticas para refeições rápidas e saudáveis, e treinos eficientes que se encaixam até nas agendas mais corridas. Pequenas mudanças consistentes geram grandes resultados.</p> </div> <div class="objeccao-card animate-on-scroll" style="transition-delay: 0.5s;"> <h4>"Tenho medo de falhar novamente."</h4> <p>O medo é natural, mas aqui você não estará sozinha. O acompanhamento contínuo e o foco na mentalidade são partes essenciais do processo. Vamos trabalhar juntas para construir sua confiança e resiliência, celebrando cada pequena vitória no caminho.</p> </div> </div> </div> </div> </section>
 
     </main>
 
@@ -866,7 +416,7 @@
                 <button class="quick-question-btn">Qual a garantia?</button>
                 <button class="quick-question-btn">Como funciona a dieta?</button>
                 <button class="quick-question-btn">Preciso ir à academia?</button>
-                </div>
+             </div>
         </div>
         <div class="ai-chat-input-area">
             <input type="text" id="ai-chat-input" placeholder="Digite sua pergunta..." aria-label="Digite sua pergunta">
@@ -875,16 +425,57 @@
     </div>
 
 
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                  <div><h4>Emagrecimento Real</h4><ul><li><a href="#hero">Início</a></li><li><a href="#cta">Inscreva-se</a></li></ul></div> <div><h4>O Método</h4><ul><li><a href="#poder">A Verdade</a></li><li><a href="#importancia">Academia</a></li><li><a href="#beneficios">Dieta</a></li><li><a href="#construtor">Suplementos</a></li></ul></div> <div><h4>Resultados</h4><ul><li><a href="#depoimentos">Depoimentos</a></li><li><a href="#garantia">Garantia</a></li><li><a href="#garantia-objecoes">Dúvidas</a></li></ul></div> <div><h4>Sua Jornada</h4><ul><li><a href="#porque-agora">Comece Agora</a></li></ul></div>
-            </div>
-            <div class="footer-bottom">
-                  <p>⚡ “O corpo muda quando a mente decide.”</p> <p>Este projeto é para mulheres que decidiram sair do ciclo das promessas e entrar no caminho da evolução.</p> <p>Porque emagrecer não é sobre perder peso — é sobre ganhar confiança, energia e liberdade.</p> <p style="margin-top: 1rem;">Copyright © 2025 [Seu Nome/Marca]. Todos os direitos reservados.</p> <p style="margin-top: 0.5rem;">Design do site feito por <a href="https://wa.me/message/DQJBWVDS3BJ4N1" target="_blank" class="designer-link">Rodrigo</a>, colaborador da Aprovados.</p>
+  <footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4>Emagrecimento Real</h4>
+                <ul>
+                    <li><a href="#hero">Início</a></li>
+                    <li><a href="#cta">Inscreva-se</a></li>
+                </ul>
+            </div> 
+            <div>
+                <h4>O Método</h4>
+                <ul>
+                    <li><a href="#poder">A Verdade</a></li>
+                    <li><a href="#importancia">Academia</a></li>
+                    <li><a href="#beneficios">Dieta</a></li>
+                    <li><a href="#construtor">Suplementos</a></li>
+                </ul>
+            </div> 
+            <div>
+                <h4>Resultados</h4>
+                <ul>
+                    <li><a href="#depoimentos">Depoimentos</a></li>
+                    <li><a href="#garantia-objecoes">Dúvidas</a></li>
+                </ul>
+            </div> 
+            <div>
+                <h4>Sua Jornada</h4>
+                <ul>
+                    <li><a href="#calculadora">Calculadora</a></li>
+                </ul>
             </div>
         </div>
-    </footer>
+        
+        <div class="footer-bottom">
+            <div class="footer-quote">
+                <p>⚡ “O corpo muda quando a mente decide.”</p>
+            </div>
+
+            <div class="footer-mission">
+                <p>Este projeto é para mulheres que decidiram sair do ciclo das promessas e entrar no caminho da evolução.</p> 
+                <p>Porque emagrecer não é sobre perder peso — é sobre ganhar confiança, energia e liberdade.</p> 
+            </div>
+            
+            <div class="footer-legal">
+                <p>Copyright © 2025 [Seu Nome/Marca]. Todos os direitos reservados.</p> 
+                <p>Design do site feito por <a href="https://wa.me/message/DQJBWVDS3BJ4N1" target="_blank" class="designer-link">Rodrigo</a>, colaborador da Aprovados.</p>
+            </div>
+        </div>
+    </div>
+</footer>
 
     <div class="video-modal" id="video-modal">
         <div class="video-modal-content">
@@ -894,457 +485,6 @@
         </div>
     </div>
 
-    <script>
-        // --- JAVASCRIPT ORIGINAL MANTIDO E EXPANDIDO ---
-        const pageConfig = {
-            n8nWebhookUrl: 'https://automacoe-n8n.bitxsu.easypanel.host/webhook-test/n8n', // <-- CONFIRA SE ESTA URL ESTÁ CORRETA
-            googleSheetWebhookUrl: 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL', // <<<----- SUBSTITUA PELA URL DO SEU GOOGLE APPS SCRIPT WEB APP
-            headerVideo: { src: 'https://www.youtube.com/watch?v=jmJY2IK7OGs' }, // <-- CONFIRA SE ESTE VÍDEO ESTÁ CORRETO
-            demoVideo: { src: 'https://www.youtube.com/watch?v=gwbasDmCDp0' } // <-- CONFIRA SE ESTE VÍDEO ESTÁ CORRETO
-        };
-
-        // --- INÍCIO: CONFIGURAÇÃO DO "CÉREBRO" DE IA (SIMULAÇÃO) ---
-        const aiExtensiveText = `
-            Olá! Sou o assistente virtual do método Emagrecimento Real. Estou aqui para te ajudar a entender nossa filosofia e tirar todas as suas dúvidas. Nossa filosofia é baseada em 100% de honestidade e ciência. Não acreditamos em milagres. Estamos aqui para ajudar mulheres que estão cansadas de promessas vazias, dietas malucas, cápsulas mágicas, chás milagrosos e "gurus" que não praticam o que pregam. Este método é para quem quer parar de tentar e começar a evoluir de verdade. O que funciona é a trindade da transformação: Ciência, Consistência e Paciência.
-
-Sobre o início do processo: A verdade que ninguém conta é que nos primeiros 20 a 30 dias, a maior parte do peso perdido é retenção líquida, não gordura. Nessa fase inicial, seu corpo está se adaptando à nova rotina e desinchando. É uma vitória, mas é apenas o começo.
-
-Sobre a queima de gordura real: A perda de gordura efetiva, aquela que muda o espelho, começa depois dessa fase inicial de 30 dias. A queima de gordura real é ativada pela constância na dieta e pela intensidade no treino.
-
-Sobre quanto tempo leva para ver resultados: Você começará a ver mudanças notáveis no espelho e nas roupas entre 60 e 90 dias de foco total. Uma transformação profunda e sustentável, onde sua mente e corpo realmente mudam, geralmente leva 120 dias ou mais. É importante entender que o processo de emagrecimento não é linear. Haverá altos e baixos, e isso é perfeitamente normal.
-
-Sobre o Pilar 1: A Dieta. A dieta é o motor da sua evolução. É o combustível certo para a sua máquina. Não trate a dieta como uma prisão ou um vilão. Ela é sua aliada. A regra de ouro do nosso método é: Constância é mais importante que perfeição. Nos primeiros 30 dias, foque em ter o máximo de disciplina de segunda a sexta. O fim de semana é consequência. É crucial priorizar o consumo de proteínas em todas as suas refeições. A proteína dá saciedade e constrói músculos. Fibras, vindas de vegetais e frutas, e o consumo adequado de água são essenciais para o funcionamento do intestino e para a saciedade. Recomendamos um bom nutricionista, mas temos uma regra: escolha um profissional que viva o que ensina. Você não está "de dieta", você está em um processo de "reconstrução" do seu corpo e da sua mente.
-
-Sobre o Pilar 2: A Academia (Treino). A academia é o seu canteiro de obras. É lá que você esculpe seu novo corpo. Você precisa treinar com propósito e intensidade, não apenas "matar tempo" ou socializar. O celular é o maior vilão do seu foco na academia. Deixe-o guardado. Se você precisa de música, use um relógio ou coloque o celular no modo avião. Ritmo, intensidade e suor são o que aceleram o metabolismo. O treino intenso ativa o glicogênio muscular e força o corpo a usar a gordura armazenada como fonte de energia.
-
-Sobre o Pilar 3: Suplementação Inteligente. Suplementos são aliados estratégicos, mas eles não fazem milagres sozinhos. Suplementos não substituem o esforço do treino e a disciplina da dieta. Para quem está começando, os suplementos ideais são Whey Protein e Creatina. O Whey Protein ajuda na recuperação muscular pós-treino e facilita a construção de massa magra, o que acelera o metabolismo. A Creatina é fundamental para manter a força e o desempenho, mesmo quando você está em déficit calórico (comendo menos). Sobre termogênicos: Eles podem dar um empurrãozinho na queima de gordura, mas devem ser usados com muita cautela e sempre associados a treino e dieta. Evite produtos milagrosos ou "fórmulas secretas" da internet. A maioria não tem respaldo científico e pode prejudicar seu metabolismo. A fórmula real do sucesso é simples: Treino Certo + Dieta Ajustada + Suplementos Confiáveis.
-
-Sobre a Mentalidade e Foco (Mindset). Sua mentalidade é o que realmente muda o jogo. Você não precisa de sorte, precisa de estratégia. Você não precisa de milagres, precisa de consistência. A nova seção "Foco Total" é sobre isso: a academia é lugar de treinar. Não perca seu tempo precioso de treino tirando fotos no espelho da academia. Documente sua evolução tirando fotos em casa, uma vez por semana, sempre no mesmo horário e com a mesma roupa. As redes sociais podem ser uma distração enorme no início do processo. Foque em você, não em provar algo para os outros.
-
-Sobre a Calculadora de Metas: A Calculadora de Metas Nutricionais na página é uma ferramenta gratuita para te dar um ponto de partida personalizado. Ela calcula estimativas de consumo diário de água (em litros), proteínas (em gramas), gorduras boas (em gramas) e carboidratos (em gramas). Para usar a calculadora, pedimos seu nome, idade, altura, peso e seu nível de treino (iniciante, intermediário ou avançado). Também perguntamos se você já usou remédio para emagrecer ou se tem vontade de usar suplemento, para entendermos melhor seu perfil. IMPORTANTE: Os resultados da calculadora são apenas estimativas e não substituem, de forma alguma, uma consulta com um nutricionista ou médico. Use-os como um guia inicial.
-
-Sobre a Oferta Principal (Preço): A oferta principal desta página é o acesso ao Guia de Emagrecimento Real e à Lista Exclusiva, que é 100% GRATUITO. Para receber o Guia, basta preencher seu melhor e-mail no formulário da seção "CTA" no final da página. O Guia inclui dicas práticas de alimentação, estratégias de treino, foco mental e uma lista de suplementos confiáveis. Existem também links para programas pagos, como o link da Hotmart (G102346790F), que são para quem deseja um acompanhamento completo e personalizado.
-
-Sobre Garantia e Objeções (Seus Medos): Objeção: "Já tentei de tudo e nada funcionou para mim." Resposta: Nós entendemos perfeitamente sua frustração. A maioria das dietas falha por serem restritivas demais ou genéricas. Nosso método foca em sustentabilidade e na criação de hábitos realistas que se encaixam na sua rotina. Nós não vendemos soluções temporárias, vendemos reeducação.
-
-Objeção: "Eu não tenho tempo para cozinhar ou treinar." Resposta: O segredo não é ter mais tempo, é usar o tempo de forma inteligente. Ensinamos estratégias para refeições rápidas (como batch cooking ou preparo semanal) e treinos eficientes que se encaixam até nas agendas mais corridas. 45 minutos de treino focado valem mais que 2 horas de distração.
-
-Objeção: "Tenho medo de falhar de novo e me frustrar." Resposta: Esse medo é a razão pela qual o acompanhamento e o foco na mentalidade são pilares do nosso método. Você não estará sozinha. Vamos trabalhar para construir sua confiança e resiliência, celebrando cada pequena vitória. O fracasso só existe para quem desiste.
-
-Sobre a Garantia: Em nossos programas pagos, oferecemos uma Garantia Incondicional de 7 Dias. Se você entrar no programa e achar que não é para você nos primeiros 7 dias, devolvemos 100% do seu investimento. Sem perguntas, sem burocracia. O risco é todo nosso.
-
-Sobre a Criadora e os Depoimentos: Temos depoimentos reais de alunas como a Ana B. (mãe e profissional), a Carla M. (estudante) e a Sofia R. (empreendedora). Elas são pessoas reais, com rotinas reais, que também duvidaram e hoje inspiram outras mulheres com suas transformações. A criadora do método, [Nome da Mentora/Coach], já esteve exatamente onde você está. Ela lutou contra a balança, a frustração e as promessas vazias. Por isso, ela criou um método realista, baseado em ciência e focado em resultados duradouros. A promessa dela é: sem fórmulas mágicas. Apenas orientação honesta, prática e eficaz para você finalmente alcançar seus objetivos.
-
-Ações e Contato: Para começar sua jornada gratuita, o primeiro passo é deixar seu e-mail no formulário no final da página para receber o Guia Gratuito. Se você tiver dúvidas urgentes ou quiser falar sobre os programas pagos, pode clicar no botão flutuante do WhatsApp para falar diretamente com nossa equipe. A decisão de começar é hoje. Não espere a segunda-feira, o próximo mês ou o "momento perfeito". Ele não existe.
-
-Eu sou seu assistente virtual e fui programado com todas essas informações. Estou aqui para ajudar a esclarecer qualquer um desses pontos. Basta perguntar.
-            ${document.body.innerText || ''} // Tenta adicionar o texto visível da página também
-        `; // <<< COLOQUE SEU TEXTO EXTENSO AQUI DENTRO DAS CRASES (` `)
-
-        // Alteração 4 e 5: Modificada função simpleAiResponse
-        function simpleAiResponse(query) {
-            const lowerQuery = query.toLowerCase().trim();
-            if (!lowerQuery) return "Por favor, digite sua pergunta.";
-
-            // Alteração 4: Reconhecimento de saudações
-            const greetings = ['oi', 'olá', 'ola', 'bom dia', 'boa tarde', 'boa noite', 'e aí', 'eae', 'tudo bem', 'tudo bom'];
-            const isGreeting = greetings.some(greeting => lowerQuery === greeting || lowerQuery.startsWith(greeting + ' ') || lowerQuery.startsWith(greeting + '!'));
-
-            if (isGreeting) {
-                const greetingResponses = [
-                    "Olá! Como posso te ajudar sobre o Emagrecimento Real hoje?",
-                    "Oi! 😊 Em que posso ser útil?",
-                    "Opa! Tudo bem? Me diga como posso auxiliar com sua jornada de emagrecimento.",
-                    "Olá! Pronto para tirar suas dúvidas sobre o método?"
-                ];
-                return greetingResponses[Math.floor(Math.random() * greetingResponses.length)];
-            }
-
-            // Lógica original de busca (simplificada)
-            const cleanQuery = lowerQuery.replace(/[.,!?;:]/g, '').replace(/\s+/g, ' ');
-            const queryWords = cleanQuery.split(' ').filter(word => word.length > 2); // Palavras com mais de 2 letras para mais abrangência
-
-            const cleanBaseText = aiExtensiveText.toLowerCase().replace(/[.,!?;:]/g, '').replace(/\s+/g, ' ');
-            // Tenta dividir por frases que terminam com ponto final ou quebras de linha significativas
-             const sentences = cleanBaseText.split(/[.\n।?]+/).map(s => s.trim()).filter(s => s.length > 15);
-
-
-            let bestMatch = null;
-            let maxMatchScore = 0;
-
-            for (const sentence of sentences) {
-                if (sentence.length < 10) continue;
-
-                let currentMatchScore = 0;
-                let matchedWords = new Set();
-
-                for (const word of queryWords) {
-                    const regex = new RegExp(`\\b${word}\\b`);
-                    if (regex.test(sentence) && !matchedWords.has(word)) {
-                        currentMatchScore += 1;
-                        matchedWords.add(word);
-                    }
-                }
-
-                const relevance = queryWords.length > 0 ? currentMatchScore / queryWords.length : 0;
-
-                if (relevance > maxMatchScore) {
-                    maxMatchScore = relevance;
-                     // Tenta encontrar a sentença original com pontuação
-                    const originalSentence = aiExtensiveText.split(/[.\n।?]/).find(orig => orig.toLowerCase().includes(sentence.substring(0, 20).trim()));
-                    bestMatch = (originalSentence || sentence).trim();
-                } else if (relevance > 0 && maxMatchScore === 0) {
-                     const originalSentence = aiExtensiveText.split(/[.\n।?]/).find(orig => orig.toLowerCase().includes(sentence.substring(0, 20).trim()));
-                    bestMatch = (originalSentence || sentence).trim();
-                    maxMatchScore = relevance;
-                }
-            }
-
-
-            if (bestMatch && maxMatchScore > 0.1) {
-                // Remove a parte "(Assistente simples)" se existir e limita o tamanho
-                 let finalResponse = bestMatch.replace(/\(Assistente simples\)/i, '').trim();
-                 return finalResponse.length > 300 ? finalResponse.substring(0, 297) + '...' : finalResponse;
-            } else {
-                 // Alteração 5: Resposta "não sei" com link do WhatsApp
-                const whatsappLink = "https://wa.me/message/DQJBWVDS3BJ4N1"; // Link encontrado no HTML
-                return `Puxa, ainda estou aprendendo sobre isso! 🤔 Que tal conversarmos diretamente pelo <a href="${whatsappLink}" target="_blank">WhatsApp</a> para eu te ajudar melhor?`;
-            }
-        }
-        // --- FIM: CONFIGURAÇÃO DO "CÉREBRO" DE IA (SIMULAÇÃO) ---
-
-
-        function getVideoEmbedUrl(url) {
-            if (!url) return null;
-            const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/;
-            const youtubeMatch = url.match(youtubeRegex);
-            if (youtubeMatch) { const videoId = youtubeMatch[1]; return { type: 'iframe', src: `https://www.youtube.com/embed/${videoId}?playlist=${videoId}&loop=1&rel=0&iv_load_policy=3&showinfo=0&modestbranding=1&controls=0` }; }
-            const gdriveRegex = /drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/;
-            const gdriveMatch = url.match(gdriveRegex);
-            if (gdriveMatch) { const fileId = gdriveMatch[1]; return { type: 'iframe', src: `https://drive.google.com/file/d/${fileId}/preview` }; }
-            if (url.match(/\.(mp4|webm|ogg)$/i) || !url.startsWith('http')) { return { type: 'video', src: url }; }
-            console.warn("Tipo de URL de vídeo não reconhecido:", url); return { type: 'iframe', src: url };
-        }
-
-        // --- FUNÇÃO PARA ENVIAR DADOS PARA N8N (Webhook) ---
-        async function sendToWebhook(data) {
-            const webhookUrl = pageConfig.n8nWebhookUrl;
-            if (!webhookUrl || webhookUrl.trim() === '' || webhookUrl.includes('substitua-pela-url')) { console.warn('N8N Webhook URL não configurada.'); return; }
-            try {
-                const response = await fetch(webhookUrl, { method: 'POST', mode: 'cors', headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(data), });
-                if (response.ok) { console.log('Dados enviados ao N8N Webhook!', data); } else { console.error('Falha ao enviar dados para o N8N Webhook. Status:', response.status); }
-            } catch (error) { console.error('Erro de rede ou na requisição para o N8N Webhook:', error); }
-        }
-
-        // --- NOVA FUNÇÃO PARA ENVIAR DADOS PARA GOOGLE SHEETS (via Apps Script Web App) ---
-        async function sendToGoogleSheet(data) {
-            const sheetUrl = pageConfig.googleSheetWebhookUrl;
-            if (!sheetUrl || sheetUrl.trim() === '' || sheetUrl.includes('YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL')) {
-                console.warn('Google Apps Script Web App URL não configurada.');
-                return;
-            }
-
-            const payload = {
-                timestamp: new Date().toLocaleString("pt-BR"),
-                source: data.form_id || 'Unknown Form',
-                ...data
-            };
-
-            try {
-                const response = await fetch(sheetUrl, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(payload)
-                });
-                console.log('Tentativa de envio para Google Sheet realizada.', payload);
-            } catch (error) {
-                console.error('Erro ao tentar enviar dados para o Google Sheet via Apps Script:', error);
-            }
-        }
-        /* ... (código exemplo do Google Apps Script comentado) ... */
-
-        document.addEventListener("DOMContentLoaded", function() {
-            function setupPage() {
-                const headerVideoEl = document.getElementById('video-background'); const headerIframeEl = document.getElementById('iframe-background'); const configSrc = pageConfig.headerVideo.src;
-                headerVideoEl.style.display = 'none'; headerIframeEl.style.display = 'none';
-                if (configSrc) {
-                    const videoData = getVideoEmbedUrl(configSrc);
-                    if (videoData) {
-                        if (videoData.type === 'iframe') { headerIframeEl.src = `${videoData.src}&autoplay=1&mute=1`; headerIframeEl.style.display = 'block'; }
-                        else { headerVideoEl.innerHTML = `<source src="${videoData.src}" type="video/mp4">`; headerVideoEl.load(); headerVideoEl.play().catch(e => console.error("Header video autoplay failed:", e)); headerVideoEl.style.display = 'block'; }
-                    } else { console.error("Não foi possível processar a URL do vídeo do cabeçalho:", configSrc); }
-                }
-
-                document.querySelectorAll('.btn').forEach(button => {
-                    button.addEventListener('click', () => {
-                        const isExternalLink = button.tagName === 'A' && button.href && button.href.startsWith('http');
-                        const isSubmitButton = button.tagName === 'BUTTON' && button.type === 'submit';
-
-                        if (isExternalLink || (isSubmitButton && button.closest('form')?.id === 'email-form')) {
-                             if(isExternalLink && button.getAttribute('href') === '#') {
-                                 console.warn('Link externo placeholder (#) clicado, envio para webhook ignorado. Substitua o href.');
-                                 return;
-                             }
-
-                            sendToWebhook({ // Envia para N8N
-                                event: 'cta_click',
-                                target_url: isExternalLink ? button.href : (button.closest('form')?.id || 'N/A'),
-                                button_id: button.id || 'N/A',
-                                button_text: button.textContent.trim(),
-                                timestamp: new Date().toISOString()
-                            });
-                        }
-                    });
-                });
-
-                const emailForm = document.getElementById('email-form');
-                if (emailForm) {
-                    emailForm.addEventListener('submit', (e) => {
-                        e.preventDefault();
-                        const emailInput = document.getElementById('email-input');
-                        const email = emailInput ? emailInput.value : 'N/A';
-
-                        try {
-                            localStorage.setItem('submittedEmail', email);
-                            console.log('Email salvo no localStorage:', email);
-                        } catch (storageError) {
-                            console.error('Erro ao salvar email no localStorage:', storageError);
-                        }
-
-                        const submitData = {
-                            event: 'email_submit',
-                            email: email,
-                            form_id: 'email-form',
-                            timestamp: new Date().toISOString()
-                        };
-
-                        sendToWebhook(submitData);
-                        sendToGoogleSheet(submitData);
-
-                        alert('Obrigado por se inscrever! Seu Guia será baixado/aberto agora.');
-                        if(emailInput) emailInput.value = '';
-
-                        const ebookLink = 'https://drive.google.com/file/d/1n7s4FiiXFrKOAn-_kcLOQm-bsGz-kv1u/view?usp=drive_link';
-                        if (ebookLink && ebookLink !== '#') {
-                            setTimeout(() => { window.location.href = ebookLink; }, 300);
-                        } else {
-                            console.warn('Link do eBook não configurado no formulário de email.');
-                        }
-                    });
-                }
-
-                 // --- INÍCIO: LÓGICA DO CHAT AI FLUTUANTE (ATUALIZADA) ---
-                 const aiChatPanel = document.getElementById('ai-chat-panel');
-                 const aiChatBtn = document.getElementById('ai-chat-btn');
-                 const aiChatCloseBtn = document.getElementById('ai-chat-close-btn');
-                 const aiChatDisplay = document.getElementById('ai-chat-display');
-                 const aiChatInput = document.getElementById('ai-chat-input');
-                 const aiChatSubmit = document.getElementById('ai-chat-submit');
-                 const quickQuestionsContainer = document.getElementById('ai-quick-questions'); // Alteração 3
-                 let firstUserInteraction = true; // Alteração 3: Controla exibição das perguntas rápidas
-
-                 function toggleChatPanel() {
-                     aiChatPanel.classList.toggle('active');
-                     if(aiChatPanel.classList.contains('active')) {
-                         aiChatInput.focus();
-                         // Resetar estado inicial se reabrir e não houve interação
-                         if(firstUserInteraction && quickQuestionsContainer) {
-                             quickQuestionsContainer.style.display = 'flex';
-                         }
-                     }
-                 }
-
-                // Alteração 5: Modificada função addMessageToChat para aceitar HTML
-                 function addMessageToChat(message, sender = 'ai', isHtml = false) {
-                     if (!aiChatDisplay) return;
-                     const messageElement = document.createElement('p');
-                     messageElement.classList.add(sender === 'user' ? 'user-message' : 'ai-message');
-
-                     if (isHtml) {
-                         messageElement.innerHTML = message; // Usa innerHTML para renderizar o link
-                     } else {
-                         messageElement.textContent = message; // Usa textContent por padrão (mais seguro)
-                     }
-
-                     aiChatDisplay.appendChild(messageElement);
-                     aiChatDisplay.scrollTop = aiChatDisplay.scrollHeight;
-                 }
-
-                 function handleChatSubmit(queryOverride = null) { // Aceita uma query (perguntas rápidas)
-                     if (!aiChatInput || !aiChatSubmit) return;
-                     const userQuery = queryOverride || aiChatInput.value.trim(); // Usa override ou valor do input
-                     if (!userQuery) return;
-
-                     // Alteração 3: Esconde perguntas rápidas após a primeira interação
-                     if(firstUserInteraction && quickQuestionsContainer) {
-                         quickQuestionsContainer.style.display = 'none';
-                         firstUserInteraction = false;
-                     }
-
-                     addMessageToChat(userQuery, 'user');
-                     if(!queryOverride) aiChatInput.value = ''; // Limpa input só se não for pergunta rápida
-                     aiChatInput.disabled = true;
-                     aiChatSubmit.disabled = true;
-                     addMessageToChat("Digitando...", 'ai'); // Melhor indicador
-
-                     setTimeout(() => {
-                         const aiResponse = simpleAiResponse(userQuery);
-                         const thinkingIndicator = aiChatDisplay.querySelector('.ai-message:last-child');
-                          if (thinkingIndicator && thinkingIndicator.textContent === "Digitando...") {
-                              thinkingIndicator.remove();
-                         }
-
-                         // Alteração 5: Verifica se a resposta contém HTML (o link do WhatsApp)
-                         const containsHtml = aiResponse.includes('<a href=');
-                         addMessageToChat(aiResponse, 'ai', containsHtml); // Passa o flag isHtml
-
-                         aiChatInput.disabled = false;
-                         aiChatSubmit.disabled = false;
-                         aiChatInput.focus();
-                     }, 800);
-                 }
-
-                 if (aiChatBtn) {
-                     aiChatBtn.addEventListener('click', toggleChatPanel);
-                 }
-                  if (aiChatCloseBtn) {
-                     aiChatCloseBtn.addEventListener('click', toggleChatPanel);
-                 }
-
-                 if (aiChatSubmit) {
-                     aiChatSubmit.addEventListener('click', () => handleChatSubmit()); // Chama sem override
-                 }
-                  if (aiChatInput) {
-                     aiChatInput.addEventListener('keypress', function (e) {
-                          if (e.key === 'Enter' && !aiChatSubmit.disabled) { // Verifica se não está desabilitado
-                              handleChatSubmit(); // Chama sem override
-                          }
-                     });
-                 }
-
-                 // Alteração 3: Adiciona listeners para botões de perguntas rápidas
-                 if (quickQuestionsContainer) {
-                    quickQuestionsContainer.addEventListener('click', function(e) {
-                        if (e.target.classList.contains('quick-question-btn')) {
-                            const question = e.target.textContent;
-                            handleChatSubmit(question); // Chama com a pergunta do botão
-                        }
-                    });
-                 }
-                 // --- FIM: LÓGICA DO CHAT AI FLUTUANTE ---
-
-            } // Fim setupPage()
-
-            setupPage();
-
-            const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); }); }, { threshold: 0.1 });
-            document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
-
-            const backToTopButton = document.getElementById('back-to-top-btn');
-            window.addEventListener('scroll', () => { backToTopButton.classList.toggle('visible', window.scrollY > 300); });
-
-            const carouselWrapper = document.getElementById('carousel-wrapper');
-            if(carouselWrapper) {
-                const prevBtn = document.getElementById('prev-btn'); const nextBtn = document.getElementById('next-btn'); let autoScrollInterval;
-                const getScrollAmount = () => { const card = carouselWrapper.querySelector('.depoimento-card'); if (!card) return 300; const gap = parseInt(window.getComputedStyle(carouselWrapper).gap) || 32; return card.offsetWidth + gap; };
-                const scrollNext = () => { if (!carouselWrapper) return; if (carouselWrapper.scrollLeft + carouselWrapper.clientWidth >= carouselWrapper.scrollWidth - 1) { carouselWrapper.scrollTo({ left: 0, behavior: 'smooth' }); } else { carouselWrapper.scrollBy({ left: getScrollAmount(), behavior: 'smooth' }); } };
-                const scrollPrev = () => { if (!carouselWrapper) return; if (carouselWrapper.scrollLeft <= 0) { carouselWrapper.scrollTo({ left: carouselWrapper.scrollWidth, behavior: 'smooth' }); } else { carouselWrapper.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' }); } };
-                const startAutoScroll = () => { if (!autoScrollInterval) { autoScrollInterval = setInterval(scrollNext, 4000); } }; const stopAutoScroll = () => { clearInterval(autoScrollInterval); autoScrollInterval = null; };
-                if (nextBtn) nextBtn.addEventListener('click', () => { stopAutoScroll(); scrollNext(); startAutoScroll(); });
-                if (prevBtn) prevBtn.addEventListener('click', () => { stopAutoScroll(); scrollPrev(); startAutoScroll(); });
-                carouselWrapper.addEventListener('mouseenter', stopAutoScroll); carouselWrapper.addEventListener('mouseleave', startAutoScroll); startAutoScroll();
-             }
-
-            const playDemoBtn = document.getElementById('play-demo-video-btn'); const videoModal = document.getElementById('video-modal'); const closeModalBtn = document.getElementById('close-modal-btn'); const modalVideoLocal = document.getElementById('modal-video-local'); const modalVideoYoutube = document.getElementById('modal-video-youtube');
-            function openModal() {
-                 const videoSrc = pageConfig.demoVideo.src; if (!videoSrc) { console.error('Fonte do vídeo de demonstração não definida.'); return; }
-                 if (modalVideoLocal) modalVideoLocal.style.display = 'none';
-                 if (modalVideoYoutube) modalVideoYoutube.style.display = 'none';
-                 const videoData = getVideoEmbedUrl(videoSrc);
-                 if (videoData) {
-                     if (videoData.type === 'iframe') { if(modalVideoYoutube) {modalVideoYoutube.src = `${videoData.src}?autoplay=1&rel=0`; modalVideoYoutube.style.display = 'block';} }
-                     else { if(modalVideoLocal) {modalVideoLocal.src = videoData.src; modalVideoLocal.muted = false; modalVideoLocal.style.display = 'block'; modalVideoLocal.currentTime = 0; modalVideoLocal.play().catch(e => console.error("Erro ao tentar tocar vídeo no modal:", e));} }
-                     if(videoModal) videoModal.classList.add('active');
-                 } else { console.error("Não foi possível processar a URL do vídeo de demonstração:", videoSrc); }
-            }
-            function closeModal() {
-                 if(videoModal) videoModal.classList.remove('active');
-                 if (modalVideoLocal) { modalVideoLocal.pause(); modalVideoLocal.src = ''; }
-                 if (modalVideoYoutube) { try { if (modalVideoYoutube.contentWindow) modalVideoYoutube.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*'); } catch(e) { console.warn("Não foi possível pausar o vídeo do YouTube via postMessage."); } setTimeout(() => { if(modalVideoYoutube) modalVideoYoutube.src = ''; }, 300); }
-            }
-            if (playDemoBtn) playDemoBtn.addEventListener('click', openModal); if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
-            if (videoModal) { videoModal.addEventListener('click', (event) => { if (event.target === videoModal) closeModal(); }); }
-
-            const calculadoraForm = document.getElementById('calculadora-form');
-            const resultadoDiv = document.getElementById('resultado-calculadora');
-            if (calculadoraForm && resultadoDiv) {
-                calculadoraForm.addEventListener('submit', function(event) {
-                    event.preventDefault();
-                    const nome = document.getElementById('calc-nome').value.trim();
-                    const idade = parseInt(document.getElementById('calc-idade').value);
-                    const altura = parseInt(document.getElementById('calc-altura').value);
-                    const peso = parseFloat(document.getElementById('calc-peso').value);
-                    const nivelTreino = document.getElementById('calc-treino').value;
-                    const usouRemedio = document.getElementById('calc-remedio').value;
-                    const querSuplemento = document.getElementById('calc-suplemento').value;
-                    const saudeGeral = document.getElementById('calc-saude').value.trim();
-
-                    if (!nome || isNaN(idade) || isNaN(altura) || isNaN(peso) || !nivelTreino || !usouRemedio || !querSuplemento) {
-                        alert('Por favor, preencha todos os campos obrigatórios corretamente.');
-                        return;
-                    }
-
-                    const aguaMl = peso * 35; const aguaLitros = (aguaMl / 1000).toFixed(1);
-                    const proteinaG = Math.round(peso * 2);
-                    const gorduraG = Math.round(peso * 0.8);
-                    const carboidratoG = Math.round(peso * 2);
-
-                    const resultadosCalculo = {
-                        agua_litros: aguaLitros,
-                        proteina_g: proteinaG,
-                        gordura_g: gorduraG,
-                        carboidrato_g: carboidratoG
-                    };
-
-                    const resultadoHTML = `<p>Olá, <strong>${nome}</strong>!</p><p>Com base nos seus dados (Idade: ${idade}, Altura: ${altura}cm, Peso: ${peso}kg, Nível de Treino: ${nivelTreino}), aqui estão algumas <strong>estimativas</strong> diárias para te ajudar no seu objetivo de emagrecimento:</p><ul><li>💧 <strong>Água:</strong> Aproximadamente <strong>${resultadosCalculo.agua_litros} litros</strong> por dia.</li><li>🍗 <strong>Proteínas:</strong> Cerca de <strong>${resultadosCalculo.proteina_g}g</strong> por dia.</li><li>🥑 <strong>Gorduras Boas:</strong> Em torno de <strong>${resultadosCalculo.gordura_g}g</strong> por dia.</li><li>🍚 <strong>Carboidratos:</strong> Aproximadamente <strong>${resultadosCalculo.carboidrato_g}g</strong> por dia.</li></ul><p>Lembre-se, <strong>${nome}</strong>, estes são apenas parâmetros iniciais. A distribuição exata e as quantidades podem variar dependendo da sua resposta individual, tipo de treino e outros fatores. É fundamental buscar a orientação de um profissional.</p>`;
-                    resultadoDiv.innerHTML = resultadoHTML;
-                    resultadoDiv.style.display = 'block';
-                    void resultadoDiv.offsetWidth;
-                    resultadoDiv.classList.add('visible');
-                    resultadoDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-                     const dataToSend = {
-                        event: 'calculadora_submit',
-                        form_id: 'calculadora-form',
-                        nome: nome,
-                        idade: idade,
-                        altura_cm: altura,
-                        peso_kg: peso,
-                        nivel_treino: nivelTreino,
-                        usou_remedio: usouRemedio,
-                        quer_suplemento: querSuplemento,
-                        saude_geral: saudeGeral,
-                        resultado: resultadosCalculo,
-                        timestamp: new Date().toISOString()
-                    };
-
-                    try {
-                        localStorage.setItem('calculatorData', JSON.stringify(dataToSend));
-                        console.log('Dados da calculadora salvos no localStorage:', dataToSend);
-                    } catch (storageError) {
-                        console.error('Erro ao salvar dados da calculadora no localStorage:', storageError);
-                    }
-
-                    sendToWebhook(dataToSend);
-                    sendToGoogleSheet(dataToSend);
-
-                });
-            } // Fim if (calculadoraForm && resultadoDiv)
-
-        }); // Fim DOMContentLoaded
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
