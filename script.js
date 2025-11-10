@@ -15,28 +15,17 @@ const pageConfig = {
     calculatorUrl: '#calculadora', // Link para a calculadora
     ebookCtaId: '#cta',        // ID da seção de captura de e-mail
 
-    // --- (ATUALIZADO) CHAVES DAS APIs DE IA ---
-    // Claude foi removido e DeepSeek foi adicionado. Os 5 slots Groq permanecem.
-    apiKeys: {
-        GEMINI: 'SUA_CHAVE_API_GEMINI_AQUI', 
-        OPENAI: 'SUA_CHAVE_API_OPENAI_AQUI', 
-        DEEPSEEK: 'SUA_CHAVE_API_DEEPSEEK_AQUI', // NOVO
-        GROQ_1: 'SUA_CHAVE_API_GROQ_1_AQUI',
-        GROQ_2: 'SUA_CHAVE_API_GROQ_2_AQUI',
-        GROQ_3: 'SUA_CHAVE_API_GROQ_3_AQUI',
-        GROQ_4: 'SUA_CHAVE_API_GROQ_4_AQUI',
-        GROQ_5: 'SUA_CHAVE_API_GROQ_5_AQUI' 
-    }
+    // Chaves das APIs de IA (Movidas para o backend /api/chat.js)
 };
 
 /* ======================================================================
- * --- INÍCIO: "CÉREBRO" DE IA E ORQUESTRAÇÃO (ATUALIZADO) ---
+ * --- INÍCIO: "CÉREBRO" DE IA (LADO DO CLIENTE) ---
  * ======================================================================
  */
 
 /**
  * NÍVEL 1: Cérebro Interno (Base de Conhecimento Local)
- * Este é o "prompt" que define a personalidade e o conhecimento base do agente.
+ * CORREÇÃO: Removido o ${document.body.innerText} que estava contaminando o prompt.
  */
 const internalKnowledgeBase = `
     Olá! Sou o assistente virtual do método Emagrecimento Real. Estou aqui para te ajudar a entender nossa filosofia e tirar todas as suas dúvidas. Nossa filosofia é baseada em 100% de honestidade e ciência. Não acreditamos em milagres. Estamos aqui para ajudar mulheres que estão cansadas de promessas vazias, dietas malucas, cápsulas mágicas, chás milagrosos e "gurus" que não praticam o que pregam. Este método é para quem quer parar de tentar e começar a evoluir de verdade. O que funciona é a trindade da transformação: Ciência, Consistência e Paciência.
@@ -72,13 +61,12 @@ const internalKnowledgeBase = `
     Ações e Contato: Para começar sua jornada gratuita, o primeiro passo é usar nossa Calculadora de Metas Nutricionais, que está aqui mesmo nesta página, mais para baixo. ⬇️ Ela vai te dar estimativas de calorias e macros para você começar com o pé direito! Se preferir, pode também se cadastrar no formulário no final da página para receber o Guia Gratuito. Se você tiver dúvidas urgentes ou quiser falar sobre os programas pagos, pode clicar no botão flutuante do WhatsApp para falar diretamente com nossa equipe. A decisão de começar é hoje. Não espere a segunda-feira, o próximo mês ou o "momento perfeito". Ele não existe.
 
     Eu sou seu assistente virtual e fui programado com todas essas informações. Estou aqui para ajudar a esclarecer qualquer um desses pontos. Basta perguntar.
-    ${document.body.innerText || ''}
 `;
 
 /**
- * NÍVEL 1: Agente Interno (queryInternalKnowledge)
- * Processa a query contra a base de conhecimento local e metas estratégicas.
- * Retorna 'null' se não encontrar uma resposta boa o suficiente.
+ * (REESCRITO) NÍVEL 1: Agente Interno (queryInternalKnowledge)
+ * Lógica de busca por parágrafos e pontuação de palavras-chave.
+ * Agora responde de forma inteligente usando o internalKnowledgeBase.
  */
 function queryInternalKnowledge(query) {
     const lowerQuery = query.toLowerCase().trim();
@@ -95,7 +83,7 @@ function queryInternalKnowledge(query) {
             "Opa! Tudo bem? Me diga como posso auxiliar com sua jornada de emagrecimento.",
             "Olá! Pronto para tirar suas dúvidas sobre o método?"
         ];
-        return greetingResponses[Math.floor(Math.random() * greetingResponses.length)];
+        return { response: greetingResponses[Math.floor(Math.random() * greetingResponses.length)], isHtml: false };
     }
     
     // --- 2. Triage: Metas Estratégicas (Induzimento) ---
@@ -104,294 +92,130 @@ function queryInternalKnowledge(query) {
     // Induzir à CALCULADORA
     const calcKeywords = ['calculadora', 'calcular', 'meta', 'imc', 'peso', 'água', 'proteína', 'calorias'];
     if (calcKeywords.some(word => lowerQuery.includes(word))) {
-        return `Claro! A melhor forma de começar é pela nossa <strong>Calculadora de Metas</strong>. Ela vai te dar estimativas de água, proteínas e calorias.<br><br>Você pode acessá-la <a href="${pageConfig.calculatorUrl}" ${closeChatOnNav}>clicando aqui</a>!`;
+        return { 
+            response: `Claro! A melhor forma de começar é pela nossa <strong>Calculadora de Metas</strong>. Ela vai te dar estimativas de água, proteínas e calorias.<br><br>Você pode acessá-la <a href="${pageConfig.calculatorUrl}" ${closeChatOnNav}>clicando aqui</a>!`,
+            isHtml: true 
+        };
     }
 
     // Induzir ao EBOOK
     const ebookKeywords = ['ebook', 'guia', 'gratuito', 'e-book', 'email', 'cadastrar', 'receber o guia'];
     if (ebookKeywords.some(word => lowerQuery.includes(word))) {
-        return `O <strong>Guia de Emagrecimento Real</strong> é 100% gratuito! Você pode recebê-lo agora mesmo.<br><br>Basta rolar até a seção final da página e deixar seu e-mail <a href="${pageConfig.ebookCtaId}" ${closeChatOnNav}>clicando neste link</a>.`;
+        return {
+            response: `O <strong>Guia de Emagrecimento Real</strong> é 100% gratuito! Você pode recebê-lo agora mesmo.<br><br>Basta rolar até a seção final da página e deixar seu e-mail <a href="${pageConfig.ebookCtaId}" ${closeChatOnNav}>clicando neste link</a>.`,
+            isHtml: true
+        };
     }
 
-    // --- 3. Triage: Busca no Conhecimento Local (Keyword search) ---
+    // --- 3. (NOVA LÓGICA) Triage: Busca no Conhecimento Local ---
     const cleanQuery = lowerQuery.replace(/[.,!?;:]/g, '').replace(/\s+/g, ' ');
-    const queryWords = cleanQuery.split(' ').filter(word => word.length > 2);
-    if (lowerQuery.includes('ia')) queryWords.push('ia');
-    if (lowerQuery.includes('imc')) queryWords.push('imc');
+    const queryWords = new Set(cleanQuery.split(' ').filter(word => word.length > 2)); // Usar um Set para performance
     
-    const cleanBaseText = internalKnowledgeBase.toLowerCase().replace(/[.,!?;:]/g, '').replace(/\s+/g, ' ');
-    const sentences = cleanBaseText.split(/[.\n।?]+/).map(s => s.trim()).filter(s => s.length > 15);
+    // Adiciona palavras-chave curtas, mas importantes
+    if (lowerQuery.includes('ia')) queryWords.add('ia');
+    if (lowerQuery.includes('imc')) queryWords.add('imc');
+    if (lowerQuery.includes('cta')) queryWords.add('cta');
+    if (lowerQuery.includes('whey')) queryWords.add('whey');
+
+    // Divide o prompt por parágrafos (linhas em branco)
+    const paragraphs = internalKnowledgeBase.split(/\n\n+/); 
 
     let bestMatch = null;
     let maxMatchScore = 0;
 
-    for (const sentence of sentences) {
-        if (sentence.length < 10) continue;
+    for (const paragraph of paragraphs) {
+        const cleanParagraph = paragraph.toLowerCase().replace(/[.,!?;:]/g, '');
+        if (cleanParagraph.length < 15) continue; // Ignora parágrafos curtos (ex: só a saudação)
+
         let currentMatchScore = 0;
-        let matchedWords = new Set();
         for (const word of queryWords) {
-            const regex = new RegExp(`\\b${word}\\b`);
-            if (regex.test(sentence) && !matchedWords.has(word)) {
-                currentMatchScore += 1;
-                matchedWords.add(word);
+            if (cleanParagraph.includes(word)) {
+                currentMatchScore++;
             }
         }
-        const relevance = queryWords.length > 0 ? currentMatchScore / queryWords.length : 0;
         
-        const originalSentenceFind = internalKnowledgeBase.split(/[.\n।?]/).find(orig => orig.toLowerCase().includes(sentence.substring(0, 20).trim()));
-        if (originalSentenceFind && originalSentenceFind.toLowerCase().includes(lowerQuery)) {
-             currentMatchScore += 2; // Bônus por correspondência exata
+        // Bônus se a query inteira estiver no parágrafo (para perguntas exatas dos botões)
+        if (cleanParagraph.includes(cleanQuery)) {
+            currentMatchScore += 5; 
         }
 
-        if (relevance > maxMatchScore) {
-            maxMatchScore = relevance;
-            bestMatch = (originalSentenceFind || sentence).trim();
-        } else if (relevance > 0 && maxMatchScore === 0) {
-            bestMatch = (originalSentenceFind || sentence).trim();
-            maxMatchScore = relevance;
+        if (currentMatchScore > maxMatchScore) {
+            maxMatchScore = currentMatchScore;
+            bestMatch = paragraph.trim(); // Salva o parágrafo ORIGINAL
         }
     }
 
     // --- 4. Verificação de Relevância ---
-    if (bestMatch && maxMatchScore > 0.1) {
-        let finalResponse = bestMatch.replace(/\(Assistente simples\)/i, '').trim();
-        return finalResponse.length > 350 ? finalResponse.substring(0, 347) + '...' : finalResponse;
+    if (bestMatch && maxMatchScore > 0) { 
+        // Limpa a resposta (remove prefixos de formatação do prompt, ex: "Sobre o Pilar 1:")
+        let finalResponse = bestMatch.replace(/Sobre [^:]+:/i, '').trim();
+        // Limita o tamanho da resposta
+        finalResponse = finalResponse.length > 400 ? finalResponse.substring(0, 397) + '...' : finalResponse;
+        
+        console.log(`Cérebro Interno: Resposta encontrada com pontuação ${maxMatchScore}.`);
+        return { response: finalResponse, isHtml: false };
     }
 
     // --- 5. Triage: Falha (Sinaliza para o Orquestrador) ---
+    // Se nenhuma saudação, meta estratégica ou palavra-chave foi encontrada, retorna null.
     return null; 
 }
 
-
-/* ======================================================================
- * --- NÍVEL 2: Funções das APIs Externas (Simuladas) ---
- * ======================================================================
- */
-
 /**
- * Simulação de chamada à API do Google Gemini.
- * Retorna `null` se a API falhar ou não estiver configurada.
- */
-async function callGeminiAPI(query) {
-    const apiKey = pageConfig.apiKeys.GEMINI;
-    if (!apiKey || apiKey === 'SUA_CHAVE_API_GEMINI_AQUI') {
-        console.warn("API Key do Gemini não configurada. Pulando...");
-        return null;
-    }
-    
-    await new Promise(resolve => setTimeout(resolve, 1200)); 
-    
-    // LÓGICA DE FETCH REAL (EXEMPLO COMENTADO):
-    /*
-    try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: `Responda como um especialista em emagrecimento, de forma curta e direta (máx 3 frases): ${query}` }] }]
-            })
-        });
-        if (!response.ok) throw new Error('Falha na resposta do Gemini');
-        const data = await response.json();
-        return data.candidates[0].content.parts[0].text;
-    } catch (error) {
-        console.error("Erro ao chamar API do Gemini:", error);
-        return null; // Falha na API, permite o fallback
-    }
-    */
-    
-    console.log("Orquestrador: Usando Gemini (simulado)");
-    return `(Resposta simulada do Gemini) Para a sua pergunta sobre "${query}", a resposta é...`;
-}
-
-/**
- * Simulação de chamada à API do OpenAI (ChatGPT).
- * Retorna `null` se a API falhar ou não estiver configurada.
- */
-async function callOpenAIAPI(query) {
-    const apiKey = pageConfig.apiKeys.OPENAI;
-    if (!apiKey || apiKey === 'SUA_CHAVE_API_OPENAI_AQUI') {
-        console.warn("API Key do OpenAI não configurada. Pulando...");
-        return null;
-    }
-    
-    await new Promise(resolve => setTimeout(resolve, 1200));
-    
-    // LÓGICA DE FETCH REAL (EXEMPLO COMENTADO):
-    /*
-    try {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`
-            },
-            body: JSON.stringify({
-                model: "gpt-3.5-turbo",
-                messages: [
-                    { role: "system", content: "Você é um especialista em emagrecimento. Responda em 3 frases." },
-                    { role: "user", content: query }
-                ]
-            })
-        });
-        if (!response.ok) throw new Error('Falha na resposta do OpenAI');
-        const data = await response.json();
-        return data.choices[0].message.content;
-    } catch (error) {
-        console.error("Erro ao chamar API do OpenAI:", error);
-        return null;
-    }
-    */
-    
-    console.log("Orquestrador: Usando OpenAI (simulado)");
-    return `(Resposta simulada do OpenAI) Sobre "${query}", o processamento indica que...`;
-}
-
-/**
- * (NOVO) Simulação de chamada à API do DeepSeek.
- * Substitui o Claude.
- * Retorna `null` se a API falhar ou não estiver configurada.
- */
-async function callDeepSeekAPI(query) {
-    const apiKey = pageConfig.apiKeys.DEEPSEEK;
-    if (!apiKey || apiKey === 'SUA_CHAVE_API_DEEPSEEK_AQUI') {
-        console.warn("API Key do DeepSeek não configurada. Pulando...");
-        return null;
-    }
-    
-    await new Promise(resolve => setTimeout(resolve, 1200));
-
-    // LÓGICA DE FETCH REAL (EXEMPLO COMENTADO - API DeepSeek é compatível com OpenAI):
-    /*
-    try {
-        const response = await fetch('https://api.deepseek.com/chat/completions', { 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`
-            },
-            body: JSON.stringify({
-                model: "deepseek-chat", // Modelo padrão da DeepSeek
-                messages: [
-                    { role: "system", content: "Você é um especialista em emagrecimento. Responda em 3 frases." },
-                    { role: "user", content: query }
-                ]
-            })
-        });
-        if (!response.ok) throw new Error('Falha na resposta do DeepSeek');
-        const data = await response.json();
-        return data.choices[0].message.content;
-    } catch (error) {
-        console.error("Erro ao chamar API do DeepSeek:", error);
-        return null;
-    }
-    */
-    
-    console.log("Orquestrador: Usando DeepSeek (simulado)");
-    return `(Resposta simulada do DeepSeek) Analisando "${query}", a perspectiva é...`;
-}
-
-/**
- * Simulação de chamada à API do Groq (x5).
- * Esta função agora aceita a chave e o nome para reutilização.
- * Retorna `null` se a API falhar ou não estiver configurada.
- */
-async function callGroqAPI(query, apiKey, apiName = "Groq") {
-    if (!apiKey || apiKey.startsWith('SUA_CHAVE_API_GROQ')) {
-        console.warn(`API Key do ${apiName} não configurada. Pulando...`);
-        return null;
-    }
-
-    await new Promise(resolve => setTimeout(resolve, 800)); // Groq é rápido, simulamos menos delay
-    
-    // LÓGICA DE FETCH REAL (EXEMPLO COMENTADO):
-    /*
-    try {
-        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`
-            },
-            body: JSON.stringify({
-                model: "llama3-8b-8192", // Exemplo de modelo rápido no Groq
-                messages: [
-                    { role: "system", content: "Você é um especialista em emagrecimento. Responda em 3 frases." },
-                    { role: "user", content: query }
-                ]
-            })
-        });
-        if (!response.ok) throw new Error(`Falha na resposta do ${apiName}`);
-        const data = await response.json();
-        return data.choices[0].message.content;
-    } catch (error) {
-        console.error(`Erro ao chamar API do ${apiName}:`, error);
-        return null;
-    }
-    */
-    
-    console.log(`Orquestrador: Usando ${apiName} (simulado)`);
-    return `(Resposta simulada do ${apiName}) De forma rápida, sobre "${query}": ...`;
-}
-
-
-/**
- * (ATUALIZADO) NÍVEL 3: Orquestrador de IA
- * Gerencia o fallback:
- * 1. Tenta Cérebro Interno
- * 2. Tenta Gemini
- * 3. Tenta OpenAI
- * 4. Tenta DeepSeek (substituindo Claude)
- * 5. Tenta Groq (x5)
- * 6. Falha e redireciona para o WhatsApp
+ * (ATUALIZADO) NÍVEL 2: Orquestrador de IA (Lado do Cliente)
+ * Esta função agora chama o Cérebro Interno. Se ele retornar null,
+ * ela chama o backend (/api/chat) para o fallback de IAs externas.
  */
 async function handleChatOrchestration(query) {
     
     // 1. Tenta o Cérebro Interno (Rápido e Gratuito)
-    let response = queryInternalKnowledge(query);
-    if (response) {
-        console.log("Orquestrador: Resposta encontrada no Cérebro Interno.");
-        const isHtml = response.includes('<a href=') || response.includes('<strong>');
-        return { response, isHtml };
+    const internalResponse = queryInternalKnowledge(query);
+    
+    if (internalResponse) {
+        console.log("Orquestrador (Frontend): Resposta encontrada no Cérebro Interno.");
+        // Retorna o objeto { response, isHtml } do cérebro interno
+        return internalResponse;
     }
 
-    // 2. Fallback para IAs Externas
-    console.log("Orquestrador: Cérebro interno não encontrou. Tentando IAs externas...");
+    // 2. Fallback para o Backend (Função Serverless)
+    // O Cérebro Interno retornou null. Agora chamamos nossa própria API.
+    console.log("Orquestrador (Frontend): Cérebro interno não encontrou. Chamando /api/chat...");
 
-    // A ordem de fallback, agora com DeepSeek
-    const apiCallChain = [
-        { name: "Gemini", func: () => callGeminiAPI(query) },
-        { name: "OpenAI", func: () => callOpenAIAPI(query) },
-        { name: "DeepSeek", func: () => callDeepSeekAPI(query) }, // SUBSTITUÍDO
-        { name: "Groq 1", func: () => callGroqAPI(query, pageConfig.apiKeys.GROQ_1, "Groq 1") },
-        { name: "Groq 2", func: () => callGroqAPI(query, pageConfig.apiKeys.GROQ_2, "Groq 2") },
-        { name: "Groq 3", func: () => callGroqAPI(query, pageConfig.apiKeys.GROQ_3, "Groq 3") },
-        { name: "Groq 4", func: () => callGroqAPI(query, pageConfig.apiKeys.GROQ_4, "Groq 4") },
-        { name: "Groq 5", func: () => callGroqAPI(query, pageConfig.apiKeys.GROQ_5, "Groq 5") }
-    ];
+    try {
+        const apiResponse = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ query: query })
+        });
 
-    for (const api of apiCallChain) {
-        response = await api.func();
-        if (response) { // Se a API retornar uma resposta (não nula)
-            console.log(`Orquestrador: Resposta obtida via ${api.name}.`);
-            return { response, isHtml: false }; // Respostas de API são sempre texto puro
+        if (!apiResponse.ok) {
+            // Se o nosso backend falhar (ex: 503, 500)
+            console.error("Orquestrador (Frontend): A API /api/chat falhou.", apiResponse.status);
+            throw new Error("Falha no servidor de IA");
         }
-    }
 
-    // 3. Resposta final de fallback (WhatsApp) se todas as IAs falharem
-    console.log("Orquestrador: Todas as IAs falharam ou estão desconfiguradas. Redirecionando para WhatsApp.");
-    const whatsappLink = "https://wa.me/message/DQJBWVDS3BJ4N1"; // Link do HTML
-    return {
-        response: `Puxa, essa é uma ótima pergunta que eu (ainda) não sei responder! 🤔<br><br>Que tal falar diretamente com nossa equipe de especialistas no <a href="${whatsappLink}" target="_blank">WhatsApp</a>? Eles vão te ajudar!`,
-        isHtml: true
-    };
+        const data = await apiResponse.json();
+        return { response: data.response, isHtml: false };
+
+    } catch (error) {
+        // 3. Resposta final de fallback (WhatsApp) se TUDO falhar
+        console.error("Orquestrador (Frontend): Erro de rede ou falha total.", error);
+        const whatsappLink = "https://wa.me/message/DQJBWVDS3BJ4N1"; // Link do HTML
+        return {
+            response: `Puxa, essa é uma ótima pergunta que eu (ainda) não sei responder! 🤔<br><br>Que tal falar diretamente com nossa equipe de especialistas no <a href="${whatsappLink}" target="_blank">WhatsApp</a>? Eles vão te ajudar!`,
+            isHtml: true
+        };
+    }
 }
 // --- FIM: "CÉREBRO" DE IA E ORQUESTRAÇÃO ---
 
 
 /* ======================================================================
  * --- INÍCIO: LÓGICA DO DOCUMENTO (Listeners e Funções) ---
- * (Esta parte permanece idêntica à versão anterior, apenas colada)
+ * (Esta seção permanece 100% IDÊNTICA. Não há necessidade de 
+ * alterar a calculadora, webhooks ou listeners do DOM.)
  * ======================================================================
  */
 
@@ -518,6 +342,7 @@ document.addEventListener("DOMContentLoaded", function() {
     setupPage();
 
     // --- LÓGICA DO CHAT AI FLUTUANTE (ATUALIZADA) ---
+    // Esta seção agora chama 'handleChatOrchestration'
     const aiChatPanel = document.getElementById('ai-chat-panel');
     const aiChatBtn = document.getElementById('ai-chat-btn');
     const aiChatCloseBtn = document.getElementById('ai-chat-close-btn');
@@ -582,7 +407,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const typingIndicator = addMessageToChat("", 'ai', { isTyping: true });
 
-        // Chama o orquestrador
+        // Chama o orquestrador (que agora chama o /api/chat se necessário)
         const { response, isHtml } = await handleChatOrchestration(userQuery);
 
         if (typingIndicator) {
@@ -665,7 +490,8 @@ document.addEventListener("DOMContentLoaded", function() {
     if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
     if (videoModal) { videoModal.addEventListener('click', (event) => { if (event.target === videoModal) closeModal(); }); }
 
-    // --- (ATUALIZADO) LÓGICA DA CALCULADORA INTELIGENTE (COM IMC) ---
+    // --- LÓGICA DA CALCULADORA INTELIGENTE (COM IMC) ---
+    // (Esta lógica está 100% mantida da etapa anterior)
     const calculadoraForm = document.getElementById('calculadora-form');
     const resultadoDiv = document.getElementById('resultado-calculadora');
     if (calculadoraForm && resultadoDiv) {
@@ -693,7 +519,6 @@ document.addEventListener("DOMContentLoaded", function() {
             const gorduraG = Math.round(peso * 0.8);
             const carboidratoG = Math.round(peso * 2);
 
-            // Cálculo do IMC
             const alturaM = altura / 100;
             const imc = (peso / (alturaM * alturaM)).toFixed(1);
 
@@ -705,23 +530,20 @@ document.addEventListener("DOMContentLoaded", function() {
                 imc: imc 
             };
 
-            // 3. (NOVO) Lógica de Avaliação de Peso Corporal (IMC)
+            // 3. Lógica de Avaliação de Peso Corporal (IMC)
             let imcMessage = '';
-            let statusClass = 'status-sucesso'; // Padrão
+            let statusClass = 'status-sucesso';
 
             if (imc < 18.5) {
                 imcMessage = `<p><strong>Atenção:</strong> Seu IMC (${imc}) indica que você está abaixo do peso ideal. Nossas estimativas podem precisar de ajuste. É fundamental focar em ganhar massa com qualidade.</p>`;
                 statusClass = 'status-aviso';
             } else if (imc >= 18.5 && imc <= 24.9) {
-                // Mensagem "está bom, mas dá para melhorar e ficar seca"
                 imcMessage = `<p><strong>Parabéns!</strong> Seu IMC (${imc}) está na faixa ideal. Nossas estimativas são um ótimo ponto de partida para você "secar" e definir!</p>`;
                 statusClass = 'status-sucesso';
             } else if (imc >= 25 && imc <= 29.9) {
-                // Alerta claro para "acima do peso"
                 imcMessage = `<p><strong>Alerta:</strong> Seu IMC (${imc}) indica que você está acima do peso (sobrepeso). Nossas estimativas focam no déficit calórico para iniciar a queima de gordura.</p>`;
                 statusClass = 'status-aviso';
             } else { // imc >= 30
-                // Alerta claro para "acima do peso" (obesidade)
                 imcMessage = `<p><strong>Alerta de Saúde:</strong> Seu IMC (${imc}) está na faixa de obesidade. O foco total deve ser no déficit calórico e no aumento da atividade física. Recomendamos procurar um profissional.</p>`;
                 statusClass = 'status-alerta';
             }
@@ -751,11 +573,7 @@ document.addEventListener("DOMContentLoaded", function() {
             
             // 5. Lógica de Exibição (ATUALIZADA com IMC e Status)
             let resultadoHTML = `<p>Olá, <strong>${nome}</strong>!</p>`;
-            
-            // Adiciona a mensagem de status do IMC primeiro
             resultadoHTML += imcMessage; 
-            
-            // Adiciona as metas nutricionais
             resultadoHTML += `<p>Com base nos seus dados, aqui estão suas <strong>estimativas</strong> diárias:</p>
                               <ul>
                                 <li>💧 <strong>Água:</strong> ${resultadosCalculo.agua_litros} L</li>
@@ -764,22 +582,17 @@ document.addEventListener("DOMContentLoaded", function() {
                                 <li>🍚 <strong>Carboidratos:</strong> ${resultadosCalculo.carboidrato_g}g</li>
                               </ul>`;
             
-            // Lógica de Upsell contextual (Mantida)
             if (querSuplemento === 'sim' || querSuplemento === 'talvez') {
                  resultadoHTML += `<p><strong>Obrigado!</strong> Como você demonstrou interesse em suplementos, confira as recomendações de curadoria na seção <strong>"Suplementação Inteligente"</strong> acima.</p>`;
             } else {
                  resultadoHTML += `<p><strong>Obrigado!</strong> Suas metas foram calculadas. Lembre-se de anotá-las e rolar para baixo para baixar seu Guia Gratuito.</p>`;
             }
 
-            // Atualiza o DOM e aplica a classe de status
             resultadoDiv.innerHTML = resultadoHTML;
-            
-            // Gerencia as classes de status
             resultadoDiv.classList.remove('status-sucesso', 'status-aviso', 'status-alerta');
             resultadoDiv.classList.add(statusClass);
-
             resultadoDiv.style.display = 'block';
-            void resultadoDiv.offsetWidth; // Força o reflow para a animação
+            void resultadoDiv.offsetWidth;
             resultadoDiv.classList.add('visible');
             resultadoDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
