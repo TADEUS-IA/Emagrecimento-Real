@@ -373,7 +373,7 @@ p.subtitulo { font-size: 1.5rem; color: var(--cor-texto-secundario); max-width: 
 /* --- BOTÕES FLUTUANTES E CHAT --- */
 .floating-buttons-container {
     position: fixed;
-    bottom: 20px;
+    bottom: -30px;
     left: 20px;
     right: 20px;
     z-index: 1000;
@@ -940,5 +940,382 @@ footer {
     #email-form #email-input:focus {
          border-color: var(--cor-destaque);
          box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.3);
+    }
+}
+
+```css
+/* ======================================================================
+   NOVOS AJUSTES SOLICITADOS (Senior Developer Patch)
+   ====================================================================== */
+
+/* 1️⃣ ESTILOS DA NOVA SEÇÃO DE DESTAQUE */
+#destaque-especial {
+    padding: 6rem 0;
+    background-color: var(--cor-fundo); /* Mantém coerência, mas o box destaca */
+}
+
+.destaque-box {
+    background: linear-gradient(135deg, #222224 0%, #1a1a1a 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 6px solid var(--cor-destaque); /* Destaque lateral na cor da marca */
+    border-radius: 24px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.destaque-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
+.destaque-imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    min-height: 400px; /* Garante altura visual */
+}
+
+.destaque-conteudo {
+    padding: 3rem 4rem;
+    text-align: left;
+}
+
+.destaque-tag {
+    display: inline-block;
+    background-color: rgba(230, 57, 70, 0.15);
+    color: var(--cor-destaque);
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.destaque-conteudo h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    color: #fff;
+}
+
+.destaque-conteudo p {
+    color: var(--cor-texto-secundario);
+    font-size: 1.15rem;
+    line-height: 1.8;
+}
+
+/* Responsividade da Nova Seção */
+@media (max-width: 900px) {
+    .destaque-grid {
+        grid-template-columns: 1fr;
+    }
+    .destaque-imagem img {
+        min-height: 250px;
+        max-height: 300px;
+    }
+    .destaque-conteudo {
+        padding: 2.5rem 2rem;
+    }
+    .destaque-conteudo h2 {
+        font-size: 2rem;
+    }
+}
+
+
+/* 2️⃣ AJUSTE DE CORES NOS CAMPOS DA CALCULADORA (Select/Option) */
+/* Isso força o fundo escuro e texto claro nas opções do select */
+.form-group select {
+    background-color: rgba(255, 255, 255, 0.05); /* Fundo escuro */
+    color: var(--cor-texto-principal);
+}
+
+/* Estilização das opções internas (Dropdown) */
+.form-group select option {
+    background-color: #1c1c1e; /* Cor sólida escura para o menu */
+    color: #f5f5f7; /* Texto claro */
+    padding: 10px;
+}
+
+/* Remove foco azul padrão em alguns navegadores e substitui pela cor da marca */
+.form-group select:focus {
+    border-color: var(--cor-destaque);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
+}
+
+
+/* 3️⃣ AJUSTE CAMPO DE E-MAIL (Texto Branco) */
+#email-form #email-input {
+    color: #ffffff !important; /* Força o branco */
+}
+
+/* Hack para forçar a cor branca mesmo quando o navegador usa o Auto-Complete */
+#email-form #email-input:-webkit-autofill,
+#email-form #email-input:-webkit-autofill:hover, 
+#email-form #email-input:-webkit-autofill:focus, 
+#email-form #email-input:-webkit-autofill:active {
+    -webkit-text-fill-color: #ffffff !important;
+    -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.05) inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Ajuste do placeholder para garantir contraste */
+#email-form #email-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* 4️⃣ AJUSTE DE COR DA SETA (Voltar ao Topo) */
+#back-to-top-btn {
+    color: #FF6F91 !important; /* Define a cor do elemento para o Rosa do tema */
+}
+
+#back-to-top-btn svg {
+    stroke: #FF6F91 !important; /* Força a linha da seta a ficar Rosa */
+    fill: transparent !important; /* Garante que não tenha preenchimento indesejado */
+}
+/* ======================================================================
+   6️⃣ MOTOR DE PADRONIZAÇÃO INTELIGENTE (CSS FLUIDO)
+   ====================================================================== */
+
+:root {
+    /* A MÁGICA DO CLAMP:
+       clamp(MINIMO, VALOR IDEAL, MAXIMO)
+       
+       --spacing-section: Espaço vertical entre seções.
+       No celular será 4rem, em telas gigantes 8rem, e no meio termo ele calcula sozinho.
+    */
+    --spacing-section: clamp(4rem, 8vh, 8rem);
+    
+    /* --spacing-gap: Espaço entre colunas e cards */
+    --spacing-gap: clamp(2rem, 4vw, 4rem);
+    
+    /* --spacing-text: Espaço entre Título e Texto */
+    --spacing-text: clamp(1rem, 2vh, 1.5rem);
+}
+
+/* 1. RESET ESTRUTURAL DE TODAS AS SEÇÕES */
+section {
+    padding-top: var(--spacing-section) !important;
+    padding-bottom: var(--spacing-section) !important;
+    width: 100%;
+    position: relative;
+    /* Garante que o conteúdo centralize verticalmente se sobrar espaço */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* 2. REGRA DE OURO DO CONTAINER (Centralização Perfeita) */
+.container {
+    width: 100%;
+    max-width: 1200px; /* Leve aumento para telas modernas */
+    margin: 0 auto;
+    padding: 0 clamp(1.5rem, 5vw, 2rem); /* Padding lateral inteligente */
+}
+
+/* 3. RITMO VERTICAL (Padroniza distâncias de texto) */
+/* Isso resolve a sensação de "bagunça" interna */
+section h2 {
+    margin-bottom: var(--spacing-text) !important;
+    line-height: 1.2;
+}
+
+section p.subtitulo {
+    margin-bottom: calc(var(--spacing-text) * 2) !important;
+}
+
+/* 4. ALINHAMENTO DE GRIDS (Force Balance) */
+/* Obriga todos os grids a usarem o mesmo espaçamento inteligente */
+.feature-section,
+.destaque-grid,
+.garantia-objecoes-grid,
+.ferramentas-grid,
+.poder-grid {
+    display: grid;
+    gap: var(--spacing-gap) !important;
+    align-items: center; /* Centraliza verticalmente imagem com texto */
+}
+
+/* 5. TRATAMENTO DE EXCEÇÕES (Lógica de "Cola") */
+/* Aqui aplicamos a lógica para seções que precisam tocar umas nas outras */
+
+/* Hero: Zera tudo para ocupar a tela */
+#hero {
+    padding: 0 !important;
+    min-height: 100vh;
+    display: block; /* Hero não usa o flex do section padrão */
+}
+
+/* Poder: Cola no fundo, mas mantém respiro no topo */
+#poder {
+    padding-top: var(--spacing-section) !important;
+    padding-bottom: 0 !important;
+}
+
+/* Importância: Cola no topo (porque o Poder colou no fundo) */
+#importancia {
+    padding-top: var(--spacing-section) !important; 
+    /* Se quiser colar visualmente, mude para 0, mas recomendo manter o respiro para leitura */
+}
+
+/* Garantia: Mantém o padrão inteligente */
+#garantia-objecoes {
+    padding-top: var(--spacing-section) !important;
+    padding-bottom: var(--spacing-section) !important;
+}
+
+/* CTA: Destaque final */
+#cta {
+    padding-top: var(--spacing-section) !important;
+    padding-bottom: var(--spacing-section) !important;
+}
+
+/* Footer: Espaçamento próprio */
+footer {
+    padding-top: var(--spacing-section) !important;
+    padding-bottom: 3rem !important;
+}
+
+/* 6. CORREÇÃO ESPECÍFICA PARA MOBILE (Layout Stacking) */
+@media (max-width: 900px) {
+    /* Força uma coluna única em telas menores para não quebrar o layout */
+    .feature-section, 
+    .destaque-grid, 
+    .garantia-objecoes-grid {
+        grid-template-columns: 1fr !important;
+        text-align: center; /* Centraliza texto no mobile para organização */
+    }
+    
+    /* Remove a ordem reversa no mobile para ficar lógico (Imagem -> Texto) */
+    .feature-section.reverse .feature-image {
+        order: -1 !important; /* Imagem sempre primeiro */
+    }
+    
+    /* Ajuste de Texto */
+    .feature-text, .destaque-conteudo {
+        padding: 0 !important;
+        text-align: left; /* Ou center, dependendo do gosto, left é mais legível */
+    }
+}
+
+/* ======================================================================
+   7️⃣ CORREÇÃO DE OVERFLOW E LAYOUT (#PODER)
+   ====================================================================== */
+
+/* 1. Devolvemos o espaçamento inferior padrão para a seção respirar */
+#poder {
+    padding-bottom: var(--spacing-section) !important; /* Restaura o espaço */
+    height: auto !important; /* Garante que a altura acompanhe o conteúdo */
+    background-color: var(--cor-fundo-secundario); /* Garante fundo sólido */
+    overflow: visible; /* Permite que sombras apareçam sem cortar */
+}
+
+/* 2. Blindagem do Grid para evitar quebra de layout */
+.poder-grid {
+    display: grid;
+    /* Ajuste inteligente: se a tela for muito pequena, reduz a largura mínima para 280px */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+    gap: var(--spacing-gap) !important;
+    width: 100%;
+    margin-top: 3rem;
+}
+
+/* 3. Garante que os cards tenham a mesma altura e não estourem */
+.poder-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    box-sizing: border-box; /* Garante que padding não estoure a largura */
+}
+
+/* 4. Ajuste específico para Mobile para evitar vazamento lateral */
+@media (max-width: 480px) {
+    .poder-grid {
+        display: flex !important; /* Muda para flexbox vertical no mobile extremo */
+        flex-direction: column;
+        gap: 2rem !important;
+    }
+    
+    .poder-card {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+}
+
+/* ======================================================================
+   8️⃣ CORREÇÃO FINAL: TEXTO DA NOVA SEÇÃO (MOBILE)
+   ====================================================================== */
+
+@media (max-width: 768px) {
+    /* 1. Força o empilhamento vertical (Imagem em cima, Texto embaixo) */
+    .destaque-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        grid-template-columns: 1fr !important;
+        width: 100% !important;
+    }
+
+    /* 2. Ajuste Crítico do Conteúdo de Texto */
+    .destaque-conteudo {
+        padding: 2rem 1.5rem !important; /* Reduz o padding gigante do PC para algo seguro no mobile */
+        width: 100% !important;
+        box-sizing: border-box !important; /* Garante que o padding não aumente a largura total */
+        text-align: left; /* Mantém a leitura natural */
+    }
+
+    /* 3. Prevenção de Estouro de Texto */
+    .destaque-conteudo p {
+        font-size: 1rem !important; /* Tamanho legível */
+        width: 100% !important;
+        max-width: 100% !important;
+        word-wrap: break-word; /* Quebra palavras muito longas para não vazar */
+    }
+
+    /* 4. Ajuste do Título para não quebrar feio */
+    .destaque-conteudo h2 {
+        font-size: 1.8rem !important; /* Título proporcional à tela do celular */
+        line-height: 1.3 !important;
+        margin-bottom: 1rem !important;
+    }
+
+    /* 5. Controle da Imagem no Mobile */
+    .destaque-imagem {
+        width: 100% !important;
+        height: 250px !important; /* Altura fixa para não ocupar a tela toda */
+    }
+
+    .destaque-imagem img {
+        height: 100% !important;
+        width: 100% !important;
+        object-fit: cover;
+    }
+}
+/* ======================================================================
+   9️⃣ AUMENTO DO CAMPO DE E-MAIL (MOBILE UX)
+   ====================================================================== */
+
+@media (max-width: 480px) {
+    /* Aumenta a altura e a área de toque do input */
+    #email-form #email-input {
+        padding: 1.2rem 1.5rem !important; /* Aumenta o "gordo" do campo (Cima/Baixo e Lados) */
+        font-size: 1.1rem !important; /* Aumenta a letra para facilitar a leitura */
+        min-height: 60px !important; /* Garante uma altura mínima generosa para o dedo */
+        line-height: normal !important; /* Centraliza o texto verticalmente */
+    }
+
+    /* Opcional: Ajusta o botão para ficar da mesma altura do campo e não ficar desproporcional */
+    #email-form button[type="submit"] {
+        padding: 1.2rem 2rem !important;
+        min-height: 60px !important;
+        font-size: 1.1rem !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 }
