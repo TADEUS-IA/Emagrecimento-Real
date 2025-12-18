@@ -1,1342 +1,507 @@
-/* --- CONFIGURAÇÕES GLOBAIS E VARIÁVEIS --- */
-:root {
-    --cor-fundo: #1A1A1A;
-    --cor-fundo-secundario: #111111;
-    --cor-texto-principal: #f5f5f7;
-    --cor-texto-secundario: #A7A7A7;
-    --cor-destaque: #E63946;
-    --cor-destaque-hover: #F04A58;
-    --cor-verde: #FF6F91;
-    --cor-vermelho-riscado: #E63946;
-    --cor-verde-fluorescente: #FF6F91;
-    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emagrecimento Real: Chega de Tentar, Comece a Evoluir</title>
+    <link rel="icon" href="logo.png" type="image/x-icon">
 
-    /* Novas cores para status */
-    --cor-aviso: #FFA500; /* Laranja para "dá para melhorar" */
-}
-
-/* --- ESTILOS GERAIS --- */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-    background-color: var(--cor-fundo);
-    color: var(--cor-texto-principal);
-    font-family: var(--font-family);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
-}
-.container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
-section { padding: 8rem 0; text-align: center; }
-h1, h2, h3 { font-weight: 600; }
-h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: -0.02em; }
-h2 { font-size: clamp(2.5rem, 5vw, 3.5rem); letter-spacing: -0.01em; margin-bottom: 1.5rem; }
-p.subtitulo { font-size: 1.5rem; color: var(--cor-texto-secundario); max-width: 700px; margin: 1.5rem auto 2.5rem auto; line-height: 1.6; }
-.btn {
-    display: inline-block;
-    background-color: var(--cor-destaque);
-    color: #fff;
-    padding: 1rem 2.5rem;
-    border-radius: 980px;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 1.1rem;
-    transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
-    animation: gentle-float 4s ease-in-out infinite;
-    border: none;
-    cursor: pointer;
-    text-align: center;
-}
-.btn:hover {
-    background-color: var(--cor-verde-fluorescente);
-    color: var(--cor-fundo);
-    transform: scale(1.05);
-    animation-play-state: paused;
-}
-.btn:active {
-    background-color: var(--cor-verde);
-    transform: scale(1.02);
-    transition: transform 0.1s ease, background-color 0.1s ease;
-}
-.animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-.animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
-.header-logo-container { position: absolute; top: 0; left: 0; width: 100%; padding: 2rem; z-index: 10; text-align: right; }
-.header-logo { max-height: 165px; width: auto; opacity: 0.9; transition: opacity 0.3s ease; }
-.header-logo:hover { opacity: 1; }
-
-/* --- HERO --- */
-#hero { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; padding: 0; overflow: hidden; }
-#video-background, #iframe-background { position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; object-fit: cover; transform: translate(-50%, -50%); z-index: 1; opacity: 0.25; border: none; }
-#iframe-background { width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; pointer-events: none; }
-.hero-content { position: relative; z-index: 2; width: 100%; }
-.title-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 2rem; padding: 2rem; }
-.vertical-text { font-size: 1.2rem; font-weight: 600; color: var(--cor-texto-secundario); writing-mode: vertical-rl; text-transform: uppercase; letter-spacing: 4px; }
-.left { text-align: left; transform: rotate(180deg); }
-.right { text-align: right; }
-.main-title { display: flex; flex-direction: column; gap: 1.5rem; }
-
-/* --- MODAL (Mantido) --- */
-.video-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
-.video-modal.active { opacity: 1; pointer-events: auto; }
-.video-modal-content { position: relative; width: 90%; max-width: 1100px; aspect-ratio: 16 / 9; transform: scale(0.8); transition: transform 0.4s ease; }
-.video-modal.active .video-modal-content { transform: scale(1); }
-.video-modal video, .video-modal iframe { width: 100%; height: 100%; border-radius: 15px; border: none; }
-.close-modal-btn { position: absolute; top: -40px; right: 0px; background: transparent; border: none; color: #fff; font-size: 3rem; font-weight: 300; cursor: pointer; line-height: 1; transition: transform 0.3s ease; }
-.close-modal-btn:hover { transform: scale(1.2); }
-
-/* --- SEÇÃO #poder --- */
-#poder { background-color: var(--cor-fundo-secundario); padding-bottom: 0; }
-.poder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem; text-align: left; }
-.poder-card { background-color: #1c1c1e; padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
-.poder-card h3 { font-size: 1.5rem; color: var(--cor-verde); margin-bottom: 1rem; }
-.poder-card p { color: var(--cor-texto-secundario); line-height: 1.7; }
-
-/* --- SEÇÕES DE PILARES (feature-section) --- */
-.feature-section { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; text-align: left; }
-.feature-section.reverse { grid-template-columns: 1fr 1fr; }
-.feature-section.reverse .feature-image { order: 2; }
-.feature-image img { width: 100%; height: auto; border-radius: 30px; display: block; }
-.feature-text h3 { font-size: 2.5rem; margin-bottom: 1rem; }
-.feature-text p { color: var(--cor-texto-secundario); font-size: 1.2rem; line-height: 1.7; }
-#beneficios .feature-text p strong { color: var(--cor-verde); font-weight: 600; }
-.text-green { color: var(--cor-verde); font-weight: 600; }
-
-/* --- ESTILOS PARA SEÇÃO 5 (SUPLEMENTAÇÃO V5 - 3D) --- */
-.recomendacao-box-v5 {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background-color: rgba(255, 111, 145, 0.05); /* Fundo rosa bem sutil */
-    border-radius: 15px;
-    border: 1px solid rgba(255, 111, 145, 0.2);
-    /* Habilita o 3D */
-    perspective: 1000px;
-}
-.recomendacao-box-v5 strong {
-    color: var(--cor-verde);
-    font-size: 1.1rem;
-    display: block;
-    margin-bottom: 0.5rem;
-}
-.recomendacao-box-v5 p {
-    font-size: 0.95rem;
-    color: var(--cor-texto-secundario);
-    margin-bottom: 1.25rem;
-}
-.recomendacao-links-v5 {
-    display: flex;
-    flex-direction: column; /* Links um abaixo do outro */
-    gap: 1rem;
-}
-.rec-card-btn {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    background-color: #1c1c1e;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    text-decoration: none;
-    color: var(--cor-texto-principal);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX'); // SUBSTITUA PELO SEU ID DO GA4
+    </script>
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '839178802000364'); // Mantenha ou substitua pelo seu ID do Pixel
+      fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=839178802000364&ev=PageView&noscript=1"
+    /></noscript>
     
-    /* Setup da transição 3D */
-    transform-style: preserve-3d;
-    transform: translateZ(0); /* Força a aceleração de hardware */
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
-                box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-.rec-card-btn:hover {
-    /* Efeito 3D sutil no hover */
-    transform: translateZ(10px) rotateX(-3deg) rotateY(2deg);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-}
-.rec-card-btn img {
-    width: 50px; /* Tamanho da imagem pequena */
-    height: 50px;
-    border-radius: 8px;
-    object-fit: cover;
-    flex-shrink: 0;
-    /* Faz a imagem flutuar acima do card */
-    transform: translateZ(20px);
-}
-.rec-card-text {
-    flex-grow: 1; /* Empurra a seta para o final */
-    text-align: left;
-}
-.rec-card-text strong {
-    font-size: 1rem;
-    color: var(--cor-texto-principal);
-    display: block;
-    margin: 0;
-}
-.rec-card-text span {
-    font-size: 0.85rem;
-    color: var(--cor-texto-secundario);
-}
-.rec-card-arrow {
-    font-size: 1.5rem;
-    color: var(--cor-texto-secundario);
-    transition: transform 0.3s ease;
-}
-.rec-card-btn:hover .rec-card-arrow {
-    transform: translateX(5px);
-    color: var(--cor-verde);
-}
-
-/* --- SEÇÃO #foco-no-treino --- */
-#foco-no-treino {
-    background-color: var(--cor-fundo);
-    color: var(--cor-texto-principal);
-    background-image: url('https://images.pexels.com/photos/1480520/pexels-photo-1480520.jpeg');
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    z-index: 1;
-    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
-}
-#foco-no-treino::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: -1;
-}
-#foco-no-treino h2 { color: var(--cor-verde); }
-#foco-no-treino p {
-    color: var(--cor-texto-principal);
-    font-size: 1.3rem;
-    line-height: 1.7;
-    max-width: 800px;
-    margin: 1.5rem auto;
-}
-#foco-no-treino strong { color: var(--cor-verde); font-weight: 600; }
-
-/* --- SEÇÃO #integracoes (CARDS V3 - FOCO EM APPS) --- */
-#integracoes { overflow: hidden; background-color: var(--cor-fundo-secundario); }
-
-.ferramentas-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    margin-top: 4rem;
-    text-align: left;
-}
-.ferramenta-card {
-    background-color: #1c1c1e;
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; 
-}
-.ferramenta-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-.ferramenta-card img {
-    width: 100%;
-    aspect-ratio: 4 / 3; 
-    object-fit: cover;
-    background-color: #333;
-}
-.ferramenta-card-content {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-.ferramenta-card h3 {
-    font-size: 1.4rem;
-    color: var(--cor-verde);
-    margin-bottom: 0.75rem;
-}
-.ferramenta-card p {
-    color: var(--cor-texto-secundario);
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-    font-size: 0.9rem;
-    flex-grow: 1;
-}
-.btn-secundario {
-    display: block;
-    text-align: center;
-    background-color: rgba(255, 111, 145, 0.1);
-    color: var(--cor-verde-fluorescente);
-    padding: 0.8rem 1.5rem;
-    border-radius: 980px;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    border: 1px solid var(--cor-verde);
-    margin-top: auto;
-}
-.btn-secundario:hover {
-    background-color: var(--cor-verde-fluorescente);
-    color: var(--cor-fundo);
-}
-
-/* --- SEÇÃO #depoimentos --- */
-.carousel-container { position: relative; margin-top: 4rem; }
-.carousel-wrapper { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 2rem; padding: 2rem 1rem; scroll-behavior: smooth; }
-.carousel-wrapper::-webkit-scrollbar { display: none; }
-.depoimento-card { flex: 0 0 31%; max-width: 31%; scroll-snap-align: start; background-color: #1c1c1e; padding: 3rem; border-radius: 20px; text-align: left; border: 1px solid rgba(255,255,255,0.1); }
-.depoimento-card blockquote { font-size: 1.2rem; line-height: 1.6; font-style: italic; margin-bottom: 2rem; }
-.author { display: flex; align-items: center; gap: 1rem; }
-.author img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
-.author-info strong { display: block; font-size: 1.1rem; }
-.author-info small { color: var(--cor-texto-secundario); }
-.carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.2); color: white; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; transition: background-color 0.3s ease; }
-.carousel-btn:hover { background-color: rgba(255, 255, 255, 0.2); }
-#prev-btn { left: -25px; }
-#next-btn { right: -25px; }
-
-/* --- SEÇÃO #calculadora --- */
-#calculadora { background-color: var(--cor-fundo-secundario); }
-.calculadora-form {
-    max-width: 600px;
-    margin: 3rem auto 0 auto;
-    background-color: #1c1c1e;
-    padding: 2.5rem;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.1);
-    text-align: left;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-}
-.form-group { margin-bottom: 1.5rem; }
-.form-group label {
-    display: block;
-    font-weight: 500;
-    color: var(--cor-texto-secundario);
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-}
-.form-group input[type="text"],
-.form-group input[type="number"],
-.form-group input[type="email"],
-.form-group select,
-.form-group textarea {
-    width: 100%;
-    padding: 0.9rem 1rem;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background-color: rgba(255, 255, 255, 0.05);
-    color: var(--cor-texto-principal);
-    font-size: 1rem;
-    font-family: var(--font-family);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.form-group input[type="text"]:focus,
-.form-group input[type="number"]:focus,
-.form-group input[type="email"]:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--cor-destaque);
-    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.3);
-}
-.form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23A7A7A7' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em; padding-right: 2.5rem; }
-.calculadora-form button[type="submit"] {
-    width: 100%;
-    margin-top: 1rem;
-}
-#resultado-calculadora {
-    margin-top: 2.5rem;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    line-height: 1.7;
-    text-align: left;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    padding: 0; /* Removido padding padrão para classes de status controlarem */
-}
-#resultado-calculadora.visible {
-    opacity: 1;
-    transform: translateY(0);
-    padding: 1.5rem; /* Adiciona padding apenas quando visível */
-}
-#resultado-calculadora strong { color: var(--cor-verde); }
-.disclaimer { font-size: 0.85rem; color: var(--cor-texto-secundario); margin-top: 1rem; text-align: center; }
-
-/* --- SEÇÃO #garantia-objecoes (Dúvidas) --- */
-#garantia-objecoes { padding-top: 0; background-color: var(--cor-fundo-secundario); }
-.garantia-objecoes-grid { display: grid; grid-template-columns: 350px 1fr; gap: 4rem; align-items: center; margin-top: 4rem; text-align: left; }
-.garantia-blindada-seal { display: flex; align-items: center; justify-content: center; }
-.garantia-blindada-seal img { max-width: 100%; animation: gentle-float 5s ease-in-out infinite; }
-.objeccoes-container { display: flex; flex-direction: column; gap: 1.5rem; }
-.objeccao-card { background-color: var(--cor-fundo-secundario); padding: 2rem; border-radius: 20px; border-left: 4px solid var(--cor-destaque); }
-.objeccao-card h4 { font-size: 1.3rem; margin-bottom: 0.75rem; color: var(--cor-texto-principal); }
-.objeccao-card p { color: var(--cor-texto-secundario); line-height: 1.6; }
-
-/* --- BOTÕES FLUTUANTES E CHAT --- */
-.floating-buttons-container {
-    position: fixed;
-    bottom: -30px;
-    left: 20px;
-    right: 20px;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    pointer-events: none;
-}
-.floating-buttons-group {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    pointer-events: auto;
-}
-.floating-buttons-group.right-group {
-    align-items: flex-end;
-}
-.float-btn {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    transition: transform 0.3s ease, background-color 0.3s ease, opacity 0.3s ease;
-    cursor: pointer;
-    border: none;
-    text-decoration: none;
-}
-.float-btn:hover { transform: scale(1.1); }
-.float-btn svg { width: 32px; height: 32px; fill: white; }
-#ai-chat-btn img {
-    width: 60px;
-    height: 500px;
-    object-fit: contain;
-    border-radius: 50%;
-}
-#whatsapp-btn { background-color: #25D366; order: 2; }
-#ai-chat-btn { background-color: var(--cor-destaque); }
-#back-to-top-btn {
-    background-color: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(20px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    order: 1;
-}
-#back-to-top-btn.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
-
-/* --- PAINEL DE CHAT --- */
-#ai-chat-panel {
-    position: fixed;
-    bottom: 95px;
-    left: 20px;
-    width: 380px;
-    max-height: 550px;
-    background-color: #1c1c1e;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    border: 1px solid rgba(255,255,255,0.1);
-    z-index: 999;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-    pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-#ai-chat-panel.active {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    pointer-events: auto;
-}
-.ai-chat-header {
-    padding: 0.8rem 1rem;
-    background-color: rgba(0,0,0,0.2);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.ai-chat-header h3 { font-size: 1rem; margin: 0; color: var(--cor-texto-principal); }
-.ai-chat-close-btn {
-    background: none; border: none; color: var(--cor-texto-secundario); font-size: 1.5rem; cursor: pointer; line-height: 1; padding: 0 0.5rem;
-}
-.ai-chat-close-btn:hover { color: var(--cor-texto-principal); }
-#ai-chat-display {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding: 1rem;
-    margin-bottom: 0;
-    background-color: transparent;
-    border: none;
-    font-size: 0.9rem;
-}
-#ai-chat-display p {
-    padding: 0.7rem 1rem;
-    border-radius: 12px;
-    margin-bottom: 0.7rem;
-    line-height: 1.5;
-    max-width: 85%;
-    word-wrap: break-word;
-}
-#ai-chat-display .user-message {
-    margin-left: auto;
-    background-color: rgba(230, 57, 70, 0.2);
-    color: var(--cor-texto-principal);
-    text-align: right;
-    border-bottom-right-radius: 4px;
-}
-#ai-chat-display .ai-message {
-    margin-right: auto;
-    background-color: rgba(255,255,255,0.08);
-    color: var(--cor-texto-principal);
-    text-align: left;
-    border-bottom-left-radius: 4px;
-}
-#ai-chat-display .ai-message a {
-    color: var(--cor-verde-fluorescente);
-    text-decoration: underline;
-    font-weight: 500;
-}
-#ai-chat-display .ai-message a:hover {
-    color: var(--cor-destaque-hover);
-}
-#ai-quick-questions {
-    padding: 0.5rem 1rem 0rem 1rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    margin-bottom: 0.5rem;
-}
-.quick-question-btn {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--cor-texto-principal);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 15px;
-    padding: 6px 12px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    white-space: nowrap;
-}
-.quick-question-btn:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-}
-.ai-chat-input-area {
-    padding: 1rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    display: flex;
-    gap: 0.5rem;
-}
-#ai-chat-input {
-    width: 100%;
-    padding: 0.7rem 0.9rem;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background-color: rgba(255, 255, 255, 0.05);
-    color: var(--cor-texto-principal);
-    font-size: 0.9rem;
-    font-family: var(--font-family);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    flex-grow: 1;
-}
-#ai-chat-input:focus {
-    outline: none;
-    border-color: var(--cor-destaque);
-    box-shadow: 0 0 0 2px rgba(230, 57, 70, 0.2);
-}
-#ai-chat-submit {
-    padding: 0.7rem 1rem;
-    font-size: 0.9rem;
-    border-radius: 8px;
-    white-space: nowrap;
-    background-color: var(--cor-destaque);
-    color: #fff;
-    text-decoration: none;
-    font-weight: 500;
-    transition: background-color 0.3s ease, transform 0.1s ease;
-    border: none;
-    cursor: pointer;
-    text-align: center;
-}
-#ai-chat-submit:hover {
-    background-color: var(--cor-verde-fluorescente);
-    color: var(--cor-fundo);
-    transform: scale(1.03);
-}
-#ai-chat-submit:active {
-    transform: scale(0.98);
-}
-
-/* ======================================================================
-    NOVOS ESTILOS PARA CTA E FOOTER (Mantidos)
-====================================================================== 
-*/
-
-/* --- SEÇÃO #cta (REESTILIZADA) --- */
-#cta {
-    background: linear-gradient(180deg, var(--cor-fundo) 0%, var(--cor-fundo-secundario) 100%);
-    padding: 8rem 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-.cta-content-box {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #1c1c1e;
-    padding: 3rem 4rem;
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-    text-align: center;
-}
-#cta h2 {
-    color: var(--cor-verde-fluorescente);
-}
-#cta .subtitulo {
-    font-size: 1.2rem;
-    color: var(--cor-texto-secundario);
-    margin-bottom: 2rem;
-    line-height: 1.7;
-}
-.cta-list-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--cor-texto-principal);
-    margin-top: 2.5rem;
-    margin-bottom: 1.5rem;
-    text-align: left;
-}
-.cta-benefits-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 3rem;
-}
-.cta-benefits-list li {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 1.05rem;
-    color: var(--cor-texto-secundario);
-    line-height: 1.6;
-}
-.icon-check {
-    width: 24px;
-    height: 24px;
-    flex-shrink: 0;
-    color: var(--cor-verde);
-}
-.form-group-inline {
-    display: flex;
-    gap: 0;
-    border-radius: 980px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background-color: rgba(255, 255, 255, 0.05);
-    overflow: hidden;
-    transition: box-shadow 0.3s ease, border-color 0.3s ease;
-}
-.form-group-inline:focus-within {
-    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.3);
-    border-color: var(--cor-destaque);
-}
-#email-form {
-     margin-top: 1rem;
-     max-width: none;
-}
-#email-form .form-group {
-     margin-bottom: 0;
-}
-#email-form #email-input {
-    flex-grow: 1;
-    border: none;
-    background: transparent;
-    border-radius: 980px 0 0 980px;
-    padding-left: 1.5rem;
-    box-shadow: none;
-}
-#email-form #email-input:focus {
-    box-shadow: none;
-    border-color: transparent;
-}
-#email-form button[type="submit"] {
-    width: auto;
-    margin-top: 0;
-    border-radius: 0 980px 980px 0;
-    white-space: nowrap;
-    flex-shrink: 0;
-    font-weight: 600;
-    padding: 1rem 2rem;
-    animation: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-#email-form button[type="submit"]:hover {
-     transform: none;
-     background-color: var(--cor-verde-fluorescente);
-     color: var(--cor-fundo);
-}
-
-/* --- FOOTER (REESTILIZADO E SEMÂNTICO) --- */
-/* Esta seção foi refatorada para ser mais robusta e semântica */
-footer {
-    background-color: var(--cor-fundo-secundario);
-    color: var(--cor-texto-secundario);
-    padding: 5rem 0 3rem 0;
-    font-size: 0.9rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    text-align: left; /* Alinha o grid à esquerda por padrão */
-}
-
-/* 1. Estilos para o Grid de Links (Robustos) */
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2.5rem 2rem;
-    margin-bottom: 3rem;
-}
-.footer-grid h4 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--cor-texto-principal);
-    margin-bottom: 1.25rem;
-}
-.footer-grid ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-.footer-grid ul li a {
-    color: var(--cor-texto-secundario);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-.footer-grid ul li a:hover {
-    color: var(--cor-verde-fluorescente);
-}
-
-/* 2. Estilos para o Footer Bottom (Semântico) */
-.footer-bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 2.5rem;
-    text-align: center;
-}
-.footer-quote p {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--cor-texto-principal);
-    font-style: italic;
-    margin-bottom: 1.5rem;
-}
-.footer-mission p {
-    max-width: 600px;
-    margin: 0 auto 1rem auto;
-    font-size: 0.95rem;
-    line-height: 1.7;
-}
-.footer-legal {
-    margin-top: 2.5rem;
-    font-size: 0.85rem;
-}
-.footer-legal p {
-    margin-bottom: 0.5rem;
-}
-.designer-link {
-    color: var(--cor-texto-secundario);
-    text-decoration: none;
-    border-bottom: 1px dotted var(--cor-texto-secundario);
-    transition: color 0.3s ease, border-color 0.3s ease;
-}
-.designer-link:hover {
-    color: var(--cor-verde-fluorescente);
-    border-color: var(--cor-verde-fluorescente);
-}
-
-
-/* ======================================================================
-    NOVOS ESTILOS (Calculadora Inteligente & Chat AI UX)
-====================================================================== */
-
-/* --- NOVOS ESTILOS PARA CALCULADORA INTELIGENTE --- */
-
-/* Estas classes de status serão adicionadas dinamicamente via JavaScript 
-  ao #resultado-calculadora com base no cálculo do IMC.
-*/
-
-/* Status Padrão / Sucesso (Peso ideal) */
-#resultado-calculadora.status-sucesso {
-    background-color: rgba(255, 111, 145, 0.1); /* Seu rosa/verde original */
-    border-left: 4px solid var(--cor-verde);
-}
-#resultado-calculadora.status-sucesso strong {
-    color: var(--cor-verde);
-}
-
-/* Status de Aviso (Dá para melhorar / Abaixo do peso) */
-#resultado-calculadora.status-aviso {
-    background-color: rgba(255, 165, 0, 0.1); /* Laranja sutil */
-    border-left: 4px solid var(--cor-aviso);
-}
-#resultado-calculadora.status-aviso strong {
-    color: var(--cor-aviso);
-}
-
-/* Status de Alerta (Acima do peso) */
-#resultado-calculadora.status-alerta {
-    background-color: rgba(230, 57, 70, 0.1); /* Vermelho sutil */
-    border-left: 4px solid var(--cor-destaque);
-}
-#resultado-calculadora.status-alerta strong {
-    color: var(--cor-destaque);
-}
-
-
-/* --- NOVOS ESTILOS PARA CHAT AI (UX) --- */
-
-/* Esta classe será adicionada ao <p> da AI enquanto 
-  aguarda uma resposta das APIs externas (OpenAI, Gemini, etc.)
-*/
-.ai-message.typing {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding-top: 15px; /* Ajuste vertical para alinhar os pontos */
-    padding-bottom: 15px;
-}
-
-.typing-dot {
-    width: 8px;
-    height: 8px;
-    background-color: var(--cor-texto-secundario);
-    border-radius: 50%;
-    /* Animação de pulsação */
-    animation: typing-pulse 1.2s infinite ease-in-out;
-}
-
-/* Delay escalonado para os pontos */
-.typing-dot:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-.typing-dot:nth-child(3) {
-    animation-delay: 0.4s;
-}
-
-/* Animação dos pontos */
-@keyframes typing-pulse {
-    0%, 100% {
-        opacity: 0.3;
-        transform: scale(0.8);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-
-/* --- MEDIA QUERIES (Mantidos e ajustados) --- */
-@media (max-width: 1024px) {
-    .depoimento-card { flex: 0 0 47%; max-width: 47%; }
-    .feature-section, .feature-section.reverse { grid-template-columns: 1fr; gap: 2rem; }
-    .feature-section.reverse .feature-image { order: 0; }
-    .feature-image { margin-bottom: 2rem; }
-    .garantia-objecoes-grid { grid-template-columns: 1fr; gap: 3rem; }
-    .garantia-blindada-seal { max-width: 250px; margin: 0 auto; }
-}
-@media (max-width: 768px) {
-    section { padding: 5rem 0; }
-    .container { padding: 0 1.5rem; }
-    h1 { font-size: clamp(2.2rem, 7vw, 3rem); }
-    h2 { font-size: clamp(2rem, 7vw, 2.5rem); }
-    p.subtitulo { font-size: 1.2rem; }
-    #foco-no-treino p { font-size: 1.1rem; }
-    .header-logo-container { padding: 1.5rem; }
-    .header-logo { max-height: 165px; }
-    .title-grid { grid-template-columns: 1fr; gap: 1rem; }
-    .vertical-text, .left, .right { display: none; }
-    .poder-card { padding: 2rem 1.5rem; }
-    .feature-text h3 { font-size: 2rem; }
-    
-    .ferramentas-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .depoimento-card { flex: 0 0 90%; max-width: 90%; padding: 2rem; }
-    .carousel-wrapper { padding: 1.5rem 0; }
-    .carousel-btn { display: none; }
-    .objeccao-card { padding: 1.5rem; }
-    
-    /* Ajuste do Footer (Refatorado) */
-    footer {
-        text-align: center; /* Centraliza o grid em telas menores */
-    }
-    .footer-grid {
-        text-align: left; /* Mantém o texto dos links à esquerda */
-    }
-
-    .calculadora-form { padding: 2rem 1.5rem; }
-    #ai-chat-panel { width: calc(100% - 30px); left: 15px; bottom: 85px; max-height: 400px; }
-    .floating-buttons-container { bottom: 15px; left: 15px; right: 15px; }
-    
-    .cta-content-box {
-        padding: 2.5rem 1.5rem;
-    }
-}
-@media (max-width: 480px) {
-    h1 { font-size: clamp(2rem, 8vw, 2.5rem); }
-    p.subtitulo { font-size: 1.1rem; }
-    #foco-no-treino p { font-size: 1rem; }
-    .btn { padding: 0.9rem 2rem; font-size: 1rem; }
-    .depoimento-card { flex: 0 0 95%; max-width: 95%; }
-    .float-btn { width: 55px; height: 55px; }
-    .form-group input[type="text"],
-    .form-group input[type="number"],
-    .form-group input[type="email"],
-    .form-group select,
-    .form-group textarea { font-size: 0.95rem; padding: 0.8rem; }
-    #ai-chat-panel { bottom: 80px; width: calc(100% - 20px); left: 10px;}
-    #ai-chat-submit { font-size: 0.95rem; padding: 0.8rem 1.2rem; }
-    .floating-buttons-container { bottom: 10px; left: 10px; right: 10px; }
-    #ai-quick-questions { padding: 0.4rem 0.8rem 0rem 0.8rem; gap: 6px;}
-    .quick-question-btn { padding: 5px 10px; font-size: 0.75rem;}
-
-    .cta-content-box {
-        padding: 2rem 1rem;
-    }
-
-    /* Quebra o formulário inline em telas pequenas */
-    .form-group-inline {
-        flex-direction: column;
-        gap: 1rem;
-        border: none;
-        background: transparent;
-        overflow: visible;
-    }
-    
-    #email-form #email-input {
-        border-radius: 10px; /* Borda normal */
-        padding-left: 1rem;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        background-color: rgba(255, 255, 255, 0.05);
-    }
-    
-    #email-form button[type="submit"] {
-        border-radius: 980px; /* Borda normal */
-        width: 100%; /* Ocupa a largura toda */
-    }
-
-    .form-group-inline:focus-within {
-         box-shadow: none;
-         border-color: transparent;
-    }
-    
-    #email-form #email-input:focus {
-         border-color: var(--cor-destaque);
-         box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.3);
-    }
-}
-
-```css
-/* ======================================================================
-   NOVOS AJUSTES SOLICITADOS (Senior Developer Patch)
-   ====================================================================== */
-
-/* 1️⃣ ESTILOS DA NOVA SEÇÃO DE DESTAQUE */
-#destaque-especial {
-    padding: 6rem 0;
-    background-color: var(--cor-fundo); /* Mantém coerência, mas o box destaca */
-}
-
-.destaque-box {
-    background: linear-gradient(135deg, #222224 0%, #1a1a1a 100%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-left: 6px solid var(--cor-destaque); /* Destaque lateral na cor da marca */
-    border-radius: 24px;
-    padding: 0;
-    overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-}
-
-.destaque-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-}
-
-.destaque-imagem img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    min-height: 400px; /* Garante altura visual */
-}
-
-.destaque-conteudo {
-    padding: 3rem 4rem;
-    text-align: left;
-}
-
-.destaque-tag {
-    display: inline-block;
-    background-color: rgba(230, 57, 70, 0.15);
-    color: var(--cor-destaque);
-    font-size: 0.85rem;
-    font-weight: 700;
-    padding: 0.4rem 1rem;
-    border-radius: 50px;
-    margin-bottom: 1.5rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-
-.destaque-conteudo h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.2;
-    color: #fff;
-}
-
-.destaque-conteudo p {
-    color: var(--cor-texto-secundario);
-    font-size: 1.15rem;
-    line-height: 1.8;
-}
-
-/* Responsividade da Nova Seção */
-@media (max-width: 900px) {
-    .destaque-grid {
-        grid-template-columns: 1fr;
-    }
-    .destaque-imagem img {
-        min-height: 250px;
-        max-height: 300px;
-    }
-    .destaque-conteudo {
-        padding: 2.5rem 2rem;
-    }
-    .destaque-conteudo h2 {
-        font-size: 2rem;
-    }
-}
-
-
-/* 2️⃣ AJUSTE DE CORES NOS CAMPOS DA CALCULADORA (Select/Option) */
-/* Isso força o fundo escuro e texto claro nas opções do select */
-.form-group select {
-    background-color: rgba(255, 255, 255, 0.05); /* Fundo escuro */
-    color: var(--cor-texto-principal);
-}
-
-/* Estilização das opções internas (Dropdown) */
-.form-group select option {
-    background-color: #1c1c1e; /* Cor sólida escura para o menu */
-    color: #f5f5f7; /* Texto claro */
-    padding: 10px;
-}
-
-/* Remove foco azul padrão em alguns navegadores e substitui pela cor da marca */
-.form-group select:focus {
-    border-color: var(--cor-destaque);
-    background-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
-}
-
-
-/* 3️⃣ AJUSTE CAMPO DE E-MAIL (Texto Branco) */
-#email-form #email-input {
-    color: #ffffff !important; /* Força o branco */
-}
-
-/* Hack para forçar a cor branca mesmo quando o navegador usa o Auto-Complete */
-#email-form #email-input:-webkit-autofill,
-#email-form #email-input:-webkit-autofill:hover, 
-#email-form #email-input:-webkit-autofill:focus, 
-#email-form #email-input:-webkit-autofill:active {
-    -webkit-text-fill-color: #ffffff !important;
-    -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.05) inset !important;
-    transition: background-color 5000s ease-in-out 0s;
-}
-
-/* Ajuste do placeholder para garantir contraste */
-#email-form #email-input::placeholder {
-    color: rgba(255, 255, 255, 0.6);
-}
-
-/* 4️⃣ AJUSTE DE COR DA SETA (Voltar ao Topo) */
-#back-to-top-btn {
-    color: #FF6F91 !important; /* Define a cor do elemento para o Rosa do tema */
-}
-
-#back-to-top-btn svg {
-    stroke: #FF6F91 !important; /* Força a linha da seta a ficar Rosa */
-    fill: transparent !important; /* Garante que não tenha preenchimento indesejado */
-}
-/* ======================================================================
-   6️⃣ MOTOR DE PADRONIZAÇÃO INTELIGENTE (CSS FLUIDO)
-   ====================================================================== */
-
-:root {
-    /* A MÁGICA DO CLAMP:
-       clamp(MINIMO, VALOR IDEAL, MAXIMO)
-       
-       --spacing-section: Espaço vertical entre seções.
-       No celular será 4rem, em telas gigantes 8rem, e no meio termo ele calcula sozinho.
-    */
-    --spacing-section: clamp(4rem, 8vh, 8rem);
-    
-    /* --spacing-gap: Espaço entre colunas e cards */
-    --spacing-gap: clamp(2rem, 4vw, 4rem);
-    
-    /* --spacing-text: Espaço entre Título e Texto */
-    --spacing-text: clamp(1rem, 2vh, 1.5rem);
-}
-
-/* 1. RESET ESTRUTURAL DE TODAS AS SEÇÕES */
-section {
-    padding-top: var(--spacing-section) !important;
-    padding-bottom: var(--spacing-section) !important;
-    width: 100%;
-    position: relative;
-    /* Garante que o conteúdo centralize verticalmente se sobrar espaço */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-/* 2. REGRA DE OURO DO CONTAINER (Centralização Perfeita) */
-.container {
-    width: 100%;
-    max-width: 1200px; /* Leve aumento para telas modernas */
-    margin: 0 auto;
-    padding: 0 clamp(1.5rem, 5vw, 2rem); /* Padding lateral inteligente */
-}
-
-/* 3. RITMO VERTICAL (Padroniza distâncias de texto) */
-/* Isso resolve a sensação de "bagunça" interna */
-section h2 {
-    margin-bottom: var(--spacing-text) !important;
-    line-height: 1.2;
-}
-
-section p.subtitulo {
-    margin-bottom: calc(var(--spacing-text) * 2) !important;
-}
-
-/* 4. ALINHAMENTO DE GRIDS (Force Balance) */
-/* Obriga todos os grids a usarem o mesmo espaçamento inteligente */
-.feature-section,
-.destaque-grid,
-.garantia-objecoes-grid,
-.ferramentas-grid,
-.poder-grid {
-    display: grid;
-    gap: var(--spacing-gap) !important;
-    align-items: center; /* Centraliza verticalmente imagem com texto */
-}
-
-/* 5. TRATAMENTO DE EXCEÇÕES (Lógica de "Cola") */
-/* Aqui aplicamos a lógica para seções que precisam tocar umas nas outras */
-
-/* Hero: Zera tudo para ocupar a tela */
-#hero {
-    padding: 0 !important;
-    min-height: 100vh;
-    display: block; /* Hero não usa o flex do section padrão */
-}
-
-/* Poder: Cola no fundo, mas mantém respiro no topo */
-#poder {
-    padding-top: var(--spacing-section) !important;
-    padding-bottom: 0 !important;
-}
-
-/* Importância: Cola no topo (porque o Poder colou no fundo) */
-#importancia {
-    padding-top: var(--spacing-section) !important; 
-    /* Se quiser colar visualmente, mude para 0, mas recomendo manter o respiro para leitura */
-}
-
-/* Garantia: Mantém o padrão inteligente */
-#garantia-objecoes {
-    padding-top: var(--spacing-section) !important;
-    padding-bottom: var(--spacing-section) !important;
-}
-
-/* CTA: Destaque final */
-#cta {
-    padding-top: var(--spacing-section) !important;
-    padding-bottom: var(--spacing-section) !important;
-}
-
-/* Footer: Espaçamento próprio */
-footer {
-    padding-top: var(--spacing-section) !important;
-    padding-bottom: 3rem !important;
-}
-
-/* 6. CORREÇÃO ESPECÍFICA PARA MOBILE (Layout Stacking) */
-@media (max-width: 900px) {
-    /* Força uma coluna única em telas menores para não quebrar o layout */
-    .feature-section, 
-    .destaque-grid, 
-    .garantia-objecoes-grid {
-        grid-template-columns: 1fr !important;
-        text-align: center; /* Centraliza texto no mobile para organização */
-    }
-    
-    /* Remove a ordem reversa no mobile para ficar lógico (Imagem -> Texto) */
-    .feature-section.reverse .feature-image {
-        order: -1 !important; /* Imagem sempre primeiro */
-    }
-    
-    /* Ajuste de Texto */
-    .feature-text, .destaque-conteudo {
-        padding: 0 !important;
-        text-align: left; /* Ou center, dependendo do gosto, left é mais legível */
-    }
-}
-
-/* ======================================================================
-   7️⃣ CORREÇÃO DE OVERFLOW E LAYOUT (#PODER)
-   ====================================================================== */
-
-/* 1. Devolvemos o espaçamento inferior padrão para a seção respirar */
-#poder {
-    padding-bottom: var(--spacing-section) !important; /* Restaura o espaço */
-    height: auto !important; /* Garante que a altura acompanhe o conteúdo */
-    background-color: var(--cor-fundo-secundario); /* Garante fundo sólido */
-    overflow: visible; /* Permite que sombras apareçam sem cortar */
-}
-
-/* 2. Blindagem do Grid para evitar quebra de layout */
-.poder-grid {
-    display: grid;
-    /* Ajuste inteligente: se a tela for muito pequena, reduz a largura mínima para 280px */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
-    gap: var(--spacing-gap) !important;
-    width: 100%;
-    margin-top: 3rem;
-}
-
-/* 3. Garante que os cards tenham a mesma altura e não estourem */
-.poder-card {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    box-sizing: border-box; /* Garante que padding não estoure a largura */
-}
-
-/* 4. Ajuste específico para Mobile para evitar vazamento lateral */
-@media (max-width: 480px) {
-    .poder-grid {
-        display: flex !important; /* Muda para flexbox vertical no mobile extremo */
-        flex-direction: column;
-        gap: 2rem !important;
-    }
-    
-    .poder-card {
-        width: 100% !important;
-        margin: 0 !important;
-    }
-}
-
-/* ======================================================================
-   8️⃣ CORREÇÃO FINAL: TEXTO DA NOVA SEÇÃO (MOBILE)
-   ====================================================================== */
-
-@media (max-width: 768px) {
-    /* 1. Força o empilhamento vertical (Imagem em cima, Texto embaixo) */
-    .destaque-grid {
-        display: flex !important;
-        flex-direction: column !important;
-        grid-template-columns: 1fr !important;
-        width: 100% !important;
-    }
-
-    /* 2. Ajuste Crítico do Conteúdo de Texto */
-    .destaque-conteudo {
-        padding: 2rem 1.5rem !important; /* Reduz o padding gigante do PC para algo seguro no mobile */
-        width: 100% !important;
-        box-sizing: border-box !important; /* Garante que o padding não aumente a largura total */
-        text-align: left; /* Mantém a leitura natural */
-    }
-
-    /* 3. Prevenção de Estouro de Texto */
-    .destaque-conteudo p {
-        font-size: 1rem !important; /* Tamanho legível */
-        width: 100% !important;
-        max-width: 100% !important;
-        word-wrap: break-word; /* Quebra palavras muito longas para não vazar */
-    }
-
-    /* 4. Ajuste do Título para não quebrar feio */
-    .destaque-conteudo h2 {
-        font-size: 1.8rem !important; /* Título proporcional à tela do celular */
-        line-height: 1.3 !important;
-        margin-bottom: 1rem !important;
-    }
-
-    /* 5. Controle da Imagem no Mobile */
-    .destaque-imagem {
-        width: 100% !important;
-        height: 250px !important; /* Altura fixa para não ocupar a tela toda */
-    }
-
-    .destaque-imagem img {
-        height: 100% !important;
-        width: 100% !important;
-        object-fit: cover;
-    }
-}
-/* ======================================================================
-   9️⃣ AUMENTO DO CAMPO DE E-MAIL (MOBILE UX)
-   ====================================================================== */
-
-@media (max-width: 480px) {
-    /* Aumenta a altura e a área de toque do input */
-    #email-form #email-input {
-        padding: 1.2rem 1.5rem !important; /* Aumenta o "gordo" do campo (Cima/Baixo e Lados) */
-        font-size: 1.1rem !important; /* Aumenta a letra para facilitar a leitura */
-        min-height: 60px !important; /* Garante uma altura mínima generosa para o dedo */
-        line-height: normal !important; /* Centraliza o texto verticalmente */
-    }
-
-    /* Opcional: Ajusta o botão para ficar da mesma altura do campo e não ficar desproporcional */
-    #email-form button[type="submit"] {
-        padding: 1.2rem 2rem !important;
-        min-height: 60px !important;
-        font-size: 1.1rem !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-    }
-}
-
-/* ======================================================================
-   🔟 MELHORIA DE UX NO CHAT (Mobile & Scroll)
-   ====================================================================== */
-
-/* Classe utilitária para esconder os botões flutuantes quando o chat abre */
-.floating-buttons-container.hide-on-chat {
-    opacity: 0;
-    pointer-events: none; /* Impede cliques acidentais quando invisível */
-    transform: translateY(20px); /* Animação de descida */
-}
-
-/* Garante que a transição seja suave */
-.floating-buttons-container {
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-/* Ajuste Fino para o Scroll da Mensagem */
-.ai-message, .user-message {
-    scroll-margin-bottom: 20px; /* Garante um respiro quando rolar automaticamente */
-}
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header id="hero">
+        <div id="iframe-background-container" style="width:100%; height:100%; position:absolute;">
+            <iframe id="iframe-background" src="" frameborder="0" allow="autoplay; encrypted-media;" allowfullscreen></iframe>
+        </div>
+        <video id="video-background" autoplay muted loop playsinline poster="https://images.pexels.com/photos/3401402/pexels-photo-3401402.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></video>
+
+        <div class="header-logo-container">
+            <a href="#hero">
+                <img src="logo.png" alt="Logo Emagrecimento Real" class="header-logo">
+            </a>
+        </div>
+
+        <div class="hero-content container">
+            <div class="title-grid">
+                <span class="vertical-text left animate-on-scroll">A DECISÃO</span>
+                <div class="main-title">
+                    <h1 class="animate-on-scroll" style="transition-delay: 0.1s;">Primeira coisa: você quer emagrecer, sim ou não?</h1>
+                    <p class="subtitulo animate-on-scroll" style="transition-delay: 0.2s;">Se a resposta for não, pode sair dessa página agora — de verdade. Você poupa o seu tempo, e eu poupo o meu. Mas se você ficou aqui, é porque está cansada de promessas vazias, dietas malucas e gurus que nunca suaram na vida. Então, parabéns. Você acabou de dar o primeiro passo pro único tipo de transformação que realmente funciona: A real, feita com verdade, estratégia e resultado.</p>
+                    <div class="animate-on-scroll" style="transition-delay: 0.3s;">
+                        <a href="#calculadora" class="btn" id="cta-hero-btn">COMEÇAR PELA MINHA META</a>
+                    </div>
+                </div>
+                 <span class="vertical-text right animate-on-scroll">É SUA</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="poder">
+            <div class="container">
+                <h2 class="animate-on-scroll">⚖️ A Verdade Que Ninguém Conta</h2>
+                <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">Esqueça os mitos. Não existe cápsula mágica, chá que seca dormindo ou treino de 5 minutos que muda seu corpo. O que existe é ciência, consistência e paciência.</p>
+                <div class="poder-grid">
+                    <div class="poder-card animate-on-scroll" style="transition-delay: 0.2s;">
+                        <h3>O Início: Retenção Líquida</h3>
+                        <p>Nos primeiros 20 a 30 dias, o que você perde não é gordura — é retenção líquida. O corpo está apenas respondendo à nova rotina.</p>
+                    </div>
+                    <div class="poder-card animate-on-scroll" style="transition-delay: 0.3s;">
+                        <h3>A Virada: Gordura Real</h3>
+                        <p>A perda de gordura real começa quando você mantém foco e constância. Dedicação e estratégia trazem a diferença visível.</p>
+                    </div>
+                    <div class="poder-card animate-on-scroll" style="transition-delay: 0.4s;">
+                        <h3>O Resultado: Transformação</h3>
+                        <p>Em 60 a 90 dias, o espelho começa a sorrir de volta. Em 120 dias, você se transforma — de dentro pra fora.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="destaque-especial">
+            <div class="container">
+                <div class="destaque-box animate-on-scroll">
+                    <div class="destaque-grid">
+                        <div class="destaque-imagem">
+                            <img src="https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Imagem de Destaque">
+                        </div>
+                        <div class="destaque-conteudo">
+                            <span class="destaque-tag">IMPORTANTE</span>
+                            <h2>O Ponto de Virada</h2>
+                            <p>Muitas pessoas começam, mas poucas entendem esse segredo. Aqui está a peça que faltava no seu quebra-cabeça: a consistência aliada à estratégia correta supera qualquer esforço isolado. Não é sobre sofrer, é sobre saber fazer.</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        
+        <section id="importancia">
+            <div class="container">
+                <div class="feature-section">
+                     <div class="feature-image animate-on-scroll">
+                        <img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=687" alt="Mulher focada treinando na academia">
+                    </div>
+                    <div class="feature-text animate-on-scroll">
+                        <h3>🏋️ Academia: Seu Canteiro de Obra</h3>
+                        <p>Pense na academia como o seu canteiro de construção. Você é a pedreira do próprio corpo. Cada treino é um tijolo. Cada gota de suor, um passo a mais na sua nova versão.<br>💡 <strong>Leve a sério:</strong> Vá com propósito, não pra “matar tempo”. Esqueça o celular. Ele é o vilão do seu foco. Se precisar, deixe o número na recepção. O mundo pode esperar. Durante aquela 1 hora, você não precisa de distração — precisa de ritmo, intensidade e suor. É isso que acelera o metabolismo, ativa o glicogênio e faz o corpo queimar gordura de verdade.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="beneficios" style="background-color: var(--cor-fundo-secundario);">
+            <div class="container">
+                <div class="feature-section reverse">
+                     <div class="feature-image animate-on-scroll">
+                        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZGlldGF8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=600" alt="Prato de comida saudável e colorida">
+                    </div>
+                    <div class="feature-text animate-on-scroll">
+                        <h3>🥗 Dieta: O Combustível Certo</h3>
+                        <p>A dieta não é o vilão da sua vida — é o motor da sua evolução. Nos primeiros 30 dias, dê o seu máximo de segunda a sexta. Seu corpo precisa entender que você está no comando agora.<br>✅ <strong>Regras de ouro:</strong> Evite restrições absurdas. <strong>Constância > perfeição</strong>. Priorize proteínas, fibras e água. Um bom nutricionista faz diferença — mas escolha alguém que viva o que ensina. E lembre-se: você não está de dieta, está em reconstrução. O que você come hoje é o que seu corpo vai agradecer amanhã.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="construtor">
+            <div class="container">
+                 <div class="feature-section">
+                     <div class="feature-image animate-on-scroll">
+                        <img src="https://images.unsplash.com/photo-1732900293895-233f769299b3?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170" alt="Suplementos organizados">
+                    </div>
+                    <div class="feature-text animate-on-scroll">
+                        <h3>💊 Suplementação Inteligente</h3>
+                        <p>Suplementos não substituem esforço, mas aceleram resultados quando usados com consciência.<br>⭐ <strong>Os aliados ideais pra quem está começando:</strong><br>- Whey Protein: ajuda na recuperação e na construção muscular.<br>- Creatina: mantém força e desempenho, mesmo em déficit calórico.<br>- Termogênicos confiáveis: dão um empurrãozinho na queima de gordura (sempre com treino e acompanhamento).<br>🚫 Evite os produtos “milagrosos” da internet. Grande parte não tem respaldo científico e pode prejudicar seu metabolismo.<br>👉 <strong>A fórmula real é simples: Treino certo + dieta ajustada + suplementos confiáveis = resultado real.</strong></p>
+                        
+                        <div class="recomendacao-box-v5">
+                            <strong>Minhas Recomendações (Curadoria):</strong>
+                            <p>Para te poupar tempo (e dinheiro com produtos ruins), estas são as marcas que eu uso e confio:</p>
+                            
+                            <div class="recomendacao-links-v5">
+                                <a href="https://s.shopee.com.br/10uyEPTyHY" target="_blank" rel="noopener noreferrer" class="rec-card-btn">
+                                    <img src="https://down-br.img.susercontent.com/file/br-11134211-7r98o-m9lrst2tugoy0e.webp" alt="Whey Protein Icon"> <div class="rec-card-text">
+                                        <strong>Whey + Creatina</strong>
+                                        <span>O Essencial</span>
+                                    </div>
+                                    <span class="rec-card-arrow">→</span>
+                                </a>
+
+                                <a href="https://s.shopee.com.br/8V0z9zSfYb" target="_blank" rel="noopener noreferrer" class="rec-card-btn">
+                                    <img src="magnesio.png" alt="Termogênico Icon"> <div class="rec-card-text">
+                                        <strong>Termogênico</strong>
+                                        <span>O Acelerador</span>
+                                    </div>
+                                    <span class="rec-card-arrow">→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                 </div>
+            </div>
+        </section>
+
+        <section id="privacidade" style="background-color: var(--cor-fundo-secundario);">
+            <div class="container">
+                 <div class="feature-section reverse">
+                     <div class="feature-image animate-on-scroll">
+                        <img src="personal.jpg" alt="Mulher olhando-se no espelho com confiança">
+                    </div>
+                    <div class="feature-text animate-on-scroll">
+                        <h3>🔥 A Mentalidade Que Muda Tudo</h3>
+                        <p>Você não precisa de sorte. Precisa de estratégia.<br>Não precisa de milagre. Precisa de consistência.<br>E, sinceramente? Não precisa de um personal com mais barriga que você — precisa de alguém que viva o que ensina, inspire o que fala e te mostre o caminho com verdade.<br>Aqui, você vai encontrar orientação real, com humor, seriedade e propósito. Sem ilusões. Sem atalhos. Apenas o caminho certo pra emagrecer de verdade, com saúde e autoestima.</p>
+                    </div>
+                 </div>
+            </div>
+        </section>
+
+        <section id="foco-no-treino">
+            <div class="container">
+                <h2 class="animate-on-scroll">📸 Foco Total: Onde a Evolução Acontece</h2>
+                <p class="animate-on-scroll" style="transition-delay: 0.1s;">
+                    <strong>Não perca tempo tirando fotos na academia.</strong> Seu objetivo agora é treinar.
+                </p>
+                <p class="animate-on-scroll" style="transition-delay: 0.2s;">
+                    Tire fotos da sua evolução em casa — esse é o momento de ter <strong>foco total em você.</strong>
+                </p>
+                <p class="animate-on-scroll" style="transition-delay: 0.3s;">
+                    As redes sociais não vão te ajudar agora, e acredite, <strong>elas realmente não vão.</strong>
+                </p>
+            </div>
+        </section>
+
+        <section id="integracoes">
+            <div class="container">
+                <h2 class="animate-on-scroll">Ferramentas que podem te ajudar</h2>
+                <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">A tecnologia é sua aliada. Estes são os aplicativos que recomendo para monitorar sua jornada.</p>
+                
+                <div class="ferramentas-grid">
+                    
+                    <div class="ferramenta-card animate-on-scroll" style="transition-delay: 0.2s;">
+                        <img src="https://images.pexels.com/photos/1109197/pexels-photo-1109197.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="App de Dieta (Ex: MyFitnessPal)">
+                        <div class="ferramenta-card-content">
+                            <h3>App de Dieta</h3>
+                            <p>Monitore sua ingestão de calorias e macros (proteínas, carboidratos, gorduras) com precisão. Conhecimento é poder.</p>
+                            <a href="https://www.myfitnesspal.com/pt/" target="_blank" rel="noopener noreferrer" class="btn-secundario">Ver App</a>
+                        </div>
+                    </div>
+                    
+                    <div class="ferramenta-card animate-on-scroll" style="transition-delay: 0.3s;">
+                        <img src="https://images.pexels.com/photos/1153369/pexels-photo-1153369.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="App de Treino (Ex: Strava)">
+                        <div class="ferramenta-card-content">
+                            <h3>App de Treino</h3>
+                            <p>Registre seus treinos, meça seu progresso de cardio e mantenha-se motivada com a comunidade. O que não é medido, não é gerenciado.</p>
+                            <a href="https://play.google.com/store/apps/details?id=com.strava&hl=pt_BR" target="_blank" rel="noopener noreferrer" class="btn-secundario">Ver App</a>
+                        </div>
+                    </div>
+                    
+                    <div class="ferramenta-card animate-on-scroll" style="transition-delay: 0.4s;">
+                        <img src="https://images.pexels.com/photos/935777/pexels-photo-935777.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="App de Sono (Ex: Sleep Cycle)">
+                        <div class="ferramenta-card-content">
+                            <h3>App de Sono</h3>
+                            <p>O emagrecimento acontece na recuperação. Monitorar a qualidade do seu sono é crucial para a regulação hormonal e reparo muscular.</p>
+                            <a href="https://www.sleepcycle.com/" target="_blank" rel="noopener noreferrer" class="btn-secundario">Ver App</a>
+                        </div>
+                    </div>
+                    
+                    <div class="ferramenta-card animate-on-scroll" style="transition-delay: 0.5s;">
+                        <img src="https://images.pexels.com/photos/6342183/pexels-photo-6342183.jpeg" alt="App de Hidratação (Ex: Waterllama)">
+                        <div class="ferramenta-card-content">
+                            <h3>App de Hidratação</h3>
+                            <p>Bater sua meta de água (que você viu na calculadora) é vital para o metabolismo. Use um app para criar o hábito e não esquecer.</p>
+                            <a href="https://waterllama.com/" target="_blank" rel="noopener noreferrer" class="btn-secundario">Ver App</a>
+                        </div>
+                    </div>
+
+                </div> </div>
+        </section>
+
+        <section id="depoimentos">
+              <div class="container">
+                    <h2 class="animate-on-scroll">Histórias Reais de Transformação.</h2>
+                    <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">Elas também duvidaram. Hoje, inspiram.</p>
+                    <div class="carousel-container">
+                        <button id="prev-btn" class="carousel-btn" aria-label="Anterior"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+                        <div class="carousel-wrapper" id="carousel-wrapper"><div class="depoimento-card"><blockquote>"Eu já tinha tentado low carb, jejum e tudo mais. No ebook eu entendi que eu simplesmente não fazia déficit. Só isso já valeu."
+                            </blockquote><div class="author"><img src="https://images.pexels.com/photos/837358/pexels-photo-837358.jpeg" alt="Ana B."><div class="author-info"><strong>JEFERSON</strong><small>EMPRESÁRIO</small></div></div></div>
+                            <div class="depoimento-card"><blockquote>"O passo do sono foi o que mais me pegou. Eu achava que era só dieta e cardio. Dormi melhor, parei de atacar doce à noite."
+                            </blockquote><div class="author"><img src="https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg" alt="Carla M."><div class="author-info"><strong>CARLA</strong><small>Estudante Universitária</small></div></div></div> <div class="depoimento-card"><blockquote>"A parte da mentalidade foi crucial. Parei de me culpar por cada deslize e aprendi a ter constância. Em 6 meses, não só emagreci, mas mudei minha relação com a comida e comigo mesma."
+                            </blockquote><div class="author"><img src="https://images.pexels.com/photos/842571/pexels-photo-842571.jpeg" alt="Sofia R."><div class="author-info"><strong>SOFIA</strong><small>Empreendedora</small></div></div></div>
+                        <div class="depoimento-card">
+    <blockquote>"Gostei porque não tem enrolação. São 5 coisas pra fazer e ele fala que se tirar uma, não funciona. Aí eu fiz as 5."</blockquote>
+    <div class="author">
+        <img src="https://midias.jornalcruzeiro.com.br/wp-content/uploads/2020/03/O-que-%C3%A9-ser-mulher-hoje-0.jpg" alt="Nome da Nova Pessoa">
+        <div class="author-info">
+            <strong>JENNIFER</strong>
+            <small>EMPRESÁRIA</small>
+        </div>
+    </div>
+</div>
+<div class="depoimento-card">
+    <blockquote>"Eu trabalho sentada o dia todo e nunca batia 3.000 passos. Com a ideia dos 10.000 por dia eu comecei a me mexer e já desinchei na primeira semana."</blockquote>
+    <div class="author">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5FvCajUnzXt3ygidZY_0QITtq3dje1iLXIQ&s" alt="Nome da Nova Pessoa">
+        <div class="author-info">
+            <strong>SORAIA</strong>
+            <small>APOSENTADA</small>
+        </div>
+    </div>
+</div>
+<div class="depoimento-card">
+    <blockquote>"O exercício dos 5 porquês mudou pra mim. Eu não emagrecia porque eu nem sabia por que queria. Agora ficou mais fácil dizer não."</blockquote>
+    <div class="author">
+        <img src="https://gente.globo.com/wp-content/uploads/2024/10/153525-gente-donas-da-casa-quem-sao-as-mulheres-empoderadas-2.jpg" alt="Nome da Nova Pessoa">
+        <div class="author-info">
+            <strong>JULIANA</strong>
+            <small>EMPREGADA DOMÉSTICA</small>
+        </div>
+    </div>
+</div>
+<div class="depoimento-card">
+    <blockquote>"Eu sempre emagreci ficando flácida. No ebook ele explica por que tem que fazer musculação. Voltei pra academia e agora o corpo tá ganhando forma."</blockquote>
+    <div class="author">
+        <img src="https://assets.propmark.com.br/uploads/2022/02/WhatsApp-Image-2022-02-18-at-08.52.06.jpeg" alt="Nome da Nova Pessoa">
+        <div class="author-info">
+            <strong>CAMILA</strong>
+            <small>BANCARIA</small>
+        </div>
+    </div>
+</div>
+<div class="depoimento-card">
+    <blockquote>"O melhor é que ele mostra aplicativo pra contar caloria. Eu não sabia por onde começar. Agora sei quanto posso comer."</blockquote>
+    <div class="author">
+        <img src="https://f.i.uol.com.br/fotografia/2024/03/07/170982434865e9d95cd132e_1709824348_3x2_md.jpg" alt="Nome da Nova Pessoa">
+        <div class="author-info">
+            <strong>MILENA</strong>
+            <small>SECRETARIA</small>
+        </div>
+    </div>
+</div>
+<div class="depoimento-card">
+    <blockquote>"Gostei que não promete milagre. Fala 60 dias, mas deixa claro que tem que fazer tudo. Isso dá confiança."</blockquote>
+    <div class="author">
+        <img src="https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_640.jpg" alt="Nome da Nova Pessoa">
+        <div class="author-info">
+            <strong>RODRIGO</strong>
+            <small>ESCRITOR</small>
+        </div>
+    </div>
+</div>
+<div class="depoimento-card">
+    <blockquote>"Comecei pelo passo do movimento e já me senti mais disposta. Aí o resto ficou mais fácil de seguir."</blockquote>
+    <div class="author">
+        <img src="https://www.sad.ms.gov.br/wp-content/uploads/2020/09/Hosilene_.jpg" alt="Nome da Nova Pessoa">
+        <div class="author-info">
+            <strong>FERNANDA</strong>
+            <small>FUNCIONÁRIA PÚBLICA</small>
+        </div>
+    </div>
+</div>
+<div class="depoimento-card">
+    <blockquote>"É simples de entender. Não é linguagem de nutricionista. Dá pra aplicar na rotina normal, com trabalho, casa e tudo."</blockquote>
+    <div class="author">
+        <img src="https://images.pexels.com/photos/26776506/pexels-photo-26776506.jpeg" alt="Nome da Nova Pessoa">
+        <div class="author-info">
+            <strong>PATRÍCIA</strong>
+            <small>DENTISTA</small>
+        </div>
+    </div>
+</div>
+                        </div>
+                        <button id="next-btn" class="carousel-btn" aria-label="Próximo"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+                    </div>
+              </div>
+          </section>
+
+        <section id="calculadora">
+            <div class="container">
+                <h2 class="animate-on-scroll">Calculadora de Metas Nutricionais</h2>
+                <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">Descubra estimativas personalizadas para te ajudar a alcançar seus objetivos de emagrecimento. Preencha os campos abaixo.</p>
+
+                <form id="calculadora-form" class="calculadora-form animate-on-scroll" style="transition-delay: 0.2s;">
+                     <div class="form-group"> <label for="calc-nome">Nome:</label> <input type="text" id="calc-nome" required placeholder="Como podemos te chamar?"> </div> <div class="form-group"> <label for="calc-idade">Idade:</label> <input type="number" id="calc-idade" required min="1" placeholder="Quantos anos você tem?"> </div> <div class="form-group"> <label for="calc-altura">Altura (em cm):</label> <input type="number" id="calc-altura" required min="1" placeholder="Ex: 165"> </div> <div class="form-group"> <label for="calc-peso">Peso Atual (em kg):</label> <input type="number" id="calc-peso" required min="1" step="0.1" placeholder="Ex: 70.5"> </div> <div class="form-group"> <label for="calc-treino">Nível de Treino:</label> <select id="calc-treino" required> <option value="" disabled selected>Selecione seu nível</option> <option value="iniciante">Iniciante (Treina pouco ou começou agora)</option> <option value="intermediario">Intermediário (Treina 3-4x por semana)</option> <option value="avancado">Avançado (Treina 5x ou mais por semana)</option> </select> </div> <div class="form-group"> <label for="calc-remedio">Já usou remédio para emagrecer?</label> <select id="calc-remedio" required> <option value="" disabled selected>Selecione</option> <option value="nao">Não</option> <option value="sim">Sim</option> </select> </div> <div class="form-group"> <label for="calc-suplemento">Tem vontade de usar suplemento que ajuda a emagrecer?</label> <select id="calc-suplemento" required> <option value="" disabled selected>Selecione</option> <option value="sim">Sim</option> <option value="nao">Não</option> <option value="talvez">Talvez / Preciso de orientação</option> </select> </div> <div class="form-group"> <label for="calc-saude">Saúde Geral / Condições Especiais:</label> <textarea id="calc-saude" rows="3" placeholder="Ex: Tudo certo, Gravidez, Pós-parto, Alguma restrição alimentar, etc."></textarea> </div>
+                    <button type="submit" class="btn">Calcular Minhas Metas</button>
+                </form>
+
+                <div id="resultado-calculadora" style="display: none;">
+                    </div>
+                 <p class="disclaimer"><strong>Importante:</strong> Esta calculadora oferece apenas estimativas com base em diretrizes gerais. Os resultados não substituem a avaliação e orientação de um profissional de saúde ou nutricionista. Consulte um especialista para um plano personalizado.</p>
+            </div>
+        </section>
+        
+        <section id="cta">
+            <div class="container">
+                <div class="cta-content-box animate-on-scroll">
+                    <h2 class="animate-on-scroll"> Nada de fórmula milagrosa, só o passo a passo que funciona:</h2>
+                    <h3>movimento diário, mente no lugar, dieta ajustada, treino certo e sono de verdade.</h3>
+                    <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">
+                        ✋ movimento diário inteligente mentalidade pra não furar dieta em déficit sem mimimi
+                            musculação pra não perder músculo sono pra acelerar tudo Coloca seu e-mail aqui embaixo que eu te 
+                            envio o ebook completo agora mesmo. Você vai entender por que não precisa viver de cardio, como segurar 
+                            a fome, como montar o prato certo e o que fazer pra não desistir no meio do caminho.
+                    </p>
+                    
+                    <h3 class="cta-list-title">Você vai receber:</h3>
+                    
+                    <ul class="cta-benefits-list">
+                        <li>
+                            <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            <span>O Guia de Emagrecimento Real (sem milagre, só ciência).</span>
+                        </li>
+                        <li>
+                            <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            <span>Dicas práticas de alimentação, treino e foco.</span>
+                        </li>
+                        <li>
+                            <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            <span>É gratuito. Só o e-mail e acabou.</span>
+                        </li>
+                    </ul>
+
+                    <div class="cta-form-wrapper">
+                        <form id="email-form" style="margin-top: 1rem;">
+                            <div class="form-group-inline">
+                                <label for="email-input" style="display: none;">Email:</label>
+                                <input type="email" id="email-input" placeholder="Digite seu melhor e-mail" required>
+                                <button type="submit" class="btn" style="width: auto;">QUERO COMEÇAR AGORA</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <section id="garantia-objecoes" style="background-color: var(--cor-fundo-secundario);"> <div class="container"> <h2 class="animate-on-scroll">Suas dúvidas, nossas respostas.</h2> <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">Entendemos suas preocupações. Veja por que este caminho é diferente.</p> <div class="garantia-objecoes-grid"> <div class="garantia-blindada-seal animate-on-scroll" style="transition-delay: 0.2s;"> <img src="https://images.pexels.com/photos/6383268/pexels-photo-6383268.jpeg" alt="Selo de Dúvidas Resolvidas"> </div> <div class="objeccoes-container"> <div class="objeccao-card animate-on-scroll" style="transition-delay: 0.3s;"> <h4>"Já tentei de tudo e nada funcionou."</h4> <p>Entendemos. Muitas dietas falham por serem restritivas demais ou não considerarem sua individualidade. Nosso foco é criar um plano sustentável, adaptado à sua rotina e que ensine hábitos para a vida, não apenas para um período.</p> </div> <div class="objeccao-card animate-on-scroll" style="transition-delay: 0.4s;"> <h4>"Não tenho tempo para cozinhar ou treinar."</h4> <p>O segredo não é ter mais tempo, é usar o tempo de forma inteligente. Vamos te mostrar estratégias práticas para refeições rápidas e saudáveis, e treinos eficientes que se encaixam até nas agendas mais corridas. Pequenas mudanças consistentes geram grandes resultados.</p> </div> <div class="objeccao-card animate-on-scroll" style="transition-delay: 0.5s;"> <h4>"Tenho medo de falhar novamente."</h4> <p>O medo é natural, mas aqui você não estará sozinha. O acompanhamento contínuo e o foco na mentalidade são partes essenciais do processo. Vamos trabalhar juntas para construir sua confiança e resiliência, celebrando cada pequena vitória no caminho.</p> </div> </div> </div> </div> </section>
+
+    </main>
+
+    <div class="floating-buttons-container">
+        <div class="floating-buttons-group left-group">
+            <button id="ai-chat-btn" class="float-btn" aria-label="Abrir chat com assistente">
+                <img src="ruiva.png" alt="Assistente IA">
+                </button>
+        </div>
+        <div class="floating-buttons-group right-group">
+             <a href="#hero" id="back-to-top-btn" class="float-btn" aria-label="Voltar ao topo"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg></a>
+             <a href="https://wa.me/message/DQJBWVDS3BJ4N1" target="_blank" id="whatsapp-btn" class="float-btn" aria-label="Fale conosco no WhatsApp"><svg viewBox="0 0 895 896" xmlns="http://www.w3.org/2000/svg"><path d="M632.753 514.282c-9.6-4.883-57.115-28.144-65.959-31.321-8.844-3.178-15.24-4.883-21.636 4.883-6.396 9.765-24.996 31.321-30.635 37.717-5.639 6.396-11.278 7.153-20.878 2.27-9.6-4.883-40.43-14.88-77.004-47.525-28.428-25.378-47.605-56.715-53.244-66.48-5.639-9.764-.6-15.08 4.283-19.963 4.363-4.363 9.6-11.278 14.483-16.917 4.883-5.639 6.396-9.765 9.765-16.161 3.178-6.396 1.589-11.278-2.27-20.878-3.938-9.6-21.636-52.285-29.479-71.54-7.56-18.973-15.399-16.44-21.636-16.72-6.078-.27-12.474-.27-18.87-.27-6.396 0-16.917 2.27-25.76 11.278-8.844 9.005-33.842 33.085-33.842 80.563 0 47.478 34.6 93.44 39.483 99.836 4.883 6.396 68.229 104.42 166.19 146.497 97.96 42.077 97.96 27.904 115.637 26.294 17.677-1.61 57.115-23.407 65.12-46.036 8.004-22.628 8.004-41.916 5.639-46.036-2.365-4.283-8.844-6.396-18.444-11.278Z"/><path d="M447.381 22.28C213.155 22.28 22.28 213.155 22.28 447.381c0 78.434 22.08 153.81 62.4 216.923L24.846 871.45l215.34-59.544c60.312 36.376 129.043 55.756 200.076 55.756h.08C681.688 827.662 872.563 636.787 872.563 447.461c-.08-234.226-190.955-425.101-425.182-425.181Zm0 76.843c197.877 0 358.858 160.981 358.858 358.858 0 197.877-160.981 358.858-358.858 358.858-67.461 0-131.745-18.618-185.895-51.579l-13.04-7.64-138.252 38.163 38.84-134.713-8.317-13.518C123.51 590.966 99.123 521.9 99.123 447.381c0-197.877 160.981-358.858 358.858-358.858h-.6Z"/></svg></a>
+        </div>
+    </div>
+
+    <div id="ai-chat-panel">
+        <div class="ai-chat-header">
+            <h3>Assistente Virtual</h3>
+            <button id="ai-chat-close-btn" class="ai-chat-close-btn" aria-label="Fechar chat">&times;</button>
+        </div>
+        <div id="ai-chat-display">
+            <p class="ai-message">Olá! Como posso te ajudar hoje sobre o Emagrecimento Real?</p>
+             <div id="ai-quick-questions">
+                <button class="quick-question-btn">O que é retenção líquida?</button>
+                <button class="quick-question-btn">Quando começo a perder gordura?</button>
+                <button class="quick-question-btn">Quais suplementos tomar?</button>
+                <button class="quick-question-btn">Qual a garantia?</button>
+                <button class="quick-question-btn">Como funciona a dieta?</button>
+                <button class="quick-question-btn">Preciso ir à academia?</button>
+             </div>
+        </div>
+        <div class="ai-chat-input-area">
+            <input type="text" id="ai-chat-input" placeholder="Digite sua pergunta..." aria-label="Digite sua pergunta">
+            <button id="ai-chat-submit">Enviar</button>
+        </div>
+    </div>
+
+
+  <footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4>Emagrecimento Real</h4>
+                <ul>
+                    <li><a href="#hero">Início</a></li>
+                    <li><a href="#cta">Inscreva-se</a></li>
+                </ul>
+            </div> 
+            <div>
+                <h4>O Método</h4>
+                <ul>
+                    <li><a href="#poder">A Verdade</a></li>
+                    <li><a href="#importancia">Academia</a></li>
+                    <li><a href="#beneficios">Dieta</a></li>
+                    <li><a href="#construtor">Suplementos</a></li>
+                </ul>
+            </div> 
+            <div>
+                <h4>Resultados</h4>
+                <ul>
+                    <li><a href="#depoimentos">Depoimentos</a></li>
+                    <li><a href="#garantia-objecoes">Dúvidas</a></li>
+                </ul>
+            </div> 
+            <div>
+                <h4>Sua Jornada</h4>
+                <ul>
+                    <li><a href="#calculadora">Calculadora</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-quote">
+                <p>⚡ “O corpo muda quando a mente decide.”</p>
+            </div>
+
+            <div class="footer-mission">
+                <p>Este projeto é para mulheres que decidiram sair do ciclo das promessas e entrar no caminho da evolução.</p> 
+                <p>Porque emagrecer não é sobre perder peso — é sobre ganhar confiança, energia e liberdade.</p> 
+            </div>
+            
+            <div class="footer-legal">
+                <p>Copyright © 2025 [Seu Nome/Marca]. Todos os direitos reservados.</p> 
+                <p>Design do site feito por <a href="https://wa.me/message/DQJBWVDS3BJ4N1" target="_blank" class="designer-link">Rodrigo</a>, colaborador da Aprovados.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <div class="video-modal" id="video-modal">
+        <div class="video-modal-content">
+            <button class="close-modal-btn" id="close-modal-btn" aria-label="Fechar vídeo">&times;</button>
+            <video id="modal-video-local" autoplay loop playsinline controls style="display: none;"></video>
+            <iframe id="modal-video-youtube" src="" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="display: none;"></iframe>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
