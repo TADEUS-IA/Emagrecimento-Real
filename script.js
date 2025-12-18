@@ -354,22 +354,37 @@ document.addEventListener("DOMContentLoaded", function() {
     const aiChatSubmit = document.getElementById('ai-chat-submit');
     const quickQuestionsContainer = document.getElementById('ai-quick-questions');
 
+   // --- SUBSTITUA A FUNÇÃO 'toggleChatPanel' POR ESTA ---
     function toggleChatPanel() {
         aiChatPanel.classList.toggle('active');
+        
+        // Seleciona o container dos botões flutuantes
+        const floatContainer = document.querySelector('.floating-buttons-container');
+        
         if(aiChatPanel.classList.contains('active')) {
-            aiChatInput.focus();
+            // CHAT ABERTO:
+            // 1. Esconde os botões flutuantes para não atrapalhar a digitação
+            if(floatContainer) floatContainer.classList.add('hide-on-chat');
+            
+            // 2. Foca no input (UX)
+            setTimeout(() => {
+                aiChatInput.focus(); 
+            }, 300); // Pequeno delay para esperar a animação de abertura
+            
+        } else {
+            // CHAT FECHADO:
+            // Mostra os botões novamente
+            if(floatContainer) floatContainer.classList.remove('hide-on-chat');
         }
     }
 
-    /**
-     * (ATUALIZADO) Adiciona mensagem ao chat E move os botões rápidos para o fim.
-     */
+    // --- SUBSTITUA A FUNÇÃO 'addMessageToChat' POR ESTA ---
     function addMessageToChat(message, sender = 'ai', options = {}) {
         const { isHtml = false, isTyping = false } = options;
         
         if (!aiChatDisplay) return;
         
-        // Remove indicador de "digitando" anterior, se houver
+        // Remove indicador de "digitando" anterior
         const existingTypingIndicator = aiChatDisplay.querySelector('.ai-message.typing');
         if (existingTypingIndicator) {
             existingTypingIndicator.remove();
@@ -387,18 +402,21 @@ document.addEventListener("DOMContentLoaded", function() {
             messageElement.textContent = message;
         }
         
-        // Lógica para manter os botões no final
-        // Insere a nova mensagem ANTES do container dos botões
-        if (quickQuestionsContainer) {
+        // Insere a mensagem ANTES dos botões de perguntas rápidas
+        if (quickQuestionsContainer && aiChatDisplay.contains(quickQuestionsContainer)) {
             aiChatDisplay.insertBefore(messageElement, quickQuestionsContainer);
         } else {
             aiChatDisplay.appendChild(messageElement);
         }
         
-        aiChatDisplay.scrollTop = aiChatDisplay.scrollHeight;
+        // --- MELHORIA DE VISIBILIDADE (AUTO-SCROLL) ---
+        // Força o navegador a rolar até a nova mensagem suavemente
+        setTimeout(() => {
+            messageElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100); // Delay mínimo para garantir que o elemento foi renderizado no DOM
+        
         return messageElement;
     }
-
     /**
      * (ATUALIZADO) Gerencia o envio da query para o orquestrador.
      */
