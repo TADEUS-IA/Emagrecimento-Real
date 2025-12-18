@@ -8,7 +8,7 @@ const pageConfig = {
     googleSheetWebhookUrl: 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL', 
 
     // Vídeos
-    headerVideo: { src: 'https://www.youtube.com/watch?v=qLjl9V0uXzA' },
+    headerVideo: { src: 'https://www.youtube.com/watch?v=-CXqjNUmmSA' },
     demoVideo: { src: 'https://www.youtube.com/watch?v=gwbasDmCDp0' },
     
     // Links Estratégicos (Usados pelo Cérebro Interno)
@@ -631,3 +631,4 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 }); // Fim DOMContentLoaded
+
