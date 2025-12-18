@@ -1,633 +1,1342 @@
+/* --- CONFIGURAÇÕES GLOBAIS E VARIÁVEIS --- */
+:root {
+    --cor-fundo: #1A1A1A;
+    --cor-fundo-secundario: #111111;
+    --cor-texto-principal: #f5f5f7;
+    --cor-texto-secundario: #A7A7A7;
+    --cor-destaque: #E63946;
+    --cor-destaque-hover: #F04A58;
+    --cor-verde: #FF6F91;
+    --cor-vermelho-riscado: #E63946;
+    --cor-verde-fluorescente: #FF6F91;
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    /* Novas cores para status */
+    --cor-aviso: #FFA500; /* Laranja para "dá para melhorar" */
+}
+
+/* --- ESTILOS GERAIS --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto-principal);
+    font-family: var(--font-family);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+.container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+section { padding: 8rem 0; text-align: center; }
+h1, h2, h3 { font-weight: 600; }
+h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: -0.02em; }
+h2 { font-size: clamp(2.5rem, 5vw, 3.5rem); letter-spacing: -0.01em; margin-bottom: 1.5rem; }
+p.subtitulo { font-size: 1.5rem; color: var(--cor-texto-secundario); max-width: 700px; margin: 1.5rem auto 2.5rem auto; line-height: 1.6; }
+.btn {
+    display: inline-block;
+    background-color: var(--cor-destaque);
+    color: #fff;
+    padding: 1rem 2.5rem;
+    border-radius: 980px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+    animation: gentle-float 4s ease-in-out infinite;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+.btn:hover {
+    background-color: var(--cor-verde-fluorescente);
+    color: var(--cor-fundo);
+    transform: scale(1.05);
+    animation-play-state: paused;
+}
+.btn:active {
+    background-color: var(--cor-verde);
+    transform: scale(1.02);
+    transition: transform 0.1s ease, background-color 0.1s ease;
+}
+.animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+.animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+.header-logo-container { position: absolute; top: 0; left: 0; width: 100%; padding: 2rem; z-index: 10; text-align: right; }
+.header-logo { max-height: 165px; width: auto; opacity: 0.9; transition: opacity 0.3s ease; }
+.header-logo:hover { opacity: 1; }
+
+/* --- HERO --- */
+#hero { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; padding: 0; overflow: hidden; }
+#video-background, #iframe-background { position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; object-fit: cover; transform: translate(-50%, -50%); z-index: 1; opacity: 0.25; border: none; }
+#iframe-background { width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; pointer-events: none; }
+.hero-content { position: relative; z-index: 2; width: 100%; }
+.title-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 2rem; padding: 2rem; }
+.vertical-text { font-size: 1.2rem; font-weight: 600; color: var(--cor-texto-secundario); writing-mode: vertical-rl; text-transform: uppercase; letter-spacing: 4px; }
+.left { text-align: left; transform: rotate(180deg); }
+.right { text-align: right; }
+.main-title { display: flex; flex-direction: column; gap: 1.5rem; }
+
+/* --- MODAL (Mantido) --- */
+.video-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+.video-modal.active { opacity: 1; pointer-events: auto; }
+.video-modal-content { position: relative; width: 90%; max-width: 1100px; aspect-ratio: 16 / 9; transform: scale(0.8); transition: transform 0.4s ease; }
+.video-modal.active .video-modal-content { transform: scale(1); }
+.video-modal video, .video-modal iframe { width: 100%; height: 100%; border-radius: 15px; border: none; }
+.close-modal-btn { position: absolute; top: -40px; right: 0px; background: transparent; border: none; color: #fff; font-size: 3rem; font-weight: 300; cursor: pointer; line-height: 1; transition: transform 0.3s ease; }
+.close-modal-btn:hover { transform: scale(1.2); }
+
+/* --- SEÇÃO #poder --- */
+#poder { background-color: var(--cor-fundo-secundario); padding-bottom: 0; }
+.poder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem; text-align: left; }
+.poder-card { background-color: #1c1c1e; padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
+.poder-card h3 { font-size: 1.5rem; color: var(--cor-verde); margin-bottom: 1rem; }
+.poder-card p { color: var(--cor-texto-secundario); line-height: 1.7; }
+
+/* --- SEÇÕES DE PILARES (feature-section) --- */
+.feature-section { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; text-align: left; }
+.feature-section.reverse { grid-template-columns: 1fr 1fr; }
+.feature-section.reverse .feature-image { order: 2; }
+.feature-image img { width: 100%; height: auto; border-radius: 30px; display: block; }
+.feature-text h3 { font-size: 2.5rem; margin-bottom: 1rem; }
+.feature-text p { color: var(--cor-texto-secundario); font-size: 1.2rem; line-height: 1.7; }
+#beneficios .feature-text p strong { color: var(--cor-verde); font-weight: 600; }
+.text-green { color: var(--cor-verde); font-weight: 600; }
+
+/* --- ESTILOS PARA SEÇÃO 5 (SUPLEMENTAÇÃO V5 - 3D) --- */
+.recomendacao-box-v5 {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: rgba(255, 111, 145, 0.05); /* Fundo rosa bem sutil */
+    border-radius: 15px;
+    border: 1px solid rgba(255, 111, 145, 0.2);
+    /* Habilita o 3D */
+    perspective: 1000px;
+}
+.recomendacao-box-v5 strong {
+    color: var(--cor-verde);
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+.recomendacao-box-v5 p {
+    font-size: 0.95rem;
+    color: var(--cor-texto-secundario);
+    margin-bottom: 1.25rem;
+}
+.recomendacao-links-v5 {
+    display: flex;
+    flex-direction: column; /* Links um abaixo do outro */
+    gap: 1rem;
+}
+.rec-card-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: #1c1c1e;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--cor-texto-principal);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    
+    /* Setup da transição 3D */
+    transform-style: preserve-3d;
+    transform: translateZ(0); /* Força a aceleração de hardware */
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.rec-card-btn:hover {
+    /* Efeito 3D sutil no hover */
+    transform: translateZ(10px) rotateX(-3deg) rotateY(2deg);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+.rec-card-btn img {
+    width: 50px; /* Tamanho da imagem pequena */
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+    /* Faz a imagem flutuar acima do card */
+    transform: translateZ(20px);
+}
+.rec-card-text {
+    flex-grow: 1; /* Empurra a seta para o final */
+    text-align: left;
+}
+.rec-card-text strong {
+    font-size: 1rem;
+    color: var(--cor-texto-principal);
+    display: block;
+    margin: 0;
+}
+.rec-card-text span {
+    font-size: 0.85rem;
+    color: var(--cor-texto-secundario);
+}
+.rec-card-arrow {
+    font-size: 1.5rem;
+    color: var(--cor-texto-secundario);
+    transition: transform 0.3s ease;
+}
+.rec-card-btn:hover .rec-card-arrow {
+    transform: translateX(5px);
+    color: var(--cor-verde);
+}
+
+/* --- SEÇÃO #foco-no-treino --- */
+#foco-no-treino {
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto-principal);
+    background-image: url('https://images.pexels.com/photos/1480520/pexels-photo-1480520.jpeg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
+}
+#foco-no-treino::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: -1;
+}
+#foco-no-treino h2 { color: var(--cor-verde); }
+#foco-no-treino p {
+    color: var(--cor-texto-principal);
+    font-size: 1.3rem;
+    line-height: 1.7;
+    max-width: 800px;
+    margin: 1.5rem auto;
+}
+#foco-no-treino strong { color: var(--cor-verde); font-weight: 600; }
+
+/* --- SEÇÃO #integracoes (CARDS V3 - FOCO EM APPS) --- */
+#integracoes { overflow: hidden; background-color: var(--cor-fundo-secundario); }
+
+.ferramentas-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 4rem;
+    text-align: left;
+}
+.ferramenta-card {
+    background-color: #1c1c1e;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; 
+}
+.ferramenta-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+.ferramenta-card img {
+    width: 100%;
+    aspect-ratio: 4 / 3; 
+    object-fit: cover;
+    background-color: #333;
+}
+.ferramenta-card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.ferramenta-card h3 {
+    font-size: 1.4rem;
+    color: var(--cor-verde);
+    margin-bottom: 0.75rem;
+}
+.ferramenta-card p {
+    color: var(--cor-texto-secundario);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    flex-grow: 1;
+}
+.btn-secundario {
+    display: block;
+    text-align: center;
+    background-color: rgba(255, 111, 145, 0.1);
+    color: var(--cor-verde-fluorescente);
+    padding: 0.8rem 1.5rem;
+    border-radius: 980px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border: 1px solid var(--cor-verde);
+    margin-top: auto;
+}
+.btn-secundario:hover {
+    background-color: var(--cor-verde-fluorescente);
+    color: var(--cor-fundo);
+}
+
+/* --- SEÇÃO #depoimentos --- */
+.carousel-container { position: relative; margin-top: 4rem; }
+.carousel-wrapper { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 2rem; padding: 2rem 1rem; scroll-behavior: smooth; }
+.carousel-wrapper::-webkit-scrollbar { display: none; }
+.depoimento-card { flex: 0 0 31%; max-width: 31%; scroll-snap-align: start; background-color: #1c1c1e; padding: 3rem; border-radius: 20px; text-align: left; border: 1px solid rgba(255,255,255,0.1); }
+.depoimento-card blockquote { font-size: 1.2rem; line-height: 1.6; font-style: italic; margin-bottom: 2rem; }
+.author { display: flex; align-items: center; gap: 1rem; }
+.author img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
+.author-info strong { display: block; font-size: 1.1rem; }
+.author-info small { color: var(--cor-texto-secundario); }
+.carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.2); color: white; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; transition: background-color 0.3s ease; }
+.carousel-btn:hover { background-color: rgba(255, 255, 255, 0.2); }
+#prev-btn { left: -25px; }
+#next-btn { right: -25px; }
+
+/* --- SEÇÃO #calculadora --- */
+#calculadora { background-color: var(--cor-fundo-secundario); }
+.calculadora-form {
+    max-width: 600px;
+    margin: 3rem auto 0 auto;
+    background-color: #1c1c1e;
+    padding: 2.5rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.1);
+    text-align: left;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+.form-group { margin-bottom: 1.5rem; }
+.form-group label {
+    display: block;
+    font-weight: 500;
+    color: var(--cor-texto-secundario);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="email"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--cor-texto-principal);
+    font-size: 1rem;
+    font-family: var(--font-family);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus,
+.form-group input[type="email"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--cor-destaque);
+    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.3);
+}
+.form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23A7A7A7' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em; padding-right: 2.5rem; }
+.calculadora-form button[type="submit"] {
+    width: 100%;
+    margin-top: 1rem;
+}
+#resultado-calculadora {
+    margin-top: 2.5rem;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    padding: 0; /* Removido padding padrão para classes de status controlarem */
+}
+#resultado-calculadora.visible {
+    opacity: 1;
+    transform: translateY(0);
+    padding: 1.5rem; /* Adiciona padding apenas quando visível */
+}
+#resultado-calculadora strong { color: var(--cor-verde); }
+.disclaimer { font-size: 0.85rem; color: var(--cor-texto-secundario); margin-top: 1rem; text-align: center; }
+
+/* --- SEÇÃO #garantia-objecoes (Dúvidas) --- */
+#garantia-objecoes { padding-top: 0; background-color: var(--cor-fundo-secundario); }
+.garantia-objecoes-grid { display: grid; grid-template-columns: 350px 1fr; gap: 4rem; align-items: center; margin-top: 4rem; text-align: left; }
+.garantia-blindada-seal { display: flex; align-items: center; justify-content: center; }
+.garantia-blindada-seal img { max-width: 100%; animation: gentle-float 5s ease-in-out infinite; }
+.objeccoes-container { display: flex; flex-direction: column; gap: 1.5rem; }
+.objeccao-card { background-color: var(--cor-fundo-secundario); padding: 2rem; border-radius: 20px; border-left: 4px solid var(--cor-destaque); }
+.objeccao-card h4 { font-size: 1.3rem; margin-bottom: 0.75rem; color: var(--cor-texto-principal); }
+.objeccao-card p { color: var(--cor-texto-secundario); line-height: 1.6; }
+
+/* --- BOTÕES FLUTUANTES E CHAT --- */
+.floating-buttons-container {
+    position: fixed;
+    bottom: -30px;
+    left: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+}
+.floating-buttons-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    pointer-events: auto;
+}
+.floating-buttons-group.right-group {
+    align-items: flex-end;
+}
+.float-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, background-color 0.3s ease, opacity 0.3s ease;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+}
+.float-btn:hover { transform: scale(1.1); }
+.float-btn svg { width: 32px; height: 32px; fill: white; }
+#ai-chat-btn img {
+    width: 60px;
+    height: 500px;
+    object-fit: contain;
+    border-radius: 50%;
+}
+#whatsapp-btn { background-color: #25D366; order: 2; }
+#ai-chat-btn { background-color: var(--cor-destaque); }
+#back-to-top-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    order: 1;
+}
+#back-to-top-btn.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+/* --- PAINEL DE CHAT --- */
+#ai-chat-panel {
+    position: fixed;
+    bottom: 95px;
+    left: 20px;
+    width: 380px;
+    max-height: 550px;
+    background-color: #1c1c1e;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.1);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+#ai-chat-panel.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+.ai-chat-header {
+    padding: 0.8rem 1rem;
+    background-color: rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.ai-chat-header h3 { font-size: 1rem; margin: 0; color: var(--cor-texto-principal); }
+.ai-chat-close-btn {
+    background: none; border: none; color: var(--cor-texto-secundario); font-size: 1.5rem; cursor: pointer; line-height: 1; padding: 0 0.5rem;
+}
+.ai-chat-close-btn:hover { color: var(--cor-texto-principal); }
+#ai-chat-display {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    margin-bottom: 0;
+    background-color: transparent;
+    border: none;
+    font-size: 0.9rem;
+}
+#ai-chat-display p {
+    padding: 0.7rem 1rem;
+    border-radius: 12px;
+    margin-bottom: 0.7rem;
+    line-height: 1.5;
+    max-width: 85%;
+    word-wrap: break-word;
+}
+#ai-chat-display .user-message {
+    margin-left: auto;
+    background-color: rgba(230, 57, 70, 0.2);
+    color: var(--cor-texto-principal);
+    text-align: right;
+    border-bottom-right-radius: 4px;
+}
+#ai-chat-display .ai-message {
+    margin-right: auto;
+    background-color: rgba(255,255,255,0.08);
+    color: var(--cor-texto-principal);
+    text-align: left;
+    border-bottom-left-radius: 4px;
+}
+#ai-chat-display .ai-message a {
+    color: var(--cor-verde-fluorescente);
+    text-decoration: underline;
+    font-weight: 500;
+}
+#ai-chat-display .ai-message a:hover {
+    color: var(--cor-destaque-hover);
+}
+#ai-quick-questions {
+    padding: 0.5rem 1rem 0rem 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 0.5rem;
+}
+.quick-question-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--cor-texto-principal);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+}
+.quick-question-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+.ai-chat-input-area {
+    padding: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    gap: 0.5rem;
+}
+#ai-chat-input {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--cor-texto-principal);
+    font-size: 0.9rem;
+    font-family: var(--font-family);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    flex-grow: 1;
+}
+#ai-chat-input:focus {
+    outline: none;
+    border-color: var(--cor-destaque);
+    box-shadow: 0 0 0 2px rgba(230, 57, 70, 0.2);
+}
+#ai-chat-submit {
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    white-space: nowrap;
+    background-color: var(--cor-destaque);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+#ai-chat-submit:hover {
+    background-color: var(--cor-verde-fluorescente);
+    color: var(--cor-fundo);
+    transform: scale(1.03);
+}
+#ai-chat-submit:active {
+    transform: scale(0.98);
+}
+
 /* ======================================================================
- * --- CONFIGURAÇÃO GLOBAL DA PÁGINA ---
- * ======================================================================
- */
-const pageConfig = {
-    // Webhooks
-    n8nWebhookUrl: 'https://automacoe-n8n.bitxsu.easypanel.host/webhook-test/n8n',
-    googleSheetWebhookUrl: 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL', 
+    NOVOS ESTILOS PARA CTA E FOOTER (Mantidos)
+====================================================================== 
+*/
 
-    // Vídeos
-    headerVideo: { src: 'https://www.youtube.com/watch?v=qLjl9V0uXzA' },
-    demoVideo: { src: 'https://www.youtube.com/watch?v=gwbasDmCDp0' },
-    
-    // Links Estratégicos (Usados pelo Cérebro Interno)
-    calculatorUrl: '#calculadora', 
-    ebookCtaId: '#cta',
-    whatsappUrl: 'https://wa.me/message/DQJBWVDS3BJ4N1' // Link do WhatsApp
-};
-
-/* ======================================================================
- * --- INÍCIO: "CÉREBRO" DE IA (LADO DO CLIENTE) ---
- * ======================================================================
- */
-
-/**
- * NÍVEL 1: Cérebro Interno (Base de Conhecimento Local)
- * Esta é a "fonte da verdade". NÃO é mais usada para respostas diretas,
- * mas sim como a base para as 'internalResponses' abaixo.
- */
-const internalKnowledgeBase = `
-    Olá! Sou o assistente virtual do método Emagrecimento Real. Nossa filosofia é 100% honestidade e ciência. Não acreditamos em milagres. O que funciona é: Ciência, Consistência e Paciência.
-
-    Sobre o início (Retenção Líquida): Nos primeiros 20 a 30 dias, a maior parte do peso perdido é retenção líquida (desinchaço), não gordura. É o corpo se adaptando.
-
-    Sobre a queima de gordura real: A perda de gordura efetiva começa *depois* desses 30 dias, ativada pela constância na dieta e intensidade no treino.
-
-    Sobre quanto tempo leva para ver resultados: Mudanças notáveis ocorrem entre 60 e 90 dias. Uma transformação profunda leva 120 dias ou mais.
-
-    Sobre o Pilar 1: A Dieta. A dieta é o motor. Regra de ouro: Constância > Perfeição. Priorize proteínas, fibras e água. Você não está "de dieta", está em "reconstrução".
-
-    Sobre o Pilar 2: A Academia (Treino). A academia é seu canteiro de obras. Treine com propósito e intensidade. Esqueça o celular. 45 minutos de treino focado valem mais que 2 horas de distração.
-
-    Sobre o Pilar 3: Suplementação Inteligente. Suplementos são aliados, não milagres. Para começar: Whey Protein (recuperação) e Creatina (força). Evite produtos "secretos" da internet.
-
-    Sobre a Mentalidade e Foco (Mindset). Mentalidade é o que muda o jogo. Você precisa de estratégia e consistência. A academia é lugar de treinar. Documente sua evolução em casa, não no espelho da academia.
-
-    Sobre a Calculadora de Metas: A Calculadora é nossa ferramenta gratuita para te dar um ponto de partida. Ela calcula estimativas de consumo diário de água, proteínas, gorduras e carboidratos.
-
-    Sobre a Oferta Principal (Guia Gratuito): O acesso ao Guia de Emagrecimento Real é 100% GRATUITO. Basta preencher seu e-mail na seção "CTA" no final da página.
-
-    Sobre Garantia e Objeções (Seus Medos): 
-    Objeção: "Já tentei de tudo e nada funcionou." Resposta: Entendemos. A maioria das dietas falha por serem restritivas demais. Nosso método foca em sustentabilidade e hábitos realistas.
-    Objeção: "Eu não tenho tempo para cozinhar ou treinar." Resposta: O segredo é usar o tempo de forma inteligente. Ensinamos estratégias para refeições rápidas e treinos eficientes.
-    Objeção: "Tenho medo de falhar de novo." Resposta: Esse medo é a razão pela qual o foco na mentalidade é um pilar. O fracasso só existe para quem desiste.
-    Sobre a Garantia: Em nossos programas pagos, oferecemos uma Garantia Incondicional de 7 Dias.
-`;
-
-
-/**
- * Respostas Humanizadas do Agente Interno
- */
-const internalResponses = {
-    'GREETING': [
-        "Olá! Sou a assistente do Emagrecimento Real. Como posso te ajudar hoje?",
-        "Oi! 😊 Em que posso ser útil?",
-        "Opa! Tudo bem? Me diga como posso auxiliar com sua jornada."
-    ],
-    'CALCULATOR': `Claro! A melhor forma de começar é pela nossa <strong>Calculadora de Metas</strong>. Ela vai te dar estimativas de água, proteínas e calorias.<br><br>Você pode acessá-la <a href="${pageConfig.calculatorUrl}" onclick="document.getElementById('ai-chat-close-btn').click()">clicando aqui</a>!`,
-    'EBOOK': `O <strong>Guia de Emagrecimento Real</strong> é 100% gratuito! Você pode recebê-lo agora mesmo.<br><br>Basta rolar até a seção final da página e deixar seu e-mail <a href="${pageConfig.ebookCtaId}" onclick="document.getElementById('ai-chat-close-btn').click()">clicando neste link</a>.`,
-    
-    // Respostas de Conhecimento (Resumos do Prompt)
-    'COMO_EMAGRECER': "Nosso método é baseado em 5 pilares: 1. Dieta em déficit calórico, 2. Treino intenso (musculação), 3. Suplementação inteligente (Whey/Creatina), 4. Mentalidade de foco, e 5. Descanso (sono).<br><br>Quer que eu detalhe algum desses pilares para você?",
-    'RETENCAO_LIQUIDA': "Nos primeiros 20 a 30 dias, a maior parte do peso que você perde é <strong>retenção líquida</strong> (desinchaço), não gordura. É o corpo se adaptando à nova rotina. É o primeiro sinal de que você está no caminho certo!",
-    'PERDA_GORDURA': "A queima de <strong>gordura real</strong> (aquela que muda o espelho) começa *depois* da fase de desinchaço (após 30 dias). Ela é ativada quando você mantém a <strong>constância na dieta</strong> e a <strong>intensidade no treino</strong>.",
-    'SUPLEMENTOS': "Ótima pergunta! Os suplementos ideais para começar são <strong>Whey Protein</strong> (para recuperação muscular) e <strong>Creatina</strong> (para manter a força).<br><br>Eles não fazem milagres, mas aceleram os resultados do seu esforço. Recomendo os que estão na seção 'Suplementação Inteligente'!",
-    'GARANTIA': "Sobre a Garantia: Se você, fizer tudo que está no Ebook. <strong>Não garantimos que vai dar certo temos certeza que irá da certo!</strong>.é a prova de falhas!",
-    'DIETA': "A dieta é o motor de tudo! A regra de ouro é: <strong>Constância > Perfeição</strong>. Foque em priorizar proteínas, fibras e água. Ela não é um vilão, é sua aliada na reconstrução do seu corpo.",
-    'ACADEMIA': "Pense na academia como seu 'canteiro de obras'. O foco total deve ser no <strong>ritmo e intensidade</strong>. Evite o celular, ele é o maior vilão do seu foco. 45 minutos focados valem mais que 2 horas de distração.",
-    'TEMPO_RESULTADOS': "Você começará a ver mudanças notáveis no espelho e nas roupas entre <strong>60 e 90 dias</strong> de foco total. Uma transformação profunda, de mente e corpo, geralmente leva <strong>120 dias</strong> ou mais.",
-    'MENTALIDADE': "A mentalidade é o que muda o jogo. Você não precisa de sorte, precisa de <strong>estratégia</strong>. Não precisa de milagres, precisa de <strong>consistência</strong>.",
-    'OBJECAO_FALHA': "Eu entendo totalmente seu medo de falhar de novo. A maioria das dietas falha por serem restritivas demais. Nosso método foca na mentalidade e no acompanhamento. Lembre-se: o fracasso só existe para quem desiste.",
-    'OBJECAO_TEMPO': "O segredo não é ter *mais* tempo, é usá-lo de forma *inteligente*. Ensinamos estratégias para refeições rápidas e treinos eficientes. <strong>45 minutos de treino focado</strong> valem mais que 2 horas de distração.",
-};
-
-/**
- * Mapa de Intenções
- */
-const keywordMap = {
-    'GREETING': ['oi', 'olá', 'ola', 'bom dia', 'boa tarde', 'boa noite', 'e aí', 'eae', 'tudo bem', 'tudo bom'],
-    'CALCULATOR': ['calculadora', 'calcular', 'meta', 'imc', 'peso', 'água', 'proteína', 'calorias'],
-    'EBOOK': ['ebook', 'guia', 'gratuito', 'e-book', 'email', 'cadastrar', 'receber o guia'],
-    'COMO_EMAGRECER': ['como emagrecer', 'como perder peso', 'perder peso', 'emagrecimento', 'emagrecer', 'o que fazer para'],
-    'RETENCAO_LIQUIDA': ['retenção líquida', 'retenção', 'desinchar', 'inchaço', 'o que é retenção'],
-    'PERDA_GORDURA': ['gordura', 'queima de gordura', 'perder gordura', 'quando começo a perder gordura'],
-    'SUPLEMENTOS': ['suplemento', 'suplementos', 'tomar', 'whey', 'creatina', 'termogênico', 'quais suplementos tomar'],
-    'GARANTIA': ['garantia', 'garantido', 'devolver', 'reembolso', 'risco', 'qual a garantia'],
-    'DIETA': ['dieta', 'alimentação', 'comer', 'refeição', 'prato', 'como funciona a dieta'],
-    'ACADEMIA': ['academia', 'treino', 'treinar', 'exercício', 'musculação', 'cardio', 'preciso ir à academia'],
-    'TEMPO_RESULTADOS': ['tempo', 'resultado', 'quando', 'demora', '60 dias', '90 dias'],
-    'MENTALIDADE': ['mentalidade', 'mente', 'foco', 'mindset', 'consistência'],
-    'OBJECAO_FALHA': ['falhar', 'falhei', 'medo de falhar', 'nada funciona', 'tentei de tudo'],
-    'OBJECAO_TEMPO': ['não tenho tempo', 'sem tempo', 'corrido', 'cozinhar'],
-};
-
-/**
- * NÍVEL 1: Agente Interno (queryInternalKnowledge)
- * Lógica de triagem: Saudações -> Metas -> Intenções por Keyword -> Fallback (null)
- */
-function queryInternalKnowledge(query) {
-    const lowerQuery = query.toLowerCase().trim();
-    if (!lowerQuery) return { response: "Por favor, digite sua pergunta.", isHtml: false };
-
-    // --- 1. Triagem: Saudações (Empatia) ---
-    if (keywordMap.GREETING.some(greeting => lowerQuery === greeting || lowerQuery.startsWith(greeting + ' '))) {
-        const responses = internalResponses.GREETING;
-        return { response: responses[Math.floor(Math.random() * responses.length)], isHtml: false };
-    }
-    
-    // --- 2. Triagem: Metas Estratégicas (Induzimento) ---
-    if (keywordMap.CALCULATOR.some(word => lowerQuery.includes(word))) {
-        return { response: internalResponses.CALCULATOR, isHtml: true };
-    }
-    if (keywordMap.EBOOK.some(word => lowerQuery.includes(word))) {
-        return { response: internalResponses.EBOOK, isHtml: true };
-    }
-
-    // --- 3. (LÓGICA CORRIGIDA) Triage: Respostas de Conhecimento (Baseado em Intenção) ---
-    let bestIntent = null;
-    let maxScore = 0;
-
-    // AQUI ESTÁ A CORREÇÃO do erro de sintaxe:
-    const cleanQuery = lowerQuery.replace(/[.,!?;:]/g, ''); // Corrigido: /g, ''
-    
-    // Itera sobre todas as intenções de conhecimento
-    const knowledgeIntents = Object.keys(keywordMap).filter(k => !['GREETING', 'CALCULATOR', 'EBOOK'].includes(k));
-
-    for (const intent of knowledgeIntents) {
-        let currentScore = 0;
-        const keywords = keywordMap[intent];
-        
-        for (const keyword of keywords) {
-            // Verifica se a *query inteira* (limpa) contém a palavra-chave
-            if (cleanQuery.includes(keyword)) {
-                // Pontuação baseada no tamanho da palavra-chave (palavras mais longas são mais relevantes)
-                currentScore += keyword.length;
-            }
-        }
-        
-        // Bônus se a query for muito parecida com uma pergunta dos botões (correspondência exata)
-        if (keywords.some(k => k === cleanQuery)) {
-            currentScore += 50; // Pontuação alta para garantir a seleção
-        }
-
-        if (currentScore > maxScore) {
-            maxScore = currentScore;
-            bestIntent = intent;
-        }
-    }
-
-    // --- 4. Verificação de Relevância ---
-    if (bestIntent && maxScore > 0) { 
-        console.log(`Cérebro Interno: Intenção '${bestIntent}' detectada com pontuação ${maxScore}.`);
-        return { response: internalResponses[bestIntent], isHtml: true };
-    }
-
-    // --- 5. Triage: Falha (Sinaliza para o Orquestrador) ---
-    // Se nenhuma intenção foi encontrada, retorna null.
-    console.log("Cérebro Interno: Nenhuma intenção local encontrada. Acionando IAs externas.");
-    return null; 
+/* --- SEÇÃO #cta (REESTILIZADA) --- */
+#cta {
+    background: linear-gradient(180deg, var(--cor-fundo) 0%, var(--cor-fundo-secundario) 100%);
+    padding: 8rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.cta-content-box {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #1c1c1e;
+    padding: 3rem 4rem;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+#cta h2 {
+    color: var(--cor-verde-fluorescente);
+}
+#cta .subtitulo {
+    font-size: 1.2rem;
+    color: var(--cor-texto-secundario);
+    margin-bottom: 2rem;
+    line-height: 1.7;
+}
+.cta-list-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+.cta-benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+.cta-benefits-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.05rem;
+    color: var(--cor-texto-secundario);
+    line-height: 1.6;
+}
+.icon-check {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    color: var(--cor-verde);
+}
+.form-group-inline {
+    display: flex;
+    gap: 0;
+    border-radius: 980px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.form-group-inline:focus-within {
+    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.3);
+    border-color: var(--cor-destaque);
+}
+#email-form {
+     margin-top: 1rem;
+     max-width: none;
+}
+#email-form .form-group {
+     margin-bottom: 0;
+}
+#email-form #email-input {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    border-radius: 980px 0 0 980px;
+    padding-left: 1.5rem;
+    box-shadow: none;
+}
+#email-form #email-input:focus {
+    box-shadow: none;
+    border-color: transparent;
+}
+#email-form button[type="submit"] {
+    width: auto;
+    margin-top: 0;
+    border-radius: 0 980px 980px 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-weight: 600;
+    padding: 1rem 2rem;
+    animation: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+#email-form button[type="submit"]:hover {
+     transform: none;
+     background-color: var(--cor-verde-fluorescente);
+     color: var(--cor-fundo);
 }
 
-
-/**
- * (Mantido) NÍVEL 2: Orquestrador de IA (Lado do Cliente)
- * Chama o Cérebro Interno. Se ele retornar null,
- * chama o backend (/api/chat) para o fallback de IAs externas.
- */
-async function handleChatOrchestration(query) {
-    
-    // 1. Tenta o Cérebro Interno
-    const internalResponse = queryInternalKnowledge(query);
-    
-    if (internalResponse) {
-        // Cérebro Interno encontrou uma resposta (Saudação, Meta ou Conhecimento)
-        return internalResponse; // Retorna o objeto { response, isHtml }
-    }
-
-    // 2. Fallback para o Backend (Função Serverless)
-    console.log("Orquestrador (Frontend): Cérebro interno não encontrou. Chamando /api/chat...");
-
-    try {
-        const apiResponse = await fetch('/api/chat', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ query: query })
-        });
-
-        if (!apiResponse.ok) {
-            console.error("Orquestrador (Frontend): A API /api/chat falhou.", apiResponse.status);
-            throw new Error("Falha no servidor de IA");
-        }
-
-        const data = await apiResponse.json();
-        return { response: data.response, isHtml: false }; // Respostas de IA externa são sempre texto puro
-
-    } catch (error) {
-        // 3. Resposta final de fallback (WhatsApp) se TUDO falhar
-        console.error("Orquestrador (Frontend): Erro de rede ou falha total.", error);
-        return {
-            response: `Puxa, essa é uma ótima pergunta que eu (ainda) não sei responder! 🤔<br><br>Que tal falar diretamente com nossa equipe de especialistas no <a href="${pageConfig.whatsappUrl}" target="_blank">WhatsApp</a>? Eles vão te ajudar!`,
-            isHtml: true
-        };
-    }
+/* --- FOOTER (REESTILIZADO E SEMÂNTICO) --- */
+/* Esta seção foi refatorada para ser mais robusta e semântica */
+footer {
+    background-color: var(--cor-fundo-secundario);
+    color: var(--cor-texto-secundario);
+    padding: 5rem 0 3rem 0;
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: left; /* Alinha o grid à esquerda por padrão */
 }
-// --- FIM: "CÉREBRO" DE IA E ORQUESTRAÇÃO ---
+
+/* 1. Estilos para o Grid de Links (Robustos) */
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2.5rem 2rem;
+    margin-bottom: 3rem;
+}
+.footer-grid h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+    margin-bottom: 1.25rem;
+}
+.footer-grid ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.footer-grid ul li a {
+    color: var(--cor-texto-secundario);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.footer-grid ul li a:hover {
+    color: var(--cor-verde-fluorescente);
+}
+
+/* 2. Estilos para o Footer Bottom (Semântico) */
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 2.5rem;
+    text-align: center;
+}
+.footer-quote p {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--cor-texto-principal);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+}
+.footer-mission p {
+    max-width: 600px;
+    margin: 0 auto 1rem auto;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+.footer-legal {
+    margin-top: 2.5rem;
+    font-size: 0.85rem;
+}
+.footer-legal p {
+    margin-bottom: 0.5rem;
+}
+.designer-link {
+    color: var(--cor-texto-secundario);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--cor-texto-secundario);
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+.designer-link:hover {
+    color: var(--cor-verde-fluorescente);
+    border-color: var(--cor-verde-fluorescente);
+}
 
 
 /* ======================================================================
- * --- INÍCIO: LÓGICA DO DOCUMENTO (Listeners e Funções) ---
- * ======================================================================
- */
+    NOVOS ESTILOS (Calculadora Inteligente & Chat AI UX)
+====================================================================== */
 
-// Função auxiliar para obter URL de embed (Mantida)
-function getVideoEmbedUrl(url) {
-    if (!url) return null;
-    const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/;
-    const youtubeMatch = url.match(youtubeRegex);
-    if (youtubeMatch) { const videoId = youtubeMatch[1]; return { type: 'iframe', src: `https://www.youtube.com/embed/${videoId}?playlist=${videoId}&loop=1&rel=0&iv_load_policy=3&showinfo=0&modestbranding=1&controls=0` }; }
-    const gdriveRegex = /drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/;
-    const gdriveMatch = url.match(gdriveRegex);
-    if (gdriveMatch) { const fileId = gdriveMatch[1]; return { type: 'iframe', src: `https://drive.google.com/file/d/${fileId}/preview` }; }
-    if (url.match(/\.(mp4|webm|ogg)$/i) || !url.startsWith('http')) { return { type: 'video', src: url }; }
-    console.warn("Tipo de URL de vídeo não reconhecido:", url); return { type: 'iframe', src: url };
+/* --- NOVOS ESTILOS PARA CALCULADORA INTELIGENTE --- */
+
+/* Estas classes de status serão adicionadas dinamicamente via JavaScript 
+  ao #resultado-calculadora com base no cálculo do IMC.
+*/
+
+/* Status Padrão / Sucesso (Peso ideal) */
+#resultado-calculadora.status-sucesso {
+    background-color: rgba(255, 111, 145, 0.1); /* Seu rosa/verde original */
+    border-left: 4px solid var(--cor-verde);
+}
+#resultado-calculadora.status-sucesso strong {
+    color: var(--cor-verde);
 }
 
-// Funções de Webhook (Mantidas)
-async function sendToWebhook(data) {
-    const webhookUrl = pageConfig.n8nWebhookUrl;
-    if (!webhookUrl || webhookUrl.trim() === '' || webhookUrl.includes('substitua-pela-url')) { console.warn('N8N Webhook URL não configurada.'); return; }
-    try {
-        const response = await fetch(webhookUrl, { method: 'POST', mode: 'cors', headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(data), });
-        if (response.ok) { console.log('Dados enviados ao N8N Webhook!', data); } else { console.error('Falha ao enviar dados para o N8N Webhook. Status:', response.status); }
-    } catch (error) { console.error('Erro de rede ou na requisição para o N8N Webhook:', error); }
+/* Status de Aviso (Dá para melhorar / Abaixo do peso) */
+#resultado-calculadora.status-aviso {
+    background-color: rgba(255, 165, 0, 0.1); /* Laranja sutil */
+    border-left: 4px solid var(--cor-aviso);
+}
+#resultado-calculadora.status-aviso strong {
+    color: var(--cor-aviso);
 }
 
-async function sendToGoogleSheet(data) {
-    const sheetUrl = pageConfig.googleSheetWebhookUrl;
-    if (!sheetUrl || sheetUrl.trim() === '' || sheetUrl.includes('YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL')) {
-        console.warn('Google Apps Script Web App URL não configurada.');
-        return;
+/* Status de Alerta (Acima do peso) */
+#resultado-calculadora.status-alerta {
+    background-color: rgba(230, 57, 70, 0.1); /* Vermelho sutil */
+    border-left: 4px solid var(--cor-destaque);
+}
+#resultado-calculadora.status-alerta strong {
+    color: var(--cor-destaque);
+}
+
+
+/* --- NOVOS ESTILOS PARA CHAT AI (UX) --- */
+
+/* Esta classe será adicionada ao <p> da AI enquanto 
+  aguarda uma resposta das APIs externas (OpenAI, Gemini, etc.)
+*/
+.ai-message.typing {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding-top: 15px; /* Ajuste vertical para alinhar os pontos */
+    padding-bottom: 15px;
+}
+
+.typing-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--cor-texto-secundario);
+    border-radius: 50%;
+    /* Animação de pulsação */
+    animation: typing-pulse 1.2s infinite ease-in-out;
+}
+
+/* Delay escalonado para os pontos */
+.typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* Animação dos pontos */
+@keyframes typing-pulse {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(0.8);
     }
-    const payload = {
-        timestamp: new Date().toLocaleString("pt-BR"),
-        source: data.form_id || 'Unknown Form',
-        ...data
-    };
-    try {
-        const response = await fetch(sheetUrl, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json', },
-            body: JSON.stringify(payload)
-        });
-        console.log('Tentativa de envio para Google Sheet realizada.', payload);
-    } catch (error) {
-        console.error('Erro ao tentar enviar dados para o Google Sheet via Apps Script:', error);
+    50% {
+        opacity: 1;
+        transform: scale(1);
     }
 }
 
-// --- Listener Principal (DOMContentLoaded) ---
-document.addEventListener("DOMContentLoaded", function() {
+
+/* --- MEDIA QUERIES (Mantidos e ajustados) --- */
+@media (max-width: 1024px) {
+    .depoimento-card { flex: 0 0 47%; max-width: 47%; }
+    .feature-section, .feature-section.reverse { grid-template-columns: 1fr; gap: 2rem; }
+    .feature-section.reverse .feature-image { order: 0; }
+    .feature-image { margin-bottom: 2rem; }
+    .garantia-objecoes-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .garantia-blindada-seal { max-width: 250px; margin: 0 auto; }
+}
+@media (max-width: 768px) {
+    section { padding: 5rem 0; }
+    .container { padding: 0 1.5rem; }
+    h1 { font-size: clamp(2.2rem, 7vw, 3rem); }
+    h2 { font-size: clamp(2rem, 7vw, 2.5rem); }
+    p.subtitulo { font-size: 1.2rem; }
+    #foco-no-treino p { font-size: 1.1rem; }
+    .header-logo-container { padding: 1.5rem; }
+    .header-logo { max-height: 165px; }
+    .title-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .vertical-text, .left, .right { display: none; }
+    .poder-card { padding: 2rem 1.5rem; }
+    .feature-text h3 { font-size: 2rem; }
     
-    // Função de setup inicial da página (Mantida)
-    function setupPage() {
-        const headerVideoEl = document.getElementById('video-background'); const headerIframeEl = document.getElementById('iframe-background'); const configSrc = pageConfig.headerVideo.src;
-        headerVideoEl.style.display = 'none'; headerIframeEl.style.display = 'none';
-        if (configSrc) {
-            const videoData = getVideoEmbedUrl(configSrc);
-            if (videoData) {
-                if (videoData.type === 'iframe') { headerIframeEl.src = `${videoData.src}&autoplay=1&mute=1`; headerIframeEl.style.display = 'block'; }
-                else { headerVideoEl.innerHTML = `<source src="${videoData.src}" type="video/mp4">`; headerVideoEl.load(); headerVideoEl.play().catch(e => console.error("Header video autoplay failed:", e)); headerVideoEl.style.display = 'block'; }
-            } else { console.error("Não foi possível processar a URL do vídeo do cabeçalho:", configSrc); }
-        }
-
-        // Listener de clique em botões (Mantido)
-        document.querySelectorAll('.btn, .btn-secundario, .btn-secundario-inline').forEach(button => {
-            button.addEventListener('click', () => {
-                const isExternalLink = button.tagName === 'A' && button.href && button.href.startsWith('http');
-                const isSubmitButton = button.tagName === 'BUTTON' && button.type === 'submit';
-                
-                if (isExternalLink || (isSubmitButton && button.closest('form')?.id === 'email-form')) {
-                     if(isExternalLink && (button.getAttribute('href').startsWith('[') || button.getAttribute('href') === '#')) { 
-                         console.warn('Link de CTA placeholder clicado, envio para webhook ignorado.');
-                         return;
-                     }
-
-                    sendToWebhook({
-                        event: 'cta_click',
-                        target_url: isExternalLink ? button.href : (button.closest('form')?.id || 'N/A'),
-                        button_id: button.id || 'N/A',
-                        button_text: button.textContent.trim(),
-                        timestamp: new Date().toISOString()
-                    });
-                }
-            });
-        });
-
-        // Formulário de E-mail (Mantido)
-        const emailForm = document.getElementById('email-form');
-        if (emailForm) {
-            emailForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const emailInput = document.getElementById('email-input');
-                const email = emailInput ? emailInput.value : 'N/A';
-
-                try {
-                    localStorage.setItem('submittedEmail', email);
-                } catch (storageError) { console.error('Erro ao salvar email no localStorage:', storageError); }
-
-                const submitData = {
-                    event: 'email_submit',
-                    email: email,
-                    form_id: 'email-form',
-                    timestamp: new Date().toISOString()
-                };
-
-                sendToWebhook(submitData);
-                sendToGoogleSheet(submitData);
-
-                alert('Obrigado por se inscrever! Seu Guia será baixado/aberto agora.');
-                if(emailInput) emailInput.value = '';
-
-                const ebookLink = 'https://drive.google.com/file/d/1n7s4FiiXFrKOAn-_kcLOQm-bsGz-kv1u/view?usp=drive_link';
-                if (ebookLink && ebookLink !== '#') {
-                    setTimeout(() => { window.location.href = ebookLink; }, 300);
-                } else {
-                    console.warn('Link do eBook não configurado no formulário de email.');
-                }
-            });
-        }
-    } // Fim setupPage()
-
-    setupPage();
-
-    // --- LÓGICA DO CHAT AI FLUTUANTE (ATUALIZADA) ---
-    // (Lógica dos botões persistentes)
-    const aiChatPanel = document.getElementById('ai-chat-panel');
-    const aiChatBtn = document.getElementById('ai-chat-btn');
-    const aiChatCloseBtn = document.getElementById('ai-chat-close-btn');
-    const aiChatDisplay = document.getElementById('ai-chat-display');
-    const aiChatInput = document.getElementById('ai-chat-input');
-    const aiChatSubmit = document.getElementById('ai-chat-submit');
-    const quickQuestionsContainer = document.getElementById('ai-quick-questions');
-
-   // --- SUBSTITUA A FUNÇÃO 'toggleChatPanel' POR ESTA ---
-    function toggleChatPanel() {
-        aiChatPanel.classList.toggle('active');
-        
-        // Seleciona o container dos botões flutuantes
-        const floatContainer = document.querySelector('.floating-buttons-container');
-        
-        if(aiChatPanel.classList.contains('active')) {
-            // CHAT ABERTO:
-            // 1. Esconde os botões flutuantes para não atrapalhar a digitação
-            if(floatContainer) floatContainer.classList.add('hide-on-chat');
-            
-            // 2. Foca no input (UX)
-            setTimeout(() => {
-                aiChatInput.focus(); 
-            }, 300); // Pequeno delay para esperar a animação de abertura
-            
-        } else {
-            // CHAT FECHADO:
-            // Mostra os botões novamente
-            if(floatContainer) floatContainer.classList.remove('hide-on-chat');
-        }
+    .ferramentas-grid {
+        grid-template-columns: 1fr;
     }
 
-    // --- SUBSTITUA A FUNÇÃO 'addMessageToChat' POR ESTA ---
-    function addMessageToChat(message, sender = 'ai', options = {}) {
-        const { isHtml = false, isTyping = false } = options;
-        
-        if (!aiChatDisplay) return;
-        
-        // Remove indicador de "digitando" anterior
-        const existingTypingIndicator = aiChatDisplay.querySelector('.ai-message.typing');
-        if (existingTypingIndicator) {
-            existingTypingIndicator.remove();
-        }
-
-        const messageElement = document.createElement('p');
-        messageElement.classList.add(sender === 'user' ? 'user-message' : 'ai-message');
-
-        if (isTyping) {
-            messageElement.classList.add('typing');
-            messageElement.innerHTML = '<span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>';
-        } else if (isHtml) {
-            messageElement.innerHTML = message;
-        } else {
-            messageElement.textContent = message;
-        }
-        
-        // Insere a mensagem ANTES dos botões de perguntas rápidas
-        if (quickQuestionsContainer && aiChatDisplay.contains(quickQuestionsContainer)) {
-            aiChatDisplay.insertBefore(messageElement, quickQuestionsContainer);
-        } else {
-            aiChatDisplay.appendChild(messageElement);
-        }
-        
-        // --- MELHORIA DE VISIBILIDADE (AUTO-SCROLL) ---
-        // Força o navegador a rolar até a nova mensagem suavemente
-        setTimeout(() => {
-            messageElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100); // Delay mínimo para garantir que o elemento foi renderizado no DOM
-        
-        return messageElement;
-    }
-    /**
-     * (ATUALIZADO) Gerencia o envio da query para o orquestrador.
-     */
-    async function handleChatSubmit(queryOverride = null) {
-        if (!aiChatInput || !aiChatSubmit) return;
-        const userQuery = queryOverride || aiChatInput.value.trim();
-        if (!userQuery) return;
-
-        addMessageToChat(userQuery, 'user');
-        if(!queryOverride) aiChatInput.value = '';
-        aiChatInput.disabled = true;
-        aiChatSubmit.disabled = true;
-        
-        // UX de carregamento no botão
-        aiChatSubmit.innerHTML = '<span class="typing-dot" style="background-color: #fff;"></span><span class="typing-dot" style="background-color: #fff;"></span><span class="typing-dot" style="background-color: #fff;"></span>';
-
-        const typingIndicator = addMessageToChat("", 'ai', { isTyping: true });
-
-        // Chama o orquestrador (que agora chama o /api/chat se necessário)
-        const { response, isHtml } = await handleChatOrchestration(userQuery);
-
-        if (typingIndicator) {
-            typingIndicator.remove();
-        }
-        addMessageToChat(response, 'ai', { isHtml });
-
-        aiChatInput.disabled = false;
-        aiChatSubmit.disabled = false;
-        aiChatSubmit.innerHTML = 'Enviar'; // Restaura o botão
-        aiChatInput.focus();
-    }
-
-    if (aiChatBtn) aiChatBtn.addEventListener('click', toggleChatPanel);
-    if (aiChatCloseBtn) aiChatCloseBtn.addEventListener('click', toggleChatPanel);
-    if (aiChatSubmit) aiChatSubmit.addEventListener('click', () => handleChatSubmit());
-    if (aiChatInput) {
-        aiChatInput.addEventListener('keypress', function (e) {
-             if (e.key === 'Enter' && !aiChatSubmit.disabled) {
-                 handleChatSubmit();
-             }
-        });
-    }
-    if (quickQuestionsContainer) {
-        // Move os botões para o final do chat assim que a página carrega
-        aiChatDisplay.appendChild(quickQuestionsContainer);
-        
-        quickQuestionsContainer.addEventListener('click', function(e) {
-             if (e.target.classList.contains('quick-question-btn')) {
-                 const question = e.target.textContent;
-                 handleChatSubmit(question); // Processa a pergunta do botão
-             }
-        });
-    }
-    // --- FIM: LÓGICA DO CHAT AI ---
-
-
-    // Lógica de Animação de Scroll (Mantida)
-    const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); }); }, { threshold: 0.1 });
-    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
-
-    // Lógica Botão Voltar ao Topo (Mantida)
-    const backToTopButton = document.getElementById('back-to-top-btn');
-    window.addEventListener('scroll', () => { backToTopButton.classList.toggle('visible', window.scrollY > 300); });
-
-    // Lógica Carrossel (Mantida)
-    const carouselWrapper = document.getElementById('carousel-wrapper');
-    if(carouselWrapper) {
-        const prevBtn = document.getElementById('prev-btn'); const nextBtn = document.getElementById('next-btn'); let autoScrollInterval;
-        const getScrollAmount = () => { const card = carouselWrapper.querySelector('.depoimento-card'); if (!card) return 300; const gap = parseInt(window.getComputedStyle(carouselWrapper).gap) || 32; return card.offsetWidth + gap; };
-        const scrollNext = () => { if (!carouselWrapper) return; if (carouselWrapper.scrollLeft + carouselWrapper.clientWidth >= carouselWrapper.scrollWidth - 1) { carouselWrapper.scrollTo({ left: 0, behavior: 'smooth' }); } else { carouselWrapper.scrollBy({ left: getScrollAmount(), behavior: 'smooth' }); } };
-        const scrollPrev = () => { if (!carouselWrapper) return; if (carouselWrapper.scrollLeft <= 0) { carouselWrapper.scrollTo({ left: carouselWrapper.scrollWidth, behavior: 'smooth' }); } else { carouselWrapper.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' }); } };
-        const startAutoScroll = () => { if (!autoScrollInterval) { autoScrollInterval = setInterval(scrollNext, 4000); } }; const stopAutoScroll = () => { clearInterval(autoScrollInterval); autoScrollInterval = null; };
-        if (nextBtn) nextBtn.addEventListener('click', () => { stopAutoScroll(); scrollNext(); startAutoScroll(); });
-        if (prevBtn) prevBtn.addEventListener('click', () => { stopAutoScroll(); scrollPrev(); startAutoScroll(); });
-        carouselWrapper.addEventListener('mouseenter', stopAutoScroll); carouselWrapper.addEventListener('mouseleave', startAutoScroll); startAutoScroll();
-     }
-
-    // Lógica Modal de Vídeo (Mantida)
-    const playDemoBtn = document.getElementById('play-demo-video-btn');
-    const videoModal = document.getElementById('video-modal'); 
-    const closeModalBtn = document.getElementById('close-modal-btn'); 
-    const modalVideoLocal = document.getElementById('modal-video-local'); 
-    const modalVideoYoutube = document.getElementById('modal-video-youtube');
+    .depoimento-card { flex: 0 0 90%; max-width: 90%; padding: 2rem; }
+    .carousel-wrapper { padding: 1.5rem 0; }
+    .carousel-btn { display: none; }
+    .objeccao-card { padding: 1.5rem; }
     
-    function openModal() {
-         const videoSrc = pageConfig.demoVideo.src; if (!videoSrc) { console.error('Fonte do vídeo de demonstração não definida.'); return; }
-         if (modalVideoLocal) modalVideoLocal.style.display = 'none';
-         if (modalVideoYoutube) modalVideoYoutube.style.display = 'none';
-         const videoData = getVideoEmbedUrl(videoSrc);
-         if (videoData) {
-             if (videoData.type === 'iframe') { if(modalVideoYoutube) {modalVideoYoutube.src = `${videoData.src}?autoplay=1&rel=0`; modalVideoYoutube.style.display = 'block';} }
-             else { if(modalVideoLocal) {modalVideoLocal.src = videoData.src; modalVideoLocal.muted = false; modalVideoLocal.style.display = 'block'; modalVideoLocal.currentTime = 0; modalVideoLocal.play().catch(e => console.error("Erro ao tentar tocar vídeo no modal:", e));} }
-             if(videoModal) videoModal.classList.add('active');
-         } else { console.error("Não foi possível processar a URL do vídeo de demonstração:", videoSrc); }
+    /* Ajuste do Footer (Refatorado) */
+    footer {
+        text-align: center; /* Centraliza o grid em telas menores */
     }
-    function closeModal() {
-         if(videoModal) videoModal.classList.remove('active');
-         if (modalVideoLocal) { modalVideoLocal.pause(); modalVideoLocal.src = ''; }
-         if (modalVideoYoutube) { try { if (modalVideoYoutube.contentWindow) modalVideoYoutube.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*'); } catch(e) { console.warn("Não foi possível pausar o vídeo do YouTube via postMessage."); } setTimeout(() => { if(modalVideoYoutube) modalVideoYoutube.src = ''; }, 300); }
-    }
-    if (playDemoBtn) playDemoBtn.addEventListener('click', openModal); 
-    if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
-    if (videoModal) { videoModal.addEventListener('click', (event) => { if (event.target === videoModal) closeModal(); }); }
-
-    // --- LÓGICA DA CALCULADORA INTELIGENTE (COM IMC) ---
-    // (Esta lógica está 100% mantida)
-    const calculadoraForm = document.getElementById('calculadora-form');
-    const resultadoDiv = document.getElementById('resultado-calculadora');
-    if (calculadoraForm && resultadoDiv) {
-        calculadoraForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            // 1. Coleta de dados
-            const nome = document.getElementById('calc-nome').value.trim();
-            const idade = parseInt(document.getElementById('calc-idade').value);
-            const altura = parseInt(document.getElementById('calc-altura').value);
-            const peso = parseFloat(document.getElementById('calc-peso').value);
-            const nivelTreino = document.getElementById('calc-treino').value;
-            const usouRemedio = document.getElementById('calc-remedio').value;
-            const querSuplemento = document.getElementById('calc-suplemento').value;
-            const saudeGeral = document.getElementById('calc-saude').value.trim();
-
-            if (!nome || isNaN(idade) || isNaN(altura) || isNaN(peso) || !nivelTreino || !usouRemedio || !querSuplemento) {
-                alert('Por favor, preencha todos os campos obrigatórios corretamente.');
-                return;
-            }
-
-            // 2. Cálculos (Estimativas + NOVO Cálculo de IMC)
-            const aguaLitros = (peso * 35 / 1000).toFixed(1);
-            const proteinaG = Math.round(peso * 2);
-            const gorduraG = Math.round(peso * 0.8);
-            const carboidratoG = Math.round(peso * 2);
-
-            const alturaM = altura / 100;
-            const imc = (peso / (alturaM * alturaM)).toFixed(1);
-
-            const resultadosCalculo = {
-                agua_litros: aguaLitros,
-                proteina_g: proteinaG,
-                gordura_g: gorduraG,
-                carboidrato_g: carboidratoG,
-                imc: imc 
-            };
-
-            // 3. Lógica de Avaliação de Peso Corporal (IMC)
-            let imcMessage = '';
-            let statusClass = 'status-sucesso';
-
-            if (imc < 18.5) {
-                imcMessage = `<p><strong>Atenção:</strong> Seu IMC (${imc}) indica que você está abaixo do peso ideal. Nossas estimativas podem precisar de ajuste. É fundamental focar em ganhar massa com qualidade.</p>`;
-                statusClass = 'status-aviso';
-            } else if (imc >= 18.5 && imc <= 24.9) {
-                imcMessage = `<p><strong>Parabéns!</strong> Seu IMC (${imc}) está na faixa ideal. Nossas estimativas são um ótimo ponto de partida para você "secar" e definir!</p>`;
-                statusClass = 'status-sucesso';
-            } else if (imc >= 25 && imc <= 29.9) {
-                imcMessage = `<p><strong>Alerta:</strong> Seu IMC (${imc}) indica que você está acima do peso (sobrepeso). Nossas estimativas focam no déficit calórico para iniciar a queima de gordura.</p>`;
-                statusClass = 'status-aviso';
-            } else { // imc >= 30
-                imcMessage = `<p><strong>Alerta de Saúde:</strong> Seu IMC (${imc}) está na faixa de obesidade. O foco total deve ser no déficit calórico e no aumento da atividade física. Recomendamos procurar um profissional.</p>`;
-                statusClass = 'status-alerta';
-            }
-
-            // 4. Envio de Webhooks (Incluindo IMC)
-            const dataToSend = {
-                event: 'calculadora_submit',
-                form_id: 'calculadora-form',
-                nome: nome,
-                idade: idade,
-                altura_cm: altura,
-                peso_kg: peso,
-                nivel_treino: nivelTreino,
-                usou_remedio: usouRemedio,
-                quer_suplemento: querSuplemento,
-                saude_geral: saudeGeral,
-                resultado: resultadosCalculo,
-                timestamp: new Date().toISOString()
-            };
-            
-            try {
-                localStorage.setItem('calculatorData', JSON.stringify(dataToSend));
-            } catch (storageError) { console.error('Erro ao salvar dados da calculadora no localStorage:', storageError); }
-
-            sendToWebhook(dataToSend);
-            sendToGoogleSheet(dataToSend);
-            
-            // 5. Lógica de Exibição (ATUALIZADA com IMC e Status)
-            let resultadoHTML = `<p>Olá, <strong>${nome}</strong>!</p>`;
-            resultadoHTML += imcMessage; 
-            resultadoHTML += `<p>Com base nos seus dados, aqui estão suas <strong>estimativas</strong> diárias:</p>
-                              <ul>
-                                <li>💧 <strong>Água:</strong> ${resultadosCalculo.agua_litros} L</li>
-                                <li>🍗 <strong>Proteínas:</strong> ${resultadosCalculo.proteina_g}g</li>
-                                <li>🥑 <strong>Gorduras:</strong> ${resultadosCalculo.gordura_g}g</li>
-                                <li>🍚 <strong>Carboidratos:</strong> ${resultadosCalculo.carboidrato_g}g</li>
-                              </ul>`;
-            
-            if (querSuplemento === 'sim' || querSuplemento === 'talvez') {
-                 resultadoHTML += `<p><strong>Obrigado!</strong> Como você demonstrou interesse em suplementos, confira as recomendações de curadoria na seção <strong>"Suplementação Inteligente"</strong> acima.</p>`;
-            } else {
-                 resultadoHTML += `<p><strong>Obrigado!</strong> Suas metas foram calculadas. Lembre-se de anotá-las e rolar para baixo para baixar seu Guia Gratuito.</p>`;
-            }
-
-            resultadoDiv.innerHTML = resultadoHTML;
-            resultadoDiv.classList.remove('status-sucesso', 'status-aviso', 'status-alerta');
-            resultadoDiv.classList.add(statusClass);
-            resultadoDiv.style.display = 'block';
-            void resultadoDiv.offsetWidth;
-            resultadoDiv.classList.add('visible');
-            resultadoDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-        });
+    .footer-grid {
+        text-align: left; /* Mantém o texto dos links à esquerda */
     }
 
-}); // Fim DOMContentLoaded
+    .calculadora-form { padding: 2rem 1.5rem; }
+    #ai-chat-panel { width: calc(100% - 30px); left: 15px; bottom: 85px; max-height: 400px; }
+    .floating-buttons-container { bottom: 15px; left: 15px; right: 15px; }
+    
+    .cta-content-box {
+        padding: 2.5rem 1.5rem;
+    }
+}
+@media (max-width: 480px) {
+    h1 { font-size: clamp(2rem, 8vw, 2.5rem); }
+    p.subtitulo { font-size: 1.1rem; }
+    #foco-no-treino p { font-size: 1rem; }
+    .btn { padding: 0.9rem 2rem; font-size: 1rem; }
+    .depoimento-card { flex: 0 0 95%; max-width: 95%; }
+    .float-btn { width: 55px; height: 55px; }
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group input[type="email"],
+    .form-group select,
+    .form-group textarea { font-size: 0.95rem; padding: 0.8rem; }
+    #ai-chat-panel { bottom: 80px; width: calc(100% - 20px); left: 10px;}
+    #ai-chat-submit { font-size: 0.95rem; padding: 0.8rem 1.2rem; }
+    .floating-buttons-container { bottom: 10px; left: 10px; right: 10px; }
+    #ai-quick-questions { padding: 0.4rem 0.8rem 0rem 0.8rem; gap: 6px;}
+    .quick-question-btn { padding: 5px 10px; font-size: 0.75rem;}
+
+    .cta-content-box {
+        padding: 2rem 1rem;
+    }
+
+    /* Quebra o formulário inline em telas pequenas */
+    .form-group-inline {
+        flex-direction: column;
+        gap: 1rem;
+        border: none;
+        background: transparent;
+        overflow: visible;
+    }
+    
+    #email-form #email-input {
+        border-radius: 10px; /* Borda normal */
+        padding-left: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    #email-form button[type="submit"] {
+        border-radius: 980px; /* Borda normal */
+        width: 100%; /* Ocupa a largura toda */
+    }
+
+    .form-group-inline:focus-within {
+         box-shadow: none;
+         border-color: transparent;
+    }
+    
+    #email-form #email-input:focus {
+         border-color: var(--cor-destaque);
+         box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.3);
+    }
+}
+
+```css
+/* ======================================================================
+   NOVOS AJUSTES SOLICITADOS (Senior Developer Patch)
+   ====================================================================== */
+
+/* 1️⃣ ESTILOS DA NOVA SEÇÃO DE DESTAQUE */
+#destaque-especial {
+    padding: 6rem 0;
+    background-color: var(--cor-fundo); /* Mantém coerência, mas o box destaca */
+}
+
+.destaque-box {
+    background: linear-gradient(135deg, #222224 0%, #1a1a1a 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 6px solid var(--cor-destaque); /* Destaque lateral na cor da marca */
+    border-radius: 24px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.destaque-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
+.destaque-imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    min-height: 400px; /* Garante altura visual */
+}
+
+.destaque-conteudo {
+    padding: 3rem 4rem;
+    text-align: left;
+}
+
+.destaque-tag {
+    display: inline-block;
+    background-color: rgba(230, 57, 70, 0.15);
+    color: var(--cor-destaque);
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.destaque-conteudo h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    color: #fff;
+}
+
+.destaque-conteudo p {
+    color: var(--cor-texto-secundario);
+    font-size: 1.15rem;
+    line-height: 1.8;
+}
+
+/* Responsividade da Nova Seção */
+@media (max-width: 900px) {
+    .destaque-grid {
+        grid-template-columns: 1fr;
+    }
+    .destaque-imagem img {
+        min-height: 250px;
+        max-height: 300px;
+    }
+    .destaque-conteudo {
+        padding: 2.5rem 2rem;
+    }
+    .destaque-conteudo h2 {
+        font-size: 2rem;
+    }
+}
+
+
+/* 2️⃣ AJUSTE DE CORES NOS CAMPOS DA CALCULADORA (Select/Option) */
+/* Isso força o fundo escuro e texto claro nas opções do select */
+.form-group select {
+    background-color: rgba(255, 255, 255, 0.05); /* Fundo escuro */
+    color: var(--cor-texto-principal);
+}
+
+/* Estilização das opções internas (Dropdown) */
+.form-group select option {
+    background-color: #1c1c1e; /* Cor sólida escura para o menu */
+    color: #f5f5f7; /* Texto claro */
+    padding: 10px;
+}
+
+/* Remove foco azul padrão em alguns navegadores e substitui pela cor da marca */
+.form-group select:focus {
+    border-color: var(--cor-destaque);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
+}
+
+
+/* 3️⃣ AJUSTE CAMPO DE E-MAIL (Texto Branco) */
+#email-form #email-input {
+    color: #ffffff !important; /* Força o branco */
+}
+
+/* Hack para forçar a cor branca mesmo quando o navegador usa o Auto-Complete */
+#email-form #email-input:-webkit-autofill,
+#email-form #email-input:-webkit-autofill:hover, 
+#email-form #email-input:-webkit-autofill:focus, 
+#email-form #email-input:-webkit-autofill:active {
+    -webkit-text-fill-color: #ffffff !important;
+    -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.05) inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Ajuste do placeholder para garantir contraste */
+#email-form #email-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* 4️⃣ AJUSTE DE COR DA SETA (Voltar ao Topo) */
+#back-to-top-btn {
+    color: #FF6F91 !important; /* Define a cor do elemento para o Rosa do tema */
+}
+
+#back-to-top-btn svg {
+    stroke: #FF6F91 !important; /* Força a linha da seta a ficar Rosa */
+    fill: transparent !important; /* Garante que não tenha preenchimento indesejado */
+}
+/* ======================================================================
+   6️⃣ MOTOR DE PADRONIZAÇÃO INTELIGENTE (CSS FLUIDO)
+   ====================================================================== */
+
+:root {
+    /* A MÁGICA DO CLAMP:
+       clamp(MINIMO, VALOR IDEAL, MAXIMO)
+       
+       --spacing-section: Espaço vertical entre seções.
+       No celular será 4rem, em telas gigantes 8rem, e no meio termo ele calcula sozinho.
+    */
+    --spacing-section: clamp(4rem, 8vh, 8rem);
+    
+    /* --spacing-gap: Espaço entre colunas e cards */
+    --spacing-gap: clamp(2rem, 4vw, 4rem);
+    
+    /* --spacing-text: Espaço entre Título e Texto */
+    --spacing-text: clamp(1rem, 2vh, 1.5rem);
+}
+
+/* 1. RESET ESTRUTURAL DE TODAS AS SEÇÕES */
+section {
+    padding-top: var(--spacing-section) !important;
+    padding-bottom: var(--spacing-section) !important;
+    width: 100%;
+    position: relative;
+    /* Garante que o conteúdo centralize verticalmente se sobrar espaço */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* 2. REGRA DE OURO DO CONTAINER (Centralização Perfeita) */
+.container {
+    width: 100%;
+    max-width: 1200px; /* Leve aumento para telas modernas */
+    margin: 0 auto;
+    padding: 0 clamp(1.5rem, 5vw, 2rem); /* Padding lateral inteligente */
+}
+
+/* 3. RITMO VERTICAL (Padroniza distâncias de texto) */
+/* Isso resolve a sensação de "bagunça" interna */
+section h2 {
+    margin-bottom: var(--spacing-text) !important;
+    line-height: 1.2;
+}
+
+section p.subtitulo {
+    margin-bottom: calc(var(--spacing-text) * 2) !important;
+}
+
+/* 4. ALINHAMENTO DE GRIDS (Force Balance) */
+/* Obriga todos os grids a usarem o mesmo espaçamento inteligente */
+.feature-section,
+.destaque-grid,
+.garantia-objecoes-grid,
+.ferramentas-grid,
+.poder-grid {
+    display: grid;
+    gap: var(--spacing-gap) !important;
+    align-items: center; /* Centraliza verticalmente imagem com texto */
+}
+
+/* 5. TRATAMENTO DE EXCEÇÕES (Lógica de "Cola") */
+/* Aqui aplicamos a lógica para seções que precisam tocar umas nas outras */
+
+/* Hero: Zera tudo para ocupar a tela */
+#hero {
+    padding: 0 !important;
+    min-height: 100vh;
+    display: block; /* Hero não usa o flex do section padrão */
+}
+
+/* Poder: Cola no fundo, mas mantém respiro no topo */
+#poder {
+    padding-top: var(--spacing-section) !important;
+    padding-bottom: 0 !important;
+}
+
+/* Importância: Cola no topo (porque o Poder colou no fundo) */
+#importancia {
+    padding-top: var(--spacing-section) !important; 
+    /* Se quiser colar visualmente, mude para 0, mas recomendo manter o respiro para leitura */
+}
+
+/* Garantia: Mantém o padrão inteligente */
+#garantia-objecoes {
+    padding-top: var(--spacing-section) !important;
+    padding-bottom: var(--spacing-section) !important;
+}
+
+/* CTA: Destaque final */
+#cta {
+    padding-top: var(--spacing-section) !important;
+    padding-bottom: var(--spacing-section) !important;
+}
+
+/* Footer: Espaçamento próprio */
+footer {
+    padding-top: var(--spacing-section) !important;
+    padding-bottom: 3rem !important;
+}
+
+/* 6. CORREÇÃO ESPECÍFICA PARA MOBILE (Layout Stacking) */
+@media (max-width: 900px) {
+    /* Força uma coluna única em telas menores para não quebrar o layout */
+    .feature-section, 
+    .destaque-grid, 
+    .garantia-objecoes-grid {
+        grid-template-columns: 1fr !important;
+        text-align: center; /* Centraliza texto no mobile para organização */
+    }
+    
+    /* Remove a ordem reversa no mobile para ficar lógico (Imagem -> Texto) */
+    .feature-section.reverse .feature-image {
+        order: -1 !important; /* Imagem sempre primeiro */
+    }
+    
+    /* Ajuste de Texto */
+    .feature-text, .destaque-conteudo {
+        padding: 0 !important;
+        text-align: left; /* Ou center, dependendo do gosto, left é mais legível */
+    }
+}
+
+/* ======================================================================
+   7️⃣ CORREÇÃO DE OVERFLOW E LAYOUT (#PODER)
+   ====================================================================== */
+
+/* 1. Devolvemos o espaçamento inferior padrão para a seção respirar */
+#poder {
+    padding-bottom: var(--spacing-section) !important; /* Restaura o espaço */
+    height: auto !important; /* Garante que a altura acompanhe o conteúdo */
+    background-color: var(--cor-fundo-secundario); /* Garante fundo sólido */
+    overflow: visible; /* Permite que sombras apareçam sem cortar */
+}
+
+/* 2. Blindagem do Grid para evitar quebra de layout */
+.poder-grid {
+    display: grid;
+    /* Ajuste inteligente: se a tela for muito pequena, reduz a largura mínima para 280px */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+    gap: var(--spacing-gap) !important;
+    width: 100%;
+    margin-top: 3rem;
+}
+
+/* 3. Garante que os cards tenham a mesma altura e não estourem */
+.poder-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    box-sizing: border-box; /* Garante que padding não estoure a largura */
+}
+
+/* 4. Ajuste específico para Mobile para evitar vazamento lateral */
+@media (max-width: 480px) {
+    .poder-grid {
+        display: flex !important; /* Muda para flexbox vertical no mobile extremo */
+        flex-direction: column;
+        gap: 2rem !important;
+    }
+    
+    .poder-card {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+}
+
+/* ======================================================================
+   8️⃣ CORREÇÃO FINAL: TEXTO DA NOVA SEÇÃO (MOBILE)
+   ====================================================================== */
+
+@media (max-width: 768px) {
+    /* 1. Força o empilhamento vertical (Imagem em cima, Texto embaixo) */
+    .destaque-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        grid-template-columns: 1fr !important;
+        width: 100% !important;
+    }
+
+    /* 2. Ajuste Crítico do Conteúdo de Texto */
+    .destaque-conteudo {
+        padding: 2rem 1.5rem !important; /* Reduz o padding gigante do PC para algo seguro no mobile */
+        width: 100% !important;
+        box-sizing: border-box !important; /* Garante que o padding não aumente a largura total */
+        text-align: left; /* Mantém a leitura natural */
+    }
+
+    /* 3. Prevenção de Estouro de Texto */
+    .destaque-conteudo p {
+        font-size: 1rem !important; /* Tamanho legível */
+        width: 100% !important;
+        max-width: 100% !important;
+        word-wrap: break-word; /* Quebra palavras muito longas para não vazar */
+    }
+
+    /* 4. Ajuste do Título para não quebrar feio */
+    .destaque-conteudo h2 {
+        font-size: 1.8rem !important; /* Título proporcional à tela do celular */
+        line-height: 1.3 !important;
+        margin-bottom: 1rem !important;
+    }
+
+    /* 5. Controle da Imagem no Mobile */
+    .destaque-imagem {
+        width: 100% !important;
+        height: 250px !important; /* Altura fixa para não ocupar a tela toda */
+    }
+
+    .destaque-imagem img {
+        height: 100% !important;
+        width: 100% !important;
+        object-fit: cover;
+    }
+}
+/* ======================================================================
+   9️⃣ AUMENTO DO CAMPO DE E-MAIL (MOBILE UX)
+   ====================================================================== */
+
+@media (max-width: 480px) {
+    /* Aumenta a altura e a área de toque do input */
+    #email-form #email-input {
+        padding: 1.2rem 1.5rem !important; /* Aumenta o "gordo" do campo (Cima/Baixo e Lados) */
+        font-size: 1.1rem !important; /* Aumenta a letra para facilitar a leitura */
+        min-height: 60px !important; /* Garante uma altura mínima generosa para o dedo */
+        line-height: normal !important; /* Centraliza o texto verticalmente */
+    }
+
+    /* Opcional: Ajusta o botão para ficar da mesma altura do campo e não ficar desproporcional */
+    #email-form button[type="submit"] {
+        padding: 1.2rem 2rem !important;
+        min-height: 60px !important;
+        font-size: 1.1rem !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+}
+
+/* ======================================================================
+   🔟 MELHORIA DE UX NO CHAT (Mobile & Scroll)
+   ====================================================================== */
+
+/* Classe utilitária para esconder os botões flutuantes quando o chat abre */
+.floating-buttons-container.hide-on-chat {
+    opacity: 0;
+    pointer-events: none; /* Impede cliques acidentais quando invisível */
+    transform: translateY(20px); /* Animação de descida */
+}
+
+/* Garante que a transição seja suave */
+.floating-buttons-container {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Ajuste Fino para o Scroll da Mensagem */
+.ai-message, .user-message {
+    scroll-margin-bottom: 20px; /* Garante um respiro quando rolar automaticamente */
+}
