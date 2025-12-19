@@ -1340,3 +1340,29 @@ footer {
 .ai-message, .user-message {
     scroll-margin-bottom: 20px; /* Garante um respiro quando rolar automaticamente */
 }
+
+/* ======================================================================
+   1️⃣1️⃣ AJUSTE LOGO MOBILE (Posição e Tamanho)
+   ====================================================================== */
+
+@media (max-width: 768px) {
+    .header-logo-container {
+        /* 1. Empurra a logo mais para a direita (reduzindo o padding da borda) */
+        padding: 15px 15px !important; 
+        
+        /* 2. Garante que ela fique alinhada à direita */
+        text-align: right !important;
+        
+        /* 3. Garante que fique no topo absoluto */
+        top: 0 !important;
+        right: 0 !important;
+    }
+
+    .header-logo {
+        /* 4. Reduz o tamanho drasticamente no celular para não tapar o texto */
+        /* Estava 165px, que é enorme. 80px é o ideal para mobile. */
+        max-height: 100px !important; 
+        width: auto !important;
+    }
+}
+
