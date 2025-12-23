@@ -307,17 +307,36 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         });
 
-        // Formulário de E-mail (Mantido)
+        // ============================================================
+        //  FORMULÁRIO DE E-MAIL (CORRIGIDO PARA LER DO HTML E NÃO BLOQUEAR)
+        // ============================================================
         const emailForm = document.getElementById('email-form');
         if (emailForm) {
-            emailForm.addEventListener('submit', (e) => {
-                e.preventDefault();
+            emailForm.addEventListener('submit', function(e) {
+                e.preventDefault(); 
+                
+                // 1. Pega o link que você colocou lá no HTML (data-link)
+                const linkDoEbook = this.getAttribute('data-link'); 
+                
+                // 2. Tenta abrir IMEDIATAMENTE (antes de qualquer alert ou atraso)
+                // Isso evita que o navegador bloqueie o pop-up
+                if (linkDoEbook && linkDoEbook !== '#' && linkDoEbook.startsWith('http')) {
+                    window.open(linkDoEbook, '_blank');
+                    
+                    // Mostra mensagem SÓ DEPOIS de abrir a janela
+                    setTimeout(() => {
+                        alert('Parabéns! Seu Guia foi aberto em uma nova aba.');
+                    }, 1000);
+                } else {
+                    console.warn('Link não encontrado no HTML ou inválido.');
+                    alert('Obrigado! Verifique se configurou o link no HTML.');
+                }
+
+                // 3. Salva os dados e limpa o campo
                 const emailInput = document.getElementById('email-input');
                 const email = emailInput ? emailInput.value : 'N/A';
 
-                try {
-                    localStorage.setItem('submittedEmail', email);
-                } catch (storageError) { console.error('Erro ao salvar email no localStorage:', storageError); }
+                try { localStorage.setItem('submittedEmail', email); } catch (e) {}
 
                 const submitData = {
                     event: 'email_submit',
@@ -329,15 +348,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 sendToWebhook(submitData);
                 sendToGoogleSheet(submitData);
 
-                alert('Obrigado por se inscrever! Seu Guia será baixado/aberto agora.');
                 if(emailInput) emailInput.value = '';
-
-                const ebookLink = 'https://drive.google.com/file/d/1n7s4FiiXFrKOAn-_kcLOQm-bsGz-kv1u/view?usp=drive_link';
-                if (ebookLink && ebookLink !== '#') {
-                    setTimeout(() => { window.location.href = ebookLink; }, 300);
-                } else {
-                    console.warn('Link do eBook não configurado no formulário de email.');
-                }
             });
         }
     } // Fim setupPage()
@@ -606,12 +617,12 @@ document.addEventListener("DOMContentLoaded", function() {
             let resultadoHTML = `<p>Olá, <strong>${nome}</strong>!</p>`;
             resultadoHTML += imcMessage; 
             resultadoHTML += `<p>Com base nos seus dados, aqui estão suas <strong>estimativas</strong> diárias:</p>
-                              <ul>
-                                <li>💧 <strong>Água:</strong> ${resultadosCalculo.agua_litros} L</li>
-                                <li>🍗 <strong>Proteínas:</strong> ${resultadosCalculo.proteina_g}g</li>
-                                <li>🥑 <strong>Gorduras:</strong> ${resultadosCalculo.gordura_g}g</li>
-                                <li>🍚 <strong>Carboidratos:</strong> ${resultadosCalculo.carboidrato_g}g</li>
-                              </ul>`;
+                             <ul>
+                               <li>💧 <strong>Água:</strong> ${resultadosCalculo.agua_litros} L</li>
+                               <li>🍗 <strong>Proteínas:</strong> ${resultadosCalculo.proteina_g}g</li>
+                               <li>🥑 <strong>Gorduras:</strong> ${resultadosCalculo.gordura_g}g</li>
+                               <li>🍚 <strong>Carboidratos:</strong> ${resultadosCalculo.carboidrato_g}g</li>
+                             </ul>`;
             
             if (querSuplemento === 'sim' || querSuplemento === 'talvez') {
                  resultadoHTML += `<p><strong>Obrigado!</strong> Como você demonstrou interesse em suplementos, confira as recomendações de curadoria na seção <strong>"Suplementação Inteligente"</strong> acima.</p>`;
@@ -631,4 +642,3 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 }); // Fim DOMContentLoaded
-
