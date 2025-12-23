@@ -1366,3 +1366,80 @@ footer {
     }
 }
 
+/* ======================================================================
+   CORREÇÃO DE LAYOUT: HERO E CABEÇALHO (Logo Centralizada e Texto Ajustado)
+   ====================================================================== */
+
+/* 1. Ajuste da LOGO (Centralizada e com respiro) */
+.header-logo-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Centraliza a logo horizontalmente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Dá um respiro do topo para não ficar colado na borda */
+    padding-top: 2rem; 
+    z-index: 20;
+    text-align: center;
+}
+
+/* Tamanho da logo controlado para elegância */
+.header-logo {
+    max-height: 120px; /* Um pouco menor para não brigar com o texto */
+    width: auto;
+    /* Sombra suave para destacar do vídeo de fundo */
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+}
+
+/* 2. Ajuste do TEXTO E BOTÃO (Empurrando para baixo) */
+#hero {
+    /* Mantém o flexbox, mas vamos ajustar o alinhamento */
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    position: relative;
+    padding: 0;
+    height: 100vh;
+}
+
+/* Esta é a classe mágica para baixar o texto */
+.hero-content {
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    /* AQUI ESTÁ O SEGREDO: Adiciona um "colchão" no topo 
+       para empurrar o texto visualmente para baixo, separando da logo */
+    padding-top: 12vh; /* Empurra 12% da altura da tela para baixo */
+}
+
+.main-title {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Aumenta o espaço entre Título, Subtítulo e Botão */
+    align-items: center; /* Garante que tudo fique centralizado */
+    text-align: center;
+}
+
+/* 3. Ajuste Específico para CELULAR (Mobile) */
+@media (max-width: 768px) {
+    /* No celular, a logo precisa ser menor para sobrar espaço pro texto */
+    .header-logo-container {
+        padding-top: 1.5rem;
+    }
+    
+    .header-logo {
+        max-height: 80px; /* Logo menor no celular */
+    }
+
+    /* No celular, empurramos um pouco mais para baixo para fugir da logo */
+    .hero-content {
+        padding-top: 15vh; 
+    }
+    
+    .main-title h1 {
+        font-size: 2rem; /* Ajuste de leitura */
+    }
+}
