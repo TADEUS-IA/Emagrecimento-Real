@@ -1443,3 +1443,11 @@ footer {
         font-size: 2rem; /* Ajuste de leitura */
     }
 }
+
+/* --- AJUSTE EXCLUSIVO PARA COMPUTADOR (PC) --- */
+@media (min-width: 1024px) {
+    .floating-buttons-container {
+        bottom: 60px !important; /* Levanta bem mais no PC */
+        right: 40px !important;  /* Afasta um pouco da direita também */
+    }
+}
